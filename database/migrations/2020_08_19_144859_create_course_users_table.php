@@ -15,9 +15,9 @@ class CreateCourseUsersTable extends Migration
     {
         Schema::create('course_users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('course_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->integer('lesson_id')->unsigned();
+            $table->integer('course_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('lesson_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
