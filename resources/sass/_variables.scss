@@ -2,7 +2,7 @@
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-sans-serif: "Nunito", sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
@@ -17,3 +17,25 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+@mixin font-face($font-family, $url, $font-weight) {
+  @font-face {
+    font-family: "#{$font-family}";
+    src: url("#{$url}");
+    font-style: normal;
+    font-weight: $font-weight;
+  }
+}
+
+$color_link: #b2d235;
+$main_color: #ffffff;
+$color_txt: #11114e;
+
+@mixin fontUTM($weight, $size, $color) {
+  font: $weight $size UTM;
+  color: $color;
+}
+
+@mixin fontOpen($weight, $size) {
+  font: $weight $size Open Sans;
+}
