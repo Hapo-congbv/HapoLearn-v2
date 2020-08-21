@@ -178,14 +178,35 @@
     }
   }
 
-  .hapo-wrap-feedback {
+  .hapo-feedback {
     .hapo-title-feedback {
-      @include fontUTM(bold, 50px, $color_txt);
+      .hapo-txt-title {
+        font-size: 50px;
+      }
+
+      .hapo-txt-decs {
+        line-height: 22px;
+        @include fontUTM(normal, 18px, #505353);
+      }
     }
 
-    .hapo-titletext-feedback {
-      padding: 10px 75px;
-      @include fontUTM(normal, 18px, $color_txt);
+    .hapo-element-cmt {
+      width: 80%;
+      height: 80%;
+    }
+
+    .hapo-img-account {
+      margin-left: 100px;
+    }
+
+    .controls-top {
+      .prev {
+        margin-left: 64px;
+      }
+
+      .next {
+        margin-right: 64px;
+      }
     }
   }
 
@@ -461,41 +482,42 @@
     }
   }
 
-  .hapo-wrap-feedback {
+  .hapo-feedback {
     .hapo-title-feedback {
-      margin-bottom: 30px;
-      margin-top: 50px;
-      @include fontUTM(bold, 40px, $color_txt);
-    }
+      .hapo-txt-title {
+        font-size: 40px;
+      }
 
-    .hapo-titletext-feedback {
-      padding: 0;
-      text-shadow: 0.05px 0.05px;
-      @include fontUTM(normal, 16px, #505353);
-    }
+      hr {
+        width: 40%;
+      }
 
-    .hapo-feedback-user-item {
-      .hapo-feedback-content {
-        .hapo-feedback-user-content {
-          padding: 5px;
-          margin-left: 0;
-        }
+      .hapo-txt-decs {
+        line-height: 22px;
+        letter-spacing: -0.01em;
+        @include fontUTM(normal, 19px, #505353);
       }
     }
 
-    .hapo-left-right {
-      font-size: 15px;
-      padding: 0 4px;
-      top: -190px;
-      color: #969494;
+    .hapo-element-cmt {
+      width: 95%;
+      background: url("../storage/images/Union.png") no-repeat;
+      background-size: 100% 95%;
+    }
 
-      .previous-icon {
-        padding: 3px 10px;
+    .hapo-img-account {
+      margin-left: 30px;
+    }
+
+    .controls-top {
+      top: -195px;
+
+      .prev {
+        margin-left: 0;
+      }
+
+      .next {
         margin-right: 0;
-      }
-
-      .next-icon {
-        padding: 3px 10px;
       }
     }
   }

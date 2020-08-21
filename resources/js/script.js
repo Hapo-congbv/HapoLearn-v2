@@ -12,26 +12,22 @@ $(document).ready(function () {
         $('.toggle-class').hide();
     });
 
-    $('.hapo-feedback-slider').slick({
+    $('.hapo-slide-block').slick({
         infinite: true,
         slidesToShow: 2,
         slidesToScroll: 1,
-        adaptiveHeight: false,
         autoplay: true,
         autoplaySpeed: 4000,
-        pauseOnFocus: true,
-        pauseOnHover: true,
-        prevArrow: $('.previous-icon'),
-        nextArrow: $('.next-icon'),
-
+        prevArrow: $('.prev'),
+        nextArrow: $('.next'),
         responsive: [
             {
-                breakpoint: 769,
+                breakpoint: 980,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1
                 }
-            }
+            },
         ]
     });
 
