@@ -14,8 +14,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $course = Course::whereBetween('id', [1, 3])->get();
-        $courseOld = Course::whereBetween('id', [4, 6])->get();
+        $course = Course::orderBy('id', 'ASC')->limit(3)->get();
+        $courseOld = Course::orderBy('id', 'DESC')->limit(3)->get();
         return view('index', compact('course', 'courseOld'));
     }
 
