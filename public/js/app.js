@@ -6430,6 +6430,1378 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/jquery-confirm/js/jquery-confirm.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/jquery-confirm/js/jquery-confirm.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * jquery-confirm v3.3.4 (http://craftpip.github.io/jquery-confirm/)
+ * Author: Boniface Pereira
+ * Website: www.craftpip.com
+ * Contact: hey@craftpip.com
+ *
+ * Copyright 2013-2019 jquery-confirm
+ * Licensed under MIT (https://github.com/craftpip/jquery-confirm/blob/master/LICENSE)
+ */
+
+
+/**
+ * UMD (Universal Module Definition) to support CommonJS, AMD and browser
+ * Thanks to https://github.com/umdjs/umd
+ */
+(function(factory){
+    if(true){
+        // AMD. Register as an anonymous module.
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    }else {}
+}(function($){
+    "use strict";
+
+    // locally assign window
+    var w = window;
+    // w.jconfirm
+    // w.Jconfirm;
+
+    $.fn.confirm = function(options, option2){
+        if(typeof options === 'undefined') options = {};
+        if(typeof options === 'string'){
+            options = {
+                content: options,
+                title: (option2) ? option2 : false
+            };
+        }
+        /*
+         *  Alias of $.confirm to emulate native confirm()
+         */
+        $(this).each(function(){
+            var $this = $(this);
+            if($this.attr('jc-attached')){
+                console.warn('jConfirm has already been attached to this element ', $this[0]);
+                return;
+            }
+
+            $this.on('click', function(e){
+                e.preventDefault();
+                var jcOption = $.extend({}, options);
+                if($this.attr('data-title'))
+                    jcOption['title'] = $this.attr('data-title');
+                if($this.attr('data-content'))
+                    jcOption['content'] = $this.attr('data-content');
+                if(typeof jcOption['buttons'] === 'undefined')
+                    jcOption['buttons'] = {};
+
+                jcOption['$target'] = $this;
+                if($this.attr('href') && Object.keys(jcOption['buttons']).length === 0){
+                    var buttons = $.extend(true, {}, w.jconfirm.pluginDefaults.defaultButtons, (w.jconfirm.defaults || {}).defaultButtons || {});
+                    var firstBtn = Object.keys(buttons)[0];
+                    jcOption['buttons'] = buttons;
+                    jcOption.buttons[firstBtn].action = function(){
+                        location.href = $this.attr('href');
+                    };
+                }
+                jcOption['closeIcon'] = false;
+                var instance = $.confirm(jcOption);
+            });
+
+            $this.attr('jc-attached', true);
+        });
+        return $(this);
+    };
+    $.confirm = function(options, option2){
+        if(typeof options === 'undefined') options = {};
+        if(typeof options === 'string'){
+            options = {
+                content: options,
+                title: (option2) ? option2 : false
+            };
+        }
+
+        var putDefaultButtons = !(options['buttons'] === false);
+
+        if(typeof options['buttons'] !== 'object')
+            options['buttons'] = {};
+
+        if(Object.keys(options['buttons']).length === 0 && putDefaultButtons){
+            var buttons = $.extend(true, {}, w.jconfirm.pluginDefaults.defaultButtons, (w.jconfirm.defaults || {}).defaultButtons || {});
+            options['buttons'] = buttons;
+        }
+
+        /*
+         *  Alias of jconfirm
+         */
+        return w.jconfirm(options);
+    };
+    $.alert = function(options, option2){
+        if(typeof options === 'undefined') options = {};
+        if(typeof options === 'string'){
+            options = {
+                content: options,
+                title: (option2) ? option2 : false
+            };
+        }
+
+        var putDefaultButtons = !(options['buttons'] === false);
+
+        if(typeof options.buttons !== 'object')
+            options.buttons = {};
+
+        if(Object.keys(options['buttons']).length === 0 && putDefaultButtons){
+            var buttons = $.extend(true, {}, w.jconfirm.pluginDefaults.defaultButtons, (w.jconfirm.defaults || {}).defaultButtons || {});
+            var firstBtn = Object.keys(buttons)[0];
+            options['buttons'][firstBtn] = buttons[firstBtn];
+        }
+        /*
+         *  Alias of jconfirm
+         */
+        return w.jconfirm(options);
+    };
+    $.dialog = function(options, option2){
+        if(typeof options === 'undefined') options = {};
+        if(typeof options === 'string'){
+            options = {
+                content: options,
+                title: (option2) ? option2 : false,
+                closeIcon: function(){
+                    // Just close the modal
+                }
+            };
+        }
+
+        options['buttons'] = {}; // purge buttons
+
+        if(typeof options['closeIcon'] === 'undefined'){
+            // Dialog must have a closeIcon.
+            options['closeIcon'] = function(){
+            }
+        }
+        /*
+         *  Alias of jconfirm
+         */
+        options.confirmKeys = [13];
+        return w.jconfirm(options);
+    };
+
+    w.jconfirm = function(options){
+        if(typeof options === 'undefined') options = {};
+        /*
+         * initial function for calling.
+         */
+        var pluginOptions = $.extend(true, {}, w.jconfirm.pluginDefaults);
+        if(w.jconfirm.defaults){
+            pluginOptions = $.extend(true, pluginOptions, w.jconfirm.defaults);
+        }
+
+        /*
+         * merge options with plugin defaults.
+         */
+        pluginOptions = $.extend(true, {}, pluginOptions, options);
+        var instance = new w.Jconfirm(pluginOptions);
+        w.jconfirm.instances.push(instance);
+        return instance;
+    };
+    w.Jconfirm = function(options){
+        /*
+         * constructor function Jconfirm,
+         * options = user options.
+         */
+        $.extend(this, options);
+        this._init();
+    };
+    w.Jconfirm.prototype = {
+        _init: function(){
+            var that = this;
+
+            if(!w.jconfirm.instances.length)
+                w.jconfirm.lastFocused = $('body').find(':focus');
+
+            this._id = Math.round(Math.random() * 99999);
+            /**
+             * contentParsed maintains the contents for $content, before it is put in DOM
+             */
+            this.contentParsed = $(document.createElement('div'));
+
+            if(!this.lazyOpen){
+                setTimeout(function(){
+                    that.open();
+                }, 0);
+            }
+        },
+        _buildHTML: function(){
+            var that = this;
+
+            // prefix the animation string and store in animationParsed
+            this._parseAnimation(this.animation, 'o');
+            this._parseAnimation(this.closeAnimation, 'c');
+            this._parseBgDismissAnimation(this.backgroundDismissAnimation);
+            this._parseColumnClass(this.columnClass);
+            this._parseTheme(this.theme);
+            this._parseType(this.type);
+
+            /*
+             * Append html.
+             */
+            var template = $(this.template);
+            template.find('.jconfirm-box').addClass(this.animationParsed).addClass(this.backgroundDismissAnimationParsed).addClass(this.typeParsed);
+
+            if(this.typeAnimated)
+                template.find('.jconfirm-box').addClass('jconfirm-type-animated');
+
+            if(this.useBootstrap){
+                template.find('.jc-bs3-row').addClass(this.bootstrapClasses.row);
+                template.find('.jc-bs3-row').addClass('justify-content-md-center justify-content-sm-center justify-content-xs-center justify-content-lg-center');
+
+                template.find('.jconfirm-box-container').addClass(this.columnClassParsed);
+
+                if(this.containerFluid)
+                    template.find('.jc-bs3-container').addClass(this.bootstrapClasses.containerFluid);
+                else
+                    template.find('.jc-bs3-container').addClass(this.bootstrapClasses.container);
+            }else{
+                template.find('.jconfirm-box').css('width', this.boxWidth);
+            }
+
+            if(this.titleClass)
+                template.find('.jconfirm-title-c').addClass(this.titleClass);
+
+            template.addClass(this.themeParsed);
+            var ariaLabel = 'jconfirm-box' + this._id;
+            template.find('.jconfirm-box').attr('aria-labelledby', ariaLabel).attr('tabindex', -1);
+            template.find('.jconfirm-content').attr('id', ariaLabel);
+            if(this.bgOpacity !== null)
+                template.find('.jconfirm-bg').css('opacity', this.bgOpacity);
+            if(this.rtl)
+                template.addClass('jconfirm-rtl');
+
+            this.$el = template.appendTo(this.container);
+            this.$jconfirmBoxContainer = this.$el.find('.jconfirm-box-container');
+            this.$jconfirmBox = this.$body = this.$el.find('.jconfirm-box');
+            this.$jconfirmBg = this.$el.find('.jconfirm-bg');
+            this.$title = this.$el.find('.jconfirm-title');
+            this.$titleContainer = this.$el.find('.jconfirm-title-c');
+            this.$content = this.$el.find('div.jconfirm-content');
+            this.$contentPane = this.$el.find('.jconfirm-content-pane');
+            this.$icon = this.$el.find('.jconfirm-icon-c');
+            this.$closeIcon = this.$el.find('.jconfirm-closeIcon');
+            this.$holder = this.$el.find('.jconfirm-holder');
+            // this.$content.css(this._getCSS(this.animationSpeed, this.animationBounce));
+            this.$btnc = this.$el.find('.jconfirm-buttons');
+            this.$scrollPane = this.$el.find('.jconfirm-scrollpane');
+
+            that.setStartingPoint();
+
+            // for loading content via URL
+            this._contentReady = $.Deferred();
+            this._modalReady = $.Deferred();
+            this.$holder.css({
+                'padding-top': this.offsetTop,
+                'padding-bottom': this.offsetBottom,
+            });
+
+            this.setTitle();
+            this.setIcon();
+            this._setButtons();
+            this._parseContent();
+            this.initDraggable();
+
+            if(this.isAjax)
+                this.showLoading(false);
+
+            $.when(this._contentReady, this._modalReady).then(function(){
+                if(that.isAjaxLoading)
+                    setTimeout(function(){
+                        that.isAjaxLoading = false;
+                        that.setContent();
+                        that.setTitle();
+                        that.setIcon();
+                        setTimeout(function(){
+                            that.hideLoading(false);
+                            that._updateContentMaxHeight();
+                        }, 100);
+                        if(typeof that.onContentReady === 'function')
+                            that.onContentReady();
+                    }, 50);
+                else{
+                    // that.setContent();
+                    that._updateContentMaxHeight();
+                    that.setTitle();
+                    that.setIcon();
+                    if(typeof that.onContentReady === 'function')
+                        that.onContentReady();
+                }
+
+                // start countdown after content has loaded.
+                if(that.autoClose)
+                    that._startCountDown();
+            }).then(function(){
+                that._watchContent();
+            });
+
+            if(this.animation === 'none'){
+                this.animationSpeed = 1;
+                this.animationBounce = 1;
+            }
+
+            this.$body.css(this._getCSS(this.animationSpeed, this.animationBounce));
+            this.$contentPane.css(this._getCSS(this.animationSpeed, 1));
+            this.$jconfirmBg.css(this._getCSS(this.animationSpeed, 1));
+            this.$jconfirmBoxContainer.css(this._getCSS(this.animationSpeed, 1));
+        },
+        _typePrefix: 'jconfirm-type-',
+        typeParsed: '',
+        _parseType: function(type){
+            this.typeParsed = this._typePrefix + type;
+        },
+        setType: function(type){
+            var oldClass = this.typeParsed;
+            this._parseType(type);
+            this.$jconfirmBox.removeClass(oldClass).addClass(this.typeParsed);
+        },
+        themeParsed: '',
+        _themePrefix: 'jconfirm-',
+        setTheme: function(theme){
+            var previous = this.theme;
+            this.theme = theme || this.theme;
+            this._parseTheme(this.theme);
+            if(previous)
+                this.$el.removeClass(previous);
+            this.$el.addClass(this.themeParsed);
+            this.theme = theme;
+        },
+        _parseTheme: function(theme){
+            var that = this;
+            theme = theme.split(',');
+            $.each(theme, function(k, a){
+                if(a.indexOf(that._themePrefix) === -1)
+                    theme[k] = that._themePrefix + $.trim(a);
+            });
+            this.themeParsed = theme.join(' ').toLowerCase();
+        },
+        backgroundDismissAnimationParsed: '',
+        _bgDismissPrefix: 'jconfirm-hilight-',
+        _parseBgDismissAnimation: function(bgDismissAnimation){
+            var animation = bgDismissAnimation.split(',');
+            var that = this;
+            $.each(animation, function(k, a){
+                if(a.indexOf(that._bgDismissPrefix) === -1)
+                    animation[k] = that._bgDismissPrefix + $.trim(a);
+            });
+            this.backgroundDismissAnimationParsed = animation.join(' ').toLowerCase();
+        },
+        animationParsed: '',
+        closeAnimationParsed: '',
+        _animationPrefix: 'jconfirm-animation-',
+        setAnimation: function(animation){
+            this.animation = animation || this.animation;
+            this._parseAnimation(this.animation, 'o');
+        },
+        _parseAnimation: function(animation, which){
+            which = which || 'o'; // parse what animation and store where. open or close?
+            var animations = animation.split(',');
+            var that = this;
+            $.each(animations, function(k, a){
+                if(a.indexOf(that._animationPrefix) === -1)
+                    animations[k] = that._animationPrefix + $.trim(a);
+            });
+            var a_string = animations.join(' ').toLowerCase();
+            if(which === 'o')
+                this.animationParsed = a_string;
+            else
+                this.closeAnimationParsed = a_string;
+
+            return a_string;
+        },
+        setCloseAnimation: function(closeAnimation){
+            this.closeAnimation = closeAnimation || this.closeAnimation;
+            this._parseAnimation(this.closeAnimation, 'c');
+        },
+        setAnimationSpeed: function(speed){
+            this.animationSpeed = speed || this.animationSpeed;
+            // this.$body.css(this._getCSS(this.animationSpeed, this.animationBounce));
+        },
+        columnClassParsed: '',
+        setColumnClass: function(colClass){
+            if(!this.useBootstrap){
+                console.warn("cannot set columnClass, useBootstrap is set to false");
+                return;
+            }
+            this.columnClass = colClass || this.columnClass;
+            this._parseColumnClass(this.columnClass);
+            this.$jconfirmBoxContainer.addClass(this.columnClassParsed);
+        },
+        _updateContentMaxHeight: function(){
+            var height = $(window).height() - (this.$jconfirmBox.outerHeight() - this.$contentPane.outerHeight()) - (this.offsetTop + this.offsetBottom);
+            this.$contentPane.css({
+                'max-height': height + 'px'
+            });
+        },
+        setBoxWidth: function(width){
+            if(this.useBootstrap){
+                console.warn("cannot set boxWidth, useBootstrap is set to true");
+                return;
+            }
+            this.boxWidth = width;
+            this.$jconfirmBox.css('width', width);
+        },
+        _parseColumnClass: function(colClass){
+            colClass = colClass.toLowerCase();
+            var p;
+            switch(colClass){
+                case 'xl':
+                case 'xlarge':
+                    p = 'col-md-12';
+                    break;
+                case 'l':
+                case 'large':
+                    p = 'col-md-8 col-md-offset-2';
+                    break;
+                case 'm':
+                case 'medium':
+                    p = 'col-md-6 col-md-offset-3';
+                    break;
+                case 's':
+                case 'small':
+                    p = 'col-md-4 col-md-offset-4';
+                    break;
+                case 'xs':
+                case 'xsmall':
+                    p = 'col-md-2 col-md-offset-5';
+                    break;
+                default:
+                    p = colClass;
+            }
+            this.columnClassParsed = p;
+        },
+        initDraggable: function(){
+            var that = this;
+            var $t = this.$titleContainer;
+
+            this.resetDrag();
+            if(this.draggable){
+                $t.on('mousedown', function(e){
+                    $t.addClass('jconfirm-hand');
+                    that.mouseX = e.clientX;
+                    that.mouseY = e.clientY;
+                    that.isDrag = true;
+                });
+                $(window).on('mousemove.' + this._id, function(e){
+                    if(that.isDrag){
+                        that.movingX = e.clientX - that.mouseX + that.initialX;
+                        that.movingY = e.clientY - that.mouseY + that.initialY;
+                        that.setDrag();
+                    }
+                });
+
+                $(window).on('mouseup.' + this._id, function(){
+                    $t.removeClass('jconfirm-hand');
+                    if(that.isDrag){
+                        that.isDrag = false;
+                        that.initialX = that.movingX;
+                        that.initialY = that.movingY;
+                    }
+                })
+            }
+        },
+        resetDrag: function(){
+            this.isDrag = false;
+            this.initialX = 0;
+            this.initialY = 0;
+            this.movingX = 0;
+            this.movingY = 0;
+            this.mouseX = 0;
+            this.mouseY = 0;
+            this.$jconfirmBoxContainer.css('transform', 'translate(' + 0 + 'px, ' + 0 + 'px)');
+        },
+        setDrag: function(){
+            if(!this.draggable)
+                return;
+
+            this.alignMiddle = false;
+            var boxWidth = this.$jconfirmBox.outerWidth();
+            var boxHeight = this.$jconfirmBox.outerHeight();
+            var windowWidth = $(window).width();
+            var windowHeight = $(window).height();
+            var that = this;
+            var dragUpdate = 1;
+            if(that.movingX % dragUpdate === 0 || that.movingY % dragUpdate === 0){
+                if(that.dragWindowBorder){
+                    var leftDistance = (windowWidth / 2) - boxWidth / 2;
+                    var topDistance = (windowHeight / 2) - boxHeight / 2;
+                    topDistance -= that.dragWindowGap;
+                    leftDistance -= that.dragWindowGap;
+
+                    if(leftDistance + that.movingX < 0){
+                        that.movingX = -leftDistance;
+                    }else if(leftDistance - that.movingX < 0){
+                        that.movingX = leftDistance;
+                    }
+
+                    if(topDistance + that.movingY < 0){
+                        that.movingY = -topDistance;
+                    }else if(topDistance - that.movingY < 0){
+                        that.movingY = topDistance;
+                    }
+                }
+
+                that.$jconfirmBoxContainer.css('transform', 'translate(' + that.movingX + 'px, ' + that.movingY + 'px)');
+            }
+        },
+        _scrollTop: function(){
+            if(typeof pageYOffset !== 'undefined'){
+                //most browsers except IE before #9
+                return pageYOffset;
+            }
+            else{
+                var B = document.body; //IE 'quirks'
+                var D = document.documentElement; //IE with doctype
+                D = (D.clientHeight) ? D : B;
+                return D.scrollTop;
+            }
+        },
+        _watchContent: function(){
+            var that = this;
+            if(this._timer) clearInterval(this._timer);
+
+            var prevContentHeight = 0;
+            this._timer = setInterval(function(){
+                if(that.smoothContent){
+                    var contentHeight = that.$content.outerHeight() || 0;
+                    if(contentHeight !== prevContentHeight){
+
+                        // Commented out to prevent scroll to top when updating the content
+                        // (for example when using ajax in forms in content)
+                        // that.$contentPane.css({
+                        //     'height': contentHeight
+                        // }).scrollTop(0);
+                        prevContentHeight = contentHeight;
+                    }
+                    var wh = $(window).height();
+                    var total = that.offsetTop + that.offsetBottom + that.$jconfirmBox.height() - that.$contentPane.height() + that.$content.height();
+                    if(total < wh){
+                        that.$contentPane.addClass('no-scroll');
+                    }else{
+                        that.$contentPane.removeClass('no-scroll');
+                    }
+                }
+            }, this.watchInterval);
+        },
+        _overflowClass: 'jconfirm-overflow',
+        _hilightAnimating: false,
+        highlight: function(){
+            this.hiLightModal();
+        },
+        hiLightModal: function(){
+            var that = this;
+            if(this._hilightAnimating)
+                return;
+
+            that.$body.addClass('hilight');
+            var duration = parseFloat(that.$body.css('animation-duration')) || 2;
+            this._hilightAnimating = true;
+            setTimeout(function(){
+                that._hilightAnimating = false;
+                that.$body.removeClass('hilight');
+            }, duration * 1000);
+        },
+        _bindEvents: function(){
+            var that = this;
+            this.boxClicked = false;
+
+            this.$scrollPane.click(function(e){ // Ignore propagated clicks
+                if(!that.boxClicked){ // Background clicked
+                    /*
+                     If backgroundDismiss is a function and its return value is truthy
+                     proceed to close the modal.
+                     */
+                    var buttonName = false;
+                    var shouldClose = false;
+                    var str;
+
+                    if(typeof that.backgroundDismiss === 'function')
+                        str = that.backgroundDismiss();
+                    else
+                        str = that.backgroundDismiss;
+
+                    if(typeof str === 'string' && typeof that.buttons[str] !== 'undefined'){
+                        buttonName = str;
+                        shouldClose = false;
+                    }else if(typeof str === 'undefined' || !!(str) === true){
+                        shouldClose = true;
+                    }else{
+                        shouldClose = false;
+                    }
+
+                    if(buttonName){
+                        var btnResponse = that.buttons[buttonName].action.apply(that);
+                        shouldClose = (typeof btnResponse === 'undefined') || !!(btnResponse);
+                    }
+
+                    if(shouldClose)
+                        that.close();
+                    else
+                        that.hiLightModal();
+                }
+                that.boxClicked = false;
+            });
+
+            this.$jconfirmBox.click(function(e){
+                that.boxClicked = true;
+            });
+
+            var isKeyDown = false;
+            $(window).on('jcKeyDown.' + that._id, function(e){
+                if(!isKeyDown){
+                    isKeyDown = true;
+                }
+            });
+            $(window).on('keyup.' + that._id, function(e){
+                if(isKeyDown){
+                    that.reactOnKey(e);
+                    isKeyDown = false;
+                }
+            });
+
+            $(window).on('resize.' + this._id, function(){
+                that._updateContentMaxHeight();
+                setTimeout(function(){
+                    that.resetDrag();
+                }, 100);
+            });
+        },
+        _cubic_bezier: '0.36, 0.55, 0.19',
+        _getCSS: function(speed, bounce){
+            return {
+                '-webkit-transition-duration': speed / 1000 + 's',
+                'transition-duration': speed / 1000 + 's',
+                '-webkit-transition-timing-function': 'cubic-bezier(' + this._cubic_bezier + ', ' + bounce + ')',
+                'transition-timing-function': 'cubic-bezier(' + this._cubic_bezier + ', ' + bounce + ')'
+            };
+        },
+        _setButtons: function(){
+            var that = this;
+            /*
+             * Settings up buttons
+             */
+
+            var total_buttons = 0;
+            if(typeof this.buttons !== 'object')
+                this.buttons = {};
+
+            $.each(this.buttons, function(key, button){
+                total_buttons += 1;
+                if(typeof button === 'function'){
+                    that.buttons[key] = button = {
+                        action: button
+                    };
+                }
+
+                that.buttons[key].text = button.text || key;
+                that.buttons[key].btnClass = button.btnClass || 'btn-default';
+                that.buttons[key].action = button.action || function(){
+                };
+                that.buttons[key].keys = button.keys || [];
+                that.buttons[key].isHidden = button.isHidden || false;
+                that.buttons[key].isDisabled = button.isDisabled || false;
+
+                $.each(that.buttons[key].keys, function(i, a){
+                    that.buttons[key].keys[i] = a.toLowerCase();
+                });
+
+                var button_element = $('<button type="button" class="btn"></button>')
+                    .html(that.buttons[key].text)
+                    .addClass(that.buttons[key].btnClass)
+                    .prop('disabled', that.buttons[key].isDisabled)
+                    .css('display', that.buttons[key].isHidden ? 'none' : '')
+                    .click(function(e){
+                        e.preventDefault();
+                        var res = that.buttons[key].action.apply(that, [that.buttons[key]]);
+                        that.onAction.apply(that, [key, that.buttons[key]]);
+                        that._stopCountDown();
+                        if(typeof res === 'undefined' || res)
+                            that.close();
+                    });
+
+                that.buttons[key].el = button_element;
+                that.buttons[key].setText = function(text){
+                    button_element.html(text);
+                };
+                that.buttons[key].addClass = function(className){
+                    button_element.addClass(className);
+                };
+                that.buttons[key].removeClass = function(className){
+                    button_element.removeClass(className);
+                };
+                that.buttons[key].disable = function(){
+                    that.buttons[key].isDisabled = true;
+                    button_element.prop('disabled', true);
+                };
+                that.buttons[key].enable = function(){
+                    that.buttons[key].isDisabled = false;
+                    button_element.prop('disabled', false);
+                };
+                that.buttons[key].show = function(){
+                    that.buttons[key].isHidden = false;
+                    button_element.css('display', '');
+                };
+                that.buttons[key].hide = function(){
+                    that.buttons[key].isHidden = true;
+                    button_element.css('display', 'none');
+                };
+                /*
+                 Buttons are prefixed with $_ or $$ for quick access
+                 */
+                that['$_' + key] = that['$$' + key] = button_element;
+                that.$btnc.append(button_element);
+            });
+
+            if(total_buttons === 0) this.$btnc.hide();
+            if(this.closeIcon === null && total_buttons === 0){
+                /*
+                 in case when no buttons are present & closeIcon is null, closeIcon is set to true,
+                 set closeIcon to true to explicitly tell to hide the close icon
+                 */
+                this.closeIcon = true;
+            }
+
+            if(this.closeIcon){
+                if(this.closeIconClass){
+                    // user requires a custom class.
+                    var closeHtml = '<i class="' + this.closeIconClass + '"></i>';
+                    this.$closeIcon.html(closeHtml);
+                }
+
+                this.$closeIcon.click(function(e){
+                    e.preventDefault();
+
+                    var buttonName = false;
+                    var shouldClose = false;
+                    var str;
+
+                    if(typeof that.closeIcon === 'function'){
+                        str = that.closeIcon();
+                    }else{
+                        str = that.closeIcon;
+                    }
+
+                    if(typeof str === 'string' && typeof that.buttons[str] !== 'undefined'){
+                        buttonName = str;
+                        shouldClose = false;
+                    }else if(typeof str === 'undefined' || !!(str) === true){
+                        shouldClose = true;
+                    }else{
+                        shouldClose = false;
+                    }
+                    if(buttonName){
+                        var btnResponse = that.buttons[buttonName].action.apply(that);
+                        shouldClose = (typeof btnResponse === 'undefined') || !!(btnResponse);
+                    }
+                    if(shouldClose){
+                        that.close();
+                    }
+                });
+                this.$closeIcon.show();
+            }else{
+                this.$closeIcon.hide();
+            }
+        },
+        setTitle: function(string, force){
+            force = force || false;
+
+            if(typeof string !== 'undefined')
+                if(typeof string === 'string')
+                    this.title = string;
+                else if(typeof string === 'function'){
+                    if(typeof string.promise === 'function')
+                        console.error('Promise was returned from title function, this is not supported.');
+
+                    var response = string();
+                    if(typeof response === 'string')
+                        this.title = response;
+                    else
+                        this.title = false;
+                }else
+                    this.title = false;
+
+            if(this.isAjaxLoading && !force)
+                return;
+
+            this.$title.html(this.title || '');
+            this.updateTitleContainer();
+        },
+        setIcon: function(iconClass, force){
+            force = force || false;
+
+            if(typeof iconClass !== 'undefined')
+                if(typeof iconClass === 'string')
+                    this.icon = iconClass;
+                else if(typeof iconClass === 'function'){
+                    var response = iconClass();
+                    if(typeof response === 'string')
+                        this.icon = response;
+                    else
+                        this.icon = false;
+                }
+                else
+                    this.icon = false;
+
+            if(this.isAjaxLoading && !force)
+                return;
+
+            this.$icon.html(this.icon ? '<i class="' + this.icon + '"></i>' : '');
+            this.updateTitleContainer();
+        },
+        updateTitleContainer: function(){
+            if(!this.title && !this.icon){
+                this.$titleContainer.hide();
+            }else{
+                this.$titleContainer.show();
+            }
+        },
+        setContentPrepend: function(content, force){
+            if(!content)
+                return;
+
+            this.contentParsed.prepend(content);
+        },
+        setContentAppend: function(content){
+            if(!content)
+                return;
+
+            this.contentParsed.append(content);
+        },
+        setContent: function(content, force){
+            force = !!force;
+            var that = this;
+            if(content)
+                this.contentParsed.html('').append(content);
+            if(this.isAjaxLoading && !force)
+                return;
+
+            this.$content.html('');
+            this.$content.append(this.contentParsed);
+            setTimeout(function(){
+                that.$body.find('input[autofocus]:visible:first').focus();
+            }, 100);
+        },
+        loadingSpinner: false,
+        showLoading: function(disableButtons){
+            this.loadingSpinner = true;
+            this.$jconfirmBox.addClass('loading');
+            if(disableButtons)
+                this.$btnc.find('button').prop('disabled', true);
+
+        },
+        hideLoading: function(enableButtons){
+            this.loadingSpinner = false;
+            this.$jconfirmBox.removeClass('loading');
+            if(enableButtons)
+                this.$btnc.find('button').prop('disabled', false);
+
+        },
+        ajaxResponse: false,
+        contentParsed: '',
+        isAjax: false,
+        isAjaxLoading: false,
+        _parseContent: function(){
+            var that = this;
+            var e = '&nbsp;';
+
+            if(typeof this.content === 'function'){
+                var res = this.content.apply(this);
+                if(typeof res === 'string'){
+                    this.content = res;
+                }
+                else if(typeof res === 'object' && typeof res.always === 'function'){
+                    // this is ajax loading via promise
+                    this.isAjax = true;
+                    this.isAjaxLoading = true;
+                    res.always(function(data, status, xhr){
+                        that.ajaxResponse = {
+                            data: data,
+                            status: status,
+                            xhr: xhr
+                        };
+                        that._contentReady.resolve(data, status, xhr);
+                        if(typeof that.contentLoaded === 'function')
+                            that.contentLoaded(data, status, xhr);
+                    });
+                    this.content = e;
+                }else{
+                    this.content = e;
+                }
+            }
+
+            if(typeof this.content === 'string' && this.content.substr(0, 4).toLowerCase() === 'url:'){
+                this.isAjax = true;
+                this.isAjaxLoading = true;
+                var u = this.content.substring(4, this.content.length);
+                $.get(u).done(function(html){
+                    that.contentParsed.html(html);
+                }).always(function(data, status, xhr){
+                    that.ajaxResponse = {
+                        data: data,
+                        status: status,
+                        xhr: xhr
+                    };
+                    that._contentReady.resolve(data, status, xhr);
+                    if(typeof that.contentLoaded === 'function')
+                        that.contentLoaded(data, status, xhr);
+                });
+            }
+
+            if(!this.content)
+                this.content = e;
+
+            if(!this.isAjax){
+                this.contentParsed.html(this.content);
+                this.setContent();
+                that._contentReady.resolve();
+            }
+        },
+        _stopCountDown: function(){
+            clearInterval(this.autoCloseInterval);
+            if(this.$cd)
+                this.$cd.remove();
+        },
+        _startCountDown: function(){
+            var that = this;
+            var opt = this.autoClose.split('|');
+            if(opt.length !== 2){
+                console.error('Invalid option for autoClose. example \'close|10000\'');
+                return false;
+            }
+
+            var button_key = opt[0];
+            var time = parseInt(opt[1]);
+            if(typeof this.buttons[button_key] === 'undefined'){
+                console.error('Invalid button key \'' + button_key + '\' for autoClose');
+                return false;
+            }
+
+            var seconds = Math.ceil(time / 1000);
+            this.$cd = $('<span class="countdown"> (' + seconds + ')</span>')
+                .appendTo(this['$_' + button_key]);
+
+            this.autoCloseInterval = setInterval(function(){
+                that.$cd.html(' (' + (seconds -= 1) + ') ');
+                if(seconds <= 0){
+                    that['$$' + button_key].trigger('click');
+                    that._stopCountDown();
+                }
+            }, 1000);
+        },
+        _getKey: function(key){
+            // very necessary keys.
+            switch(key){
+                case 192:
+                    return 'tilde';
+                case 13:
+                    return 'enter';
+                case 16:
+                    return 'shift';
+                case 9:
+                    return 'tab';
+                case 20:
+                    return 'capslock';
+                case 17:
+                    return 'ctrl';
+                case 91:
+                    return 'win';
+                case 18:
+                    return 'alt';
+                case 27:
+                    return 'esc';
+                case 32:
+                    return 'space';
+            }
+
+            // only trust alphabets with this.
+            var initial = String.fromCharCode(key);
+            if(/^[A-z0-9]+$/.test(initial))
+                return initial.toLowerCase();
+            else
+                return false;
+        },
+        reactOnKey: function(e){
+            var that = this;
+
+            /*
+             Prevent keyup event if the dialog is not last!
+             */
+            var a = $('.jconfirm');
+            if(a.eq(a.length - 1)[0] !== this.$el[0])
+                return false;
+
+            var key = e.which;
+            /*
+             Do not react if Enter or Space is pressed on input elements
+             */
+            if(this.$content.find(':input').is(':focus') && /13|32/.test(key))
+                return false;
+
+            var keyChar = this._getKey(key);
+
+            // If esc is pressed
+            if(keyChar === 'esc' && this.escapeKey){
+                if(this.escapeKey === true){
+                    this.$scrollPane.trigger('click');
+                }
+                else if(typeof this.escapeKey === 'string' || typeof this.escapeKey === 'function'){
+                    var buttonKey;
+                    if(typeof this.escapeKey === 'function'){
+                        buttonKey = this.escapeKey();
+                    }else{
+                        buttonKey = this.escapeKey;
+                    }
+
+                    if(buttonKey)
+                        if(typeof this.buttons[buttonKey] === 'undefined'){
+                            console.warn('Invalid escapeKey, no buttons found with key ' + buttonKey);
+                        }else{
+                            this['$_' + buttonKey].trigger('click');
+                        }
+                }
+            }
+
+            // check if any button is listening to this key.
+            $.each(this.buttons, function(key, button){
+                if(button.keys.indexOf(keyChar) !== -1){
+                    that['$_' + key].trigger('click');
+                }
+            });
+        },
+        setDialogCenter: function(){
+            console.info('setDialogCenter is deprecated, dialogs are centered with CSS3 tables');
+        },
+        _unwatchContent: function(){
+            clearInterval(this._timer);
+        },
+        close: function(onClosePayload){
+            var that = this;
+
+            if(typeof this.onClose === 'function')
+                this.onClose(onClosePayload);
+
+            this._unwatchContent();
+
+            /*
+             unbind the window resize & keyup event.
+             */
+            $(window).unbind('resize.' + this._id);
+            $(window).unbind('keyup.' + this._id);
+            $(window).unbind('jcKeyDown.' + this._id);
+
+            if(this.draggable){
+                $(window).unbind('mousemove.' + this._id);
+                $(window).unbind('mouseup.' + this._id);
+                this.$titleContainer.unbind('mousedown');
+            }
+
+            that.$el.removeClass(that.loadedClass);
+            $('body').removeClass('jconfirm-no-scroll-' + that._id);
+            that.$jconfirmBoxContainer.removeClass('jconfirm-no-transition');
+
+            setTimeout(function(){
+                that.$body.addClass(that.closeAnimationParsed);
+                that.$jconfirmBg.addClass('jconfirm-bg-h');
+                var closeTimer = (that.closeAnimation === 'none') ? 1 : that.animationSpeed;
+
+                setTimeout(function(){
+                    that.$el.remove();
+
+                    var l = w.jconfirm.instances;
+                    var i = w.jconfirm.instances.length - 1;
+                    for(i; i >= 0; i--){
+                        if(w.jconfirm.instances[i]._id === that._id){
+                            w.jconfirm.instances.splice(i, 1);
+                        }
+                    }
+
+                    // Focusing a element, scrolls automatically to that element.
+                    // no instances should be open, lastFocused should be true, the lastFocused element must exists in DOM
+                    if(!w.jconfirm.instances.length){
+                        if(that.scrollToPreviousElement && w.jconfirm.lastFocused && w.jconfirm.lastFocused.length && $.contains(document, w.jconfirm.lastFocused[0])){
+                            var $lf = w.jconfirm.lastFocused;
+                            if(that.scrollToPreviousElementAnimate){
+                                var st = $(window).scrollTop();
+                                var ot = w.jconfirm.lastFocused.offset().top;
+                                var wh = $(window).height();
+                                if(!(ot > st && ot < (st + wh))){
+                                    var scrollTo = (ot - Math.round((wh / 3)));
+                                    $('html, body').animate({
+                                        scrollTop: scrollTo
+                                    }, that.animationSpeed, 'swing', function(){
+                                        // gracefully scroll and then focus.
+                                        $lf.focus();
+                                    });
+                                }else{
+                                    // the element to be focused is already in view.
+                                    $lf.focus();
+                                }
+                            }else{
+                                $lf.focus();
+                            }
+                            w.jconfirm.lastFocused = false;
+                        }
+                    }
+
+                    if(typeof that.onDestroy === 'function')
+                        that.onDestroy();
+
+                }, closeTimer * 0.40);
+            }, 50);
+
+            return true;
+        },
+        open: function(){
+            if(this.isOpen())
+                return false;
+
+            // var that = this;
+            this._buildHTML();
+            this._bindEvents();
+            this._open();
+
+            return true;
+        },
+        setStartingPoint: function(){
+            var el = false;
+
+            if(this.animateFromElement !== true && this.animateFromElement){
+                el = this.animateFromElement;
+                w.jconfirm.lastClicked = false;
+            }else if(w.jconfirm.lastClicked && this.animateFromElement === true){
+                el = w.jconfirm.lastClicked;
+                w.jconfirm.lastClicked = false;
+            }else{
+                return false;
+            }
+
+            if(!el)
+                return false;
+
+            var offset = el.offset();
+
+            var iTop = el.outerHeight() / 2;
+            var iLeft = el.outerWidth() / 2;
+
+            // placing position of jconfirm modal in center of clicked element
+            iTop -= this.$jconfirmBox.outerHeight() / 2;
+            iLeft -= this.$jconfirmBox.outerWidth() / 2;
+
+            // absolute position on screen
+            var sourceTop = offset.top + iTop;
+            sourceTop = sourceTop - this._scrollTop();
+            var sourceLeft = offset.left + iLeft;
+
+            // window halved
+            var wh = $(window).height() / 2;
+            var ww = $(window).width() / 2;
+
+            var targetH = wh - this.$jconfirmBox.outerHeight() / 2;
+            var targetW = ww - this.$jconfirmBox.outerWidth() / 2;
+
+            sourceTop -= targetH;
+            sourceLeft -= targetW;
+
+            // Check if the element is inside the viewable window.
+            if(Math.abs(sourceTop) > wh || Math.abs(sourceLeft) > ww)
+                return false;
+
+            this.$jconfirmBoxContainer.css('transform', 'translate(' + sourceLeft + 'px, ' + sourceTop + 'px)');
+        },
+        _open: function(){
+            var that = this;
+            if(typeof that.onOpenBefore === 'function')
+                that.onOpenBefore();
+
+            this.$body.removeClass(this.animationParsed);
+            this.$jconfirmBg.removeClass('jconfirm-bg-h');
+            this.$body.focus();
+
+            that.$jconfirmBoxContainer.css('transform', 'translate(' + 0 + 'px, ' + 0 + 'px)');
+
+            setTimeout(function(){
+                that.$body.css(that._getCSS(that.animationSpeed, 1));
+                that.$body.css({
+                    'transition-property': that.$body.css('transition-property') + ', margin'
+                });
+                that.$jconfirmBoxContainer.addClass('jconfirm-no-transition');
+                that._modalReady.resolve();
+                if(typeof that.onOpen === 'function')
+                    that.onOpen();
+
+                that.$el.addClass(that.loadedClass);
+            }, this.animationSpeed);
+        },
+        loadedClass: 'jconfirm-open',
+        isClosed: function(){
+            return !this.$el || this.$el.parent().length === 0;
+        },
+        isOpen: function(){
+            return !this.isClosed();
+        },
+        toggle: function(){
+            if(!this.isOpen())
+                this.open();
+            else
+                this.close();
+        }
+    };
+
+    w.jconfirm.instances = [];
+    w.jconfirm.lastFocused = false;
+    w.jconfirm.pluginDefaults = {
+        template: '' +
+            '<div class="jconfirm">' +
+            '<div class="jconfirm-bg jconfirm-bg-h"></div>' +
+            '<div class="jconfirm-scrollpane">' +
+            '<div class="jconfirm-row">' +
+            '<div class="jconfirm-cell">' +
+            '<div class="jconfirm-holder">' +
+            '<div class="jc-bs3-container">' +
+            '<div class="jc-bs3-row">' +
+            '<div class="jconfirm-box-container jconfirm-animated">' +
+            '<div class="jconfirm-box" role="dialog" aria-labelledby="labelled" tabindex="-1">' +
+            '<div class="jconfirm-closeIcon">&times;</div>' +
+            '<div class="jconfirm-title-c">' +
+            '<span class="jconfirm-icon-c"></span>' +
+            '<span class="jconfirm-title"></span>' +
+            '</div>' +
+            '<div class="jconfirm-content-pane">' +
+            '<div class="jconfirm-content"></div>' +
+            '</div>' +
+            '<div class="jconfirm-buttons">' +
+            '</div>' +
+            '<div class="jconfirm-clear">' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div></div>',
+        title: 'Hello',
+        titleClass: '',
+        type: 'default',
+        typeAnimated: true,
+        draggable: true,
+        dragWindowGap: 15,
+        dragWindowBorder: true,
+        animateFromElement: true,
+        /**
+         * @deprecated
+         */
+        alignMiddle: true,
+        smoothContent: true,
+        content: 'Are you sure to continue?',
+        buttons: {},
+        defaultButtons: {
+            ok: {
+                action: function(){
+                }
+            },
+            close: {
+                action: function(){
+                }
+            }
+        },
+        contentLoaded: function(){
+        },
+        icon: '',
+        lazyOpen: false,
+        bgOpacity: null,
+        theme: 'light',
+        animation: 'scale',
+        closeAnimation: 'scale',
+        animationSpeed: 400,
+        animationBounce: 1,
+        escapeKey: true,
+        rtl: false,
+        container: 'body',
+        containerFluid: false,
+        backgroundDismiss: false,
+        backgroundDismissAnimation: 'shake',
+        autoClose: false,
+        closeIcon: null,
+        closeIconClass: false,
+        watchInterval: 100,
+        columnClass: 'col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1',
+        boxWidth: '50%',
+        scrollToPreviousElement: true,
+        scrollToPreviousElementAnimate: true,
+        useBootstrap: true,
+        offsetTop: 40,
+        offsetBottom: 40,
+        bootstrapClasses: {
+            container: 'container',
+            containerFluid: 'container-fluid',
+            row: 'row'
+        },
+        onContentReady: function(){
+
+        },
+        onOpenBefore: function(){
+
+        },
+        onOpen: function(){
+
+        },
+        onClose: function(){
+
+        },
+        onDestroy: function(){
+
+        },
+        onAction: function(){
+
+        }
+    };
+
+    /**
+     * This refers to the issue #241 and #246
+     *
+     * Problem:
+     * Button A is clicked (keydown) using the Keyboard ENTER key
+     * A opens the jconfirm modal B,
+     * B has registered ENTER key for one of its button C
+     * A is released (keyup), B gets the keyup event and triggers C.
+     *
+     * Solution:
+     * Register a global keydown event, that tells jconfirm if the keydown originated inside jconfirm
+     */
+    var keyDown = false;
+    $(window).on('keydown', function(e){
+        if(!keyDown){
+            var $target = $(e.target);
+            var pass = false;
+            if($target.closest('.jconfirm-box').length)
+                pass = true;
+            if(pass)
+                $(window).trigger('jcKeyDown');
+
+            keyDown = true;
+        }
+    });
+    $(window).on('keyup', function(){
+        keyDown = false;
+    });
+    w.jconfirm.lastClicked = false;
+    $(document).on('mousedown', 'button, a, [jc-source]', function(){
+        w.jconfirm.lastClicked = $(this);
+    });
+}));
+
+
+/***/ }),
+
 /***/ "./node_modules/jquery/dist/jquery.js":
 /*!********************************************!*\
   !*** ./node_modules/jquery/dist/jquery.js ***!
@@ -36981,6 +38353,21 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/slick-carousel/slick/slick.min.js":
+/*!********************************************************!*\
+  !*** ./node_modules/slick-carousel/slick/slick.min.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!function(i){"use strict"; true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (i),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined}(function(i){"use strict";var e=window.Slick||{};(e=function(){var e=0;return function(t,o){var s,n=this;n.defaults={accessibility:!0,adaptiveHeight:!1,appendArrows:i(t),appendDots:i(t),arrows:!0,asNavFor:null,prevArrow:'<button class="slick-prev" aria-label="Previous" type="button">Previous</button>',nextArrow:'<button class="slick-next" aria-label="Next" type="button">Next</button>',autoplay:!1,autoplaySpeed:3e3,centerMode:!1,centerPadding:"50px",cssEase:"ease",customPaging:function(e,t){return i('<button type="button" />').text(t+1)},dots:!1,dotsClass:"slick-dots",draggable:!0,easing:"linear",edgeFriction:.35,fade:!1,focusOnSelect:!1,focusOnChange:!1,infinite:!0,initialSlide:0,lazyLoad:"ondemand",mobileFirst:!1,pauseOnHover:!0,pauseOnFocus:!0,pauseOnDotsHover:!1,respondTo:"window",responsive:null,rows:1,rtl:!1,slide:"",slidesPerRow:1,slidesToShow:1,slidesToScroll:1,speed:500,swipe:!0,swipeToSlide:!1,touchMove:!0,touchThreshold:5,useCSS:!0,useTransform:!0,variableWidth:!1,vertical:!1,verticalSwiping:!1,waitForAnimate:!0,zIndex:1e3},n.initials={animating:!1,dragging:!1,autoPlayTimer:null,currentDirection:0,currentLeft:null,currentSlide:0,direction:1,$dots:null,listWidth:null,listHeight:null,loadIndex:0,$nextArrow:null,$prevArrow:null,scrolling:!1,slideCount:null,slideWidth:null,$slideTrack:null,$slides:null,sliding:!1,slideOffset:0,swipeLeft:null,swiping:!1,$list:null,touchObject:{},transformsEnabled:!1,unslicked:!1},i.extend(n,n.initials),n.activeBreakpoint=null,n.animType=null,n.animProp=null,n.breakpoints=[],n.breakpointSettings=[],n.cssTransitions=!1,n.focussed=!1,n.interrupted=!1,n.hidden="hidden",n.paused=!0,n.positionProp=null,n.respondTo=null,n.rowCount=1,n.shouldClick=!0,n.$slider=i(t),n.$slidesCache=null,n.transformType=null,n.transitionType=null,n.visibilityChange="visibilitychange",n.windowWidth=0,n.windowTimer=null,s=i(t).data("slick")||{},n.options=i.extend({},n.defaults,o,s),n.currentSlide=n.options.initialSlide,n.originalSettings=n.options,void 0!==document.mozHidden?(n.hidden="mozHidden",n.visibilityChange="mozvisibilitychange"):void 0!==document.webkitHidden&&(n.hidden="webkitHidden",n.visibilityChange="webkitvisibilitychange"),n.autoPlay=i.proxy(n.autoPlay,n),n.autoPlayClear=i.proxy(n.autoPlayClear,n),n.autoPlayIterator=i.proxy(n.autoPlayIterator,n),n.changeSlide=i.proxy(n.changeSlide,n),n.clickHandler=i.proxy(n.clickHandler,n),n.selectHandler=i.proxy(n.selectHandler,n),n.setPosition=i.proxy(n.setPosition,n),n.swipeHandler=i.proxy(n.swipeHandler,n),n.dragHandler=i.proxy(n.dragHandler,n),n.keyHandler=i.proxy(n.keyHandler,n),n.instanceUid=e++,n.htmlExpr=/^(?:\s*(<[\w\W]+>)[^>]*)$/,n.registerBreakpoints(),n.init(!0)}}()).prototype.activateADA=function(){this.$slideTrack.find(".slick-active").attr({"aria-hidden":"false"}).find("a, input, button, select").attr({tabindex:"0"})},e.prototype.addSlide=e.prototype.slickAdd=function(e,t,o){var s=this;if("boolean"==typeof t)o=t,t=null;else if(t<0||t>=s.slideCount)return!1;s.unload(),"number"==typeof t?0===t&&0===s.$slides.length?i(e).appendTo(s.$slideTrack):o?i(e).insertBefore(s.$slides.eq(t)):i(e).insertAfter(s.$slides.eq(t)):!0===o?i(e).prependTo(s.$slideTrack):i(e).appendTo(s.$slideTrack),s.$slides=s.$slideTrack.children(this.options.slide),s.$slideTrack.children(this.options.slide).detach(),s.$slideTrack.append(s.$slides),s.$slides.each(function(e,t){i(t).attr("data-slick-index",e)}),s.$slidesCache=s.$slides,s.reinit()},e.prototype.animateHeight=function(){var i=this;if(1===i.options.slidesToShow&&!0===i.options.adaptiveHeight&&!1===i.options.vertical){var e=i.$slides.eq(i.currentSlide).outerHeight(!0);i.$list.animate({height:e},i.options.speed)}},e.prototype.animateSlide=function(e,t){var o={},s=this;s.animateHeight(),!0===s.options.rtl&&!1===s.options.vertical&&(e=-e),!1===s.transformsEnabled?!1===s.options.vertical?s.$slideTrack.animate({left:e},s.options.speed,s.options.easing,t):s.$slideTrack.animate({top:e},s.options.speed,s.options.easing,t):!1===s.cssTransitions?(!0===s.options.rtl&&(s.currentLeft=-s.currentLeft),i({animStart:s.currentLeft}).animate({animStart:e},{duration:s.options.speed,easing:s.options.easing,step:function(i){i=Math.ceil(i),!1===s.options.vertical?(o[s.animType]="translate("+i+"px, 0px)",s.$slideTrack.css(o)):(o[s.animType]="translate(0px,"+i+"px)",s.$slideTrack.css(o))},complete:function(){t&&t.call()}})):(s.applyTransition(),e=Math.ceil(e),!1===s.options.vertical?o[s.animType]="translate3d("+e+"px, 0px, 0px)":o[s.animType]="translate3d(0px,"+e+"px, 0px)",s.$slideTrack.css(o),t&&setTimeout(function(){s.disableTransition(),t.call()},s.options.speed))},e.prototype.getNavTarget=function(){var e=this,t=e.options.asNavFor;return t&&null!==t&&(t=i(t).not(e.$slider)),t},e.prototype.asNavFor=function(e){var t=this.getNavTarget();null!==t&&"object"==typeof t&&t.each(function(){var t=i(this).slick("getSlick");t.unslicked||t.slideHandler(e,!0)})},e.prototype.applyTransition=function(i){var e=this,t={};!1===e.options.fade?t[e.transitionType]=e.transformType+" "+e.options.speed+"ms "+e.options.cssEase:t[e.transitionType]="opacity "+e.options.speed+"ms "+e.options.cssEase,!1===e.options.fade?e.$slideTrack.css(t):e.$slides.eq(i).css(t)},e.prototype.autoPlay=function(){var i=this;i.autoPlayClear(),i.slideCount>i.options.slidesToShow&&(i.autoPlayTimer=setInterval(i.autoPlayIterator,i.options.autoplaySpeed))},e.prototype.autoPlayClear=function(){var i=this;i.autoPlayTimer&&clearInterval(i.autoPlayTimer)},e.prototype.autoPlayIterator=function(){var i=this,e=i.currentSlide+i.options.slidesToScroll;i.paused||i.interrupted||i.focussed||(!1===i.options.infinite&&(1===i.direction&&i.currentSlide+1===i.slideCount-1?i.direction=0:0===i.direction&&(e=i.currentSlide-i.options.slidesToScroll,i.currentSlide-1==0&&(i.direction=1))),i.slideHandler(e))},e.prototype.buildArrows=function(){var e=this;!0===e.options.arrows&&(e.$prevArrow=i(e.options.prevArrow).addClass("slick-arrow"),e.$nextArrow=i(e.options.nextArrow).addClass("slick-arrow"),e.slideCount>e.options.slidesToShow?(e.$prevArrow.removeClass("slick-hidden").removeAttr("aria-hidden tabindex"),e.$nextArrow.removeClass("slick-hidden").removeAttr("aria-hidden tabindex"),e.htmlExpr.test(e.options.prevArrow)&&e.$prevArrow.prependTo(e.options.appendArrows),e.htmlExpr.test(e.options.nextArrow)&&e.$nextArrow.appendTo(e.options.appendArrows),!0!==e.options.infinite&&e.$prevArrow.addClass("slick-disabled").attr("aria-disabled","true")):e.$prevArrow.add(e.$nextArrow).addClass("slick-hidden").attr({"aria-disabled":"true",tabindex:"-1"}))},e.prototype.buildDots=function(){var e,t,o=this;if(!0===o.options.dots){for(o.$slider.addClass("slick-dotted"),t=i("<ul />").addClass(o.options.dotsClass),e=0;e<=o.getDotCount();e+=1)t.append(i("<li />").append(o.options.customPaging.call(this,o,e)));o.$dots=t.appendTo(o.options.appendDots),o.$dots.find("li").first().addClass("slick-active")}},e.prototype.buildOut=function(){var e=this;e.$slides=e.$slider.children(e.options.slide+":not(.slick-cloned)").addClass("slick-slide"),e.slideCount=e.$slides.length,e.$slides.each(function(e,t){i(t).attr("data-slick-index",e).data("originalStyling",i(t).attr("style")||"")}),e.$slider.addClass("slick-slider"),e.$slideTrack=0===e.slideCount?i('<div class="slick-track"/>').appendTo(e.$slider):e.$slides.wrapAll('<div class="slick-track"/>').parent(),e.$list=e.$slideTrack.wrap('<div class="slick-list"/>').parent(),e.$slideTrack.css("opacity",0),!0!==e.options.centerMode&&!0!==e.options.swipeToSlide||(e.options.slidesToScroll=1),i("img[data-lazy]",e.$slider).not("[src]").addClass("slick-loading"),e.setupInfinite(),e.buildArrows(),e.buildDots(),e.updateDots(),e.setSlideClasses("number"==typeof e.currentSlide?e.currentSlide:0),!0===e.options.draggable&&e.$list.addClass("draggable")},e.prototype.buildRows=function(){var i,e,t,o,s,n,r,l=this;if(o=document.createDocumentFragment(),n=l.$slider.children(),l.options.rows>1){for(r=l.options.slidesPerRow*l.options.rows,s=Math.ceil(n.length/r),i=0;i<s;i++){var d=document.createElement("div");for(e=0;e<l.options.rows;e++){var a=document.createElement("div");for(t=0;t<l.options.slidesPerRow;t++){var c=i*r+(e*l.options.slidesPerRow+t);n.get(c)&&a.appendChild(n.get(c))}d.appendChild(a)}o.appendChild(d)}l.$slider.empty().append(o),l.$slider.children().children().children().css({width:100/l.options.slidesPerRow+"%",display:"inline-block"})}},e.prototype.checkResponsive=function(e,t){var o,s,n,r=this,l=!1,d=r.$slider.width(),a=window.innerWidth||i(window).width();if("window"===r.respondTo?n=a:"slider"===r.respondTo?n=d:"min"===r.respondTo&&(n=Math.min(a,d)),r.options.responsive&&r.options.responsive.length&&null!==r.options.responsive){s=null;for(o in r.breakpoints)r.breakpoints.hasOwnProperty(o)&&(!1===r.originalSettings.mobileFirst?n<r.breakpoints[o]&&(s=r.breakpoints[o]):n>r.breakpoints[o]&&(s=r.breakpoints[o]));null!==s?null!==r.activeBreakpoint?(s!==r.activeBreakpoint||t)&&(r.activeBreakpoint=s,"unslick"===r.breakpointSettings[s]?r.unslick(s):(r.options=i.extend({},r.originalSettings,r.breakpointSettings[s]),!0===e&&(r.currentSlide=r.options.initialSlide),r.refresh(e)),l=s):(r.activeBreakpoint=s,"unslick"===r.breakpointSettings[s]?r.unslick(s):(r.options=i.extend({},r.originalSettings,r.breakpointSettings[s]),!0===e&&(r.currentSlide=r.options.initialSlide),r.refresh(e)),l=s):null!==r.activeBreakpoint&&(r.activeBreakpoint=null,r.options=r.originalSettings,!0===e&&(r.currentSlide=r.options.initialSlide),r.refresh(e),l=s),e||!1===l||r.$slider.trigger("breakpoint",[r,l])}},e.prototype.changeSlide=function(e,t){var o,s,n,r=this,l=i(e.currentTarget);switch(l.is("a")&&e.preventDefault(),l.is("li")||(l=l.closest("li")),n=r.slideCount%r.options.slidesToScroll!=0,o=n?0:(r.slideCount-r.currentSlide)%r.options.slidesToScroll,e.data.message){case"previous":s=0===o?r.options.slidesToScroll:r.options.slidesToShow-o,r.slideCount>r.options.slidesToShow&&r.slideHandler(r.currentSlide-s,!1,t);break;case"next":s=0===o?r.options.slidesToScroll:o,r.slideCount>r.options.slidesToShow&&r.slideHandler(r.currentSlide+s,!1,t);break;case"index":var d=0===e.data.index?0:e.data.index||l.index()*r.options.slidesToScroll;r.slideHandler(r.checkNavigable(d),!1,t),l.children().trigger("focus");break;default:return}},e.prototype.checkNavigable=function(i){var e,t;if(e=this.getNavigableIndexes(),t=0,i>e[e.length-1])i=e[e.length-1];else for(var o in e){if(i<e[o]){i=t;break}t=e[o]}return i},e.prototype.cleanUpEvents=function(){var e=this;e.options.dots&&null!==e.$dots&&(i("li",e.$dots).off("click.slick",e.changeSlide).off("mouseenter.slick",i.proxy(e.interrupt,e,!0)).off("mouseleave.slick",i.proxy(e.interrupt,e,!1)),!0===e.options.accessibility&&e.$dots.off("keydown.slick",e.keyHandler)),e.$slider.off("focus.slick blur.slick"),!0===e.options.arrows&&e.slideCount>e.options.slidesToShow&&(e.$prevArrow&&e.$prevArrow.off("click.slick",e.changeSlide),e.$nextArrow&&e.$nextArrow.off("click.slick",e.changeSlide),!0===e.options.accessibility&&(e.$prevArrow&&e.$prevArrow.off("keydown.slick",e.keyHandler),e.$nextArrow&&e.$nextArrow.off("keydown.slick",e.keyHandler))),e.$list.off("touchstart.slick mousedown.slick",e.swipeHandler),e.$list.off("touchmove.slick mousemove.slick",e.swipeHandler),e.$list.off("touchend.slick mouseup.slick",e.swipeHandler),e.$list.off("touchcancel.slick mouseleave.slick",e.swipeHandler),e.$list.off("click.slick",e.clickHandler),i(document).off(e.visibilityChange,e.visibility),e.cleanUpSlideEvents(),!0===e.options.accessibility&&e.$list.off("keydown.slick",e.keyHandler),!0===e.options.focusOnSelect&&i(e.$slideTrack).children().off("click.slick",e.selectHandler),i(window).off("orientationchange.slick.slick-"+e.instanceUid,e.orientationChange),i(window).off("resize.slick.slick-"+e.instanceUid,e.resize),i("[draggable!=true]",e.$slideTrack).off("dragstart",e.preventDefault),i(window).off("load.slick.slick-"+e.instanceUid,e.setPosition)},e.prototype.cleanUpSlideEvents=function(){var e=this;e.$list.off("mouseenter.slick",i.proxy(e.interrupt,e,!0)),e.$list.off("mouseleave.slick",i.proxy(e.interrupt,e,!1))},e.prototype.cleanUpRows=function(){var i,e=this;e.options.rows>1&&((i=e.$slides.children().children()).removeAttr("style"),e.$slider.empty().append(i))},e.prototype.clickHandler=function(i){!1===this.shouldClick&&(i.stopImmediatePropagation(),i.stopPropagation(),i.preventDefault())},e.prototype.destroy=function(e){var t=this;t.autoPlayClear(),t.touchObject={},t.cleanUpEvents(),i(".slick-cloned",t.$slider).detach(),t.$dots&&t.$dots.remove(),t.$prevArrow&&t.$prevArrow.length&&(t.$prevArrow.removeClass("slick-disabled slick-arrow slick-hidden").removeAttr("aria-hidden aria-disabled tabindex").css("display",""),t.htmlExpr.test(t.options.prevArrow)&&t.$prevArrow.remove()),t.$nextArrow&&t.$nextArrow.length&&(t.$nextArrow.removeClass("slick-disabled slick-arrow slick-hidden").removeAttr("aria-hidden aria-disabled tabindex").css("display",""),t.htmlExpr.test(t.options.nextArrow)&&t.$nextArrow.remove()),t.$slides&&(t.$slides.removeClass("slick-slide slick-active slick-center slick-visible slick-current").removeAttr("aria-hidden").removeAttr("data-slick-index").each(function(){i(this).attr("style",i(this).data("originalStyling"))}),t.$slideTrack.children(this.options.slide).detach(),t.$slideTrack.detach(),t.$list.detach(),t.$slider.append(t.$slides)),t.cleanUpRows(),t.$slider.removeClass("slick-slider"),t.$slider.removeClass("slick-initialized"),t.$slider.removeClass("slick-dotted"),t.unslicked=!0,e||t.$slider.trigger("destroy",[t])},e.prototype.disableTransition=function(i){var e=this,t={};t[e.transitionType]="",!1===e.options.fade?e.$slideTrack.css(t):e.$slides.eq(i).css(t)},e.prototype.fadeSlide=function(i,e){var t=this;!1===t.cssTransitions?(t.$slides.eq(i).css({zIndex:t.options.zIndex}),t.$slides.eq(i).animate({opacity:1},t.options.speed,t.options.easing,e)):(t.applyTransition(i),t.$slides.eq(i).css({opacity:1,zIndex:t.options.zIndex}),e&&setTimeout(function(){t.disableTransition(i),e.call()},t.options.speed))},e.prototype.fadeSlideOut=function(i){var e=this;!1===e.cssTransitions?e.$slides.eq(i).animate({opacity:0,zIndex:e.options.zIndex-2},e.options.speed,e.options.easing):(e.applyTransition(i),e.$slides.eq(i).css({opacity:0,zIndex:e.options.zIndex-2}))},e.prototype.filterSlides=e.prototype.slickFilter=function(i){var e=this;null!==i&&(e.$slidesCache=e.$slides,e.unload(),e.$slideTrack.children(this.options.slide).detach(),e.$slidesCache.filter(i).appendTo(e.$slideTrack),e.reinit())},e.prototype.focusHandler=function(){var e=this;e.$slider.off("focus.slick blur.slick").on("focus.slick blur.slick","*",function(t){t.stopImmediatePropagation();var o=i(this);setTimeout(function(){e.options.pauseOnFocus&&(e.focussed=o.is(":focus"),e.autoPlay())},0)})},e.prototype.getCurrent=e.prototype.slickCurrentSlide=function(){return this.currentSlide},e.prototype.getDotCount=function(){var i=this,e=0,t=0,o=0;if(!0===i.options.infinite)if(i.slideCount<=i.options.slidesToShow)++o;else for(;e<i.slideCount;)++o,e=t+i.options.slidesToScroll,t+=i.options.slidesToScroll<=i.options.slidesToShow?i.options.slidesToScroll:i.options.slidesToShow;else if(!0===i.options.centerMode)o=i.slideCount;else if(i.options.asNavFor)for(;e<i.slideCount;)++o,e=t+i.options.slidesToScroll,t+=i.options.slidesToScroll<=i.options.slidesToShow?i.options.slidesToScroll:i.options.slidesToShow;else o=1+Math.ceil((i.slideCount-i.options.slidesToShow)/i.options.slidesToScroll);return o-1},e.prototype.getLeft=function(i){var e,t,o,s,n=this,r=0;return n.slideOffset=0,t=n.$slides.first().outerHeight(!0),!0===n.options.infinite?(n.slideCount>n.options.slidesToShow&&(n.slideOffset=n.slideWidth*n.options.slidesToShow*-1,s=-1,!0===n.options.vertical&&!0===n.options.centerMode&&(2===n.options.slidesToShow?s=-1.5:1===n.options.slidesToShow&&(s=-2)),r=t*n.options.slidesToShow*s),n.slideCount%n.options.slidesToScroll!=0&&i+n.options.slidesToScroll>n.slideCount&&n.slideCount>n.options.slidesToShow&&(i>n.slideCount?(n.slideOffset=(n.options.slidesToShow-(i-n.slideCount))*n.slideWidth*-1,r=(n.options.slidesToShow-(i-n.slideCount))*t*-1):(n.slideOffset=n.slideCount%n.options.slidesToScroll*n.slideWidth*-1,r=n.slideCount%n.options.slidesToScroll*t*-1))):i+n.options.slidesToShow>n.slideCount&&(n.slideOffset=(i+n.options.slidesToShow-n.slideCount)*n.slideWidth,r=(i+n.options.slidesToShow-n.slideCount)*t),n.slideCount<=n.options.slidesToShow&&(n.slideOffset=0,r=0),!0===n.options.centerMode&&n.slideCount<=n.options.slidesToShow?n.slideOffset=n.slideWidth*Math.floor(n.options.slidesToShow)/2-n.slideWidth*n.slideCount/2:!0===n.options.centerMode&&!0===n.options.infinite?n.slideOffset+=n.slideWidth*Math.floor(n.options.slidesToShow/2)-n.slideWidth:!0===n.options.centerMode&&(n.slideOffset=0,n.slideOffset+=n.slideWidth*Math.floor(n.options.slidesToShow/2)),e=!1===n.options.vertical?i*n.slideWidth*-1+n.slideOffset:i*t*-1+r,!0===n.options.variableWidth&&(o=n.slideCount<=n.options.slidesToShow||!1===n.options.infinite?n.$slideTrack.children(".slick-slide").eq(i):n.$slideTrack.children(".slick-slide").eq(i+n.options.slidesToShow),e=!0===n.options.rtl?o[0]?-1*(n.$slideTrack.width()-o[0].offsetLeft-o.width()):0:o[0]?-1*o[0].offsetLeft:0,!0===n.options.centerMode&&(o=n.slideCount<=n.options.slidesToShow||!1===n.options.infinite?n.$slideTrack.children(".slick-slide").eq(i):n.$slideTrack.children(".slick-slide").eq(i+n.options.slidesToShow+1),e=!0===n.options.rtl?o[0]?-1*(n.$slideTrack.width()-o[0].offsetLeft-o.width()):0:o[0]?-1*o[0].offsetLeft:0,e+=(n.$list.width()-o.outerWidth())/2)),e},e.prototype.getOption=e.prototype.slickGetOption=function(i){return this.options[i]},e.prototype.getNavigableIndexes=function(){var i,e=this,t=0,o=0,s=[];for(!1===e.options.infinite?i=e.slideCount:(t=-1*e.options.slidesToScroll,o=-1*e.options.slidesToScroll,i=2*e.slideCount);t<i;)s.push(t),t=o+e.options.slidesToScroll,o+=e.options.slidesToScroll<=e.options.slidesToShow?e.options.slidesToScroll:e.options.slidesToShow;return s},e.prototype.getSlick=function(){return this},e.prototype.getSlideCount=function(){var e,t,o=this;return t=!0===o.options.centerMode?o.slideWidth*Math.floor(o.options.slidesToShow/2):0,!0===o.options.swipeToSlide?(o.$slideTrack.find(".slick-slide").each(function(s,n){if(n.offsetLeft-t+i(n).outerWidth()/2>-1*o.swipeLeft)return e=n,!1}),Math.abs(i(e).attr("data-slick-index")-o.currentSlide)||1):o.options.slidesToScroll},e.prototype.goTo=e.prototype.slickGoTo=function(i,e){this.changeSlide({data:{message:"index",index:parseInt(i)}},e)},e.prototype.init=function(e){var t=this;i(t.$slider).hasClass("slick-initialized")||(i(t.$slider).addClass("slick-initialized"),t.buildRows(),t.buildOut(),t.setProps(),t.startLoad(),t.loadSlider(),t.initializeEvents(),t.updateArrows(),t.updateDots(),t.checkResponsive(!0),t.focusHandler()),e&&t.$slider.trigger("init",[t]),!0===t.options.accessibility&&t.initADA(),t.options.autoplay&&(t.paused=!1,t.autoPlay())},e.prototype.initADA=function(){var e=this,t=Math.ceil(e.slideCount/e.options.slidesToShow),o=e.getNavigableIndexes().filter(function(i){return i>=0&&i<e.slideCount});e.$slides.add(e.$slideTrack.find(".slick-cloned")).attr({"aria-hidden":"true",tabindex:"-1"}).find("a, input, button, select").attr({tabindex:"-1"}),null!==e.$dots&&(e.$slides.not(e.$slideTrack.find(".slick-cloned")).each(function(t){var s=o.indexOf(t);i(this).attr({role:"tabpanel",id:"slick-slide"+e.instanceUid+t,tabindex:-1}),-1!==s&&i(this).attr({"aria-describedby":"slick-slide-control"+e.instanceUid+s})}),e.$dots.attr("role","tablist").find("li").each(function(s){var n=o[s];i(this).attr({role:"presentation"}),i(this).find("button").first().attr({role:"tab",id:"slick-slide-control"+e.instanceUid+s,"aria-controls":"slick-slide"+e.instanceUid+n,"aria-label":s+1+" of "+t,"aria-selected":null,tabindex:"-1"})}).eq(e.currentSlide).find("button").attr({"aria-selected":"true",tabindex:"0"}).end());for(var s=e.currentSlide,n=s+e.options.slidesToShow;s<n;s++)e.$slides.eq(s).attr("tabindex",0);e.activateADA()},e.prototype.initArrowEvents=function(){var i=this;!0===i.options.arrows&&i.slideCount>i.options.slidesToShow&&(i.$prevArrow.off("click.slick").on("click.slick",{message:"previous"},i.changeSlide),i.$nextArrow.off("click.slick").on("click.slick",{message:"next"},i.changeSlide),!0===i.options.accessibility&&(i.$prevArrow.on("keydown.slick",i.keyHandler),i.$nextArrow.on("keydown.slick",i.keyHandler)))},e.prototype.initDotEvents=function(){var e=this;!0===e.options.dots&&(i("li",e.$dots).on("click.slick",{message:"index"},e.changeSlide),!0===e.options.accessibility&&e.$dots.on("keydown.slick",e.keyHandler)),!0===e.options.dots&&!0===e.options.pauseOnDotsHover&&i("li",e.$dots).on("mouseenter.slick",i.proxy(e.interrupt,e,!0)).on("mouseleave.slick",i.proxy(e.interrupt,e,!1))},e.prototype.initSlideEvents=function(){var e=this;e.options.pauseOnHover&&(e.$list.on("mouseenter.slick",i.proxy(e.interrupt,e,!0)),e.$list.on("mouseleave.slick",i.proxy(e.interrupt,e,!1)))},e.prototype.initializeEvents=function(){var e=this;e.initArrowEvents(),e.initDotEvents(),e.initSlideEvents(),e.$list.on("touchstart.slick mousedown.slick",{action:"start"},e.swipeHandler),e.$list.on("touchmove.slick mousemove.slick",{action:"move"},e.swipeHandler),e.$list.on("touchend.slick mouseup.slick",{action:"end"},e.swipeHandler),e.$list.on("touchcancel.slick mouseleave.slick",{action:"end"},e.swipeHandler),e.$list.on("click.slick",e.clickHandler),i(document).on(e.visibilityChange,i.proxy(e.visibility,e)),!0===e.options.accessibility&&e.$list.on("keydown.slick",e.keyHandler),!0===e.options.focusOnSelect&&i(e.$slideTrack).children().on("click.slick",e.selectHandler),i(window).on("orientationchange.slick.slick-"+e.instanceUid,i.proxy(e.orientationChange,e)),i(window).on("resize.slick.slick-"+e.instanceUid,i.proxy(e.resize,e)),i("[draggable!=true]",e.$slideTrack).on("dragstart",e.preventDefault),i(window).on("load.slick.slick-"+e.instanceUid,e.setPosition),i(e.setPosition)},e.prototype.initUI=function(){var i=this;!0===i.options.arrows&&i.slideCount>i.options.slidesToShow&&(i.$prevArrow.show(),i.$nextArrow.show()),!0===i.options.dots&&i.slideCount>i.options.slidesToShow&&i.$dots.show()},e.prototype.keyHandler=function(i){var e=this;i.target.tagName.match("TEXTAREA|INPUT|SELECT")||(37===i.keyCode&&!0===e.options.accessibility?e.changeSlide({data:{message:!0===e.options.rtl?"next":"previous"}}):39===i.keyCode&&!0===e.options.accessibility&&e.changeSlide({data:{message:!0===e.options.rtl?"previous":"next"}}))},e.prototype.lazyLoad=function(){function e(e){i("img[data-lazy]",e).each(function(){var e=i(this),t=i(this).attr("data-lazy"),o=i(this).attr("data-srcset"),s=i(this).attr("data-sizes")||n.$slider.attr("data-sizes"),r=document.createElement("img");r.onload=function(){e.animate({opacity:0},100,function(){o&&(e.attr("srcset",o),s&&e.attr("sizes",s)),e.attr("src",t).animate({opacity:1},200,function(){e.removeAttr("data-lazy data-srcset data-sizes").removeClass("slick-loading")}),n.$slider.trigger("lazyLoaded",[n,e,t])})},r.onerror=function(){e.removeAttr("data-lazy").removeClass("slick-loading").addClass("slick-lazyload-error"),n.$slider.trigger("lazyLoadError",[n,e,t])},r.src=t})}var t,o,s,n=this;if(!0===n.options.centerMode?!0===n.options.infinite?s=(o=n.currentSlide+(n.options.slidesToShow/2+1))+n.options.slidesToShow+2:(o=Math.max(0,n.currentSlide-(n.options.slidesToShow/2+1)),s=n.options.slidesToShow/2+1+2+n.currentSlide):(o=n.options.infinite?n.options.slidesToShow+n.currentSlide:n.currentSlide,s=Math.ceil(o+n.options.slidesToShow),!0===n.options.fade&&(o>0&&o--,s<=n.slideCount&&s++)),t=n.$slider.find(".slick-slide").slice(o,s),"anticipated"===n.options.lazyLoad)for(var r=o-1,l=s,d=n.$slider.find(".slick-slide"),a=0;a<n.options.slidesToScroll;a++)r<0&&(r=n.slideCount-1),t=(t=t.add(d.eq(r))).add(d.eq(l)),r--,l++;e(t),n.slideCount<=n.options.slidesToShow?e(n.$slider.find(".slick-slide")):n.currentSlide>=n.slideCount-n.options.slidesToShow?e(n.$slider.find(".slick-cloned").slice(0,n.options.slidesToShow)):0===n.currentSlide&&e(n.$slider.find(".slick-cloned").slice(-1*n.options.slidesToShow))},e.prototype.loadSlider=function(){var i=this;i.setPosition(),i.$slideTrack.css({opacity:1}),i.$slider.removeClass("slick-loading"),i.initUI(),"progressive"===i.options.lazyLoad&&i.progressiveLazyLoad()},e.prototype.next=e.prototype.slickNext=function(){this.changeSlide({data:{message:"next"}})},e.prototype.orientationChange=function(){var i=this;i.checkResponsive(),i.setPosition()},e.prototype.pause=e.prototype.slickPause=function(){var i=this;i.autoPlayClear(),i.paused=!0},e.prototype.play=e.prototype.slickPlay=function(){var i=this;i.autoPlay(),i.options.autoplay=!0,i.paused=!1,i.focussed=!1,i.interrupted=!1},e.prototype.postSlide=function(e){var t=this;t.unslicked||(t.$slider.trigger("afterChange",[t,e]),t.animating=!1,t.slideCount>t.options.slidesToShow&&t.setPosition(),t.swipeLeft=null,t.options.autoplay&&t.autoPlay(),!0===t.options.accessibility&&(t.initADA(),t.options.focusOnChange&&i(t.$slides.get(t.currentSlide)).attr("tabindex",0).focus()))},e.prototype.prev=e.prototype.slickPrev=function(){this.changeSlide({data:{message:"previous"}})},e.prototype.preventDefault=function(i){i.preventDefault()},e.prototype.progressiveLazyLoad=function(e){e=e||1;var t,o,s,n,r,l=this,d=i("img[data-lazy]",l.$slider);d.length?(t=d.first(),o=t.attr("data-lazy"),s=t.attr("data-srcset"),n=t.attr("data-sizes")||l.$slider.attr("data-sizes"),(r=document.createElement("img")).onload=function(){s&&(t.attr("srcset",s),n&&t.attr("sizes",n)),t.attr("src",o).removeAttr("data-lazy data-srcset data-sizes").removeClass("slick-loading"),!0===l.options.adaptiveHeight&&l.setPosition(),l.$slider.trigger("lazyLoaded",[l,t,o]),l.progressiveLazyLoad()},r.onerror=function(){e<3?setTimeout(function(){l.progressiveLazyLoad(e+1)},500):(t.removeAttr("data-lazy").removeClass("slick-loading").addClass("slick-lazyload-error"),l.$slider.trigger("lazyLoadError",[l,t,o]),l.progressiveLazyLoad())},r.src=o):l.$slider.trigger("allImagesLoaded",[l])},e.prototype.refresh=function(e){var t,o,s=this;o=s.slideCount-s.options.slidesToShow,!s.options.infinite&&s.currentSlide>o&&(s.currentSlide=o),s.slideCount<=s.options.slidesToShow&&(s.currentSlide=0),t=s.currentSlide,s.destroy(!0),i.extend(s,s.initials,{currentSlide:t}),s.init(),e||s.changeSlide({data:{message:"index",index:t}},!1)},e.prototype.registerBreakpoints=function(){var e,t,o,s=this,n=s.options.responsive||null;if("array"===i.type(n)&&n.length){s.respondTo=s.options.respondTo||"window";for(e in n)if(o=s.breakpoints.length-1,n.hasOwnProperty(e)){for(t=n[e].breakpoint;o>=0;)s.breakpoints[o]&&s.breakpoints[o]===t&&s.breakpoints.splice(o,1),o--;s.breakpoints.push(t),s.breakpointSettings[t]=n[e].settings}s.breakpoints.sort(function(i,e){return s.options.mobileFirst?i-e:e-i})}},e.prototype.reinit=function(){var e=this;e.$slides=e.$slideTrack.children(e.options.slide).addClass("slick-slide"),e.slideCount=e.$slides.length,e.currentSlide>=e.slideCount&&0!==e.currentSlide&&(e.currentSlide=e.currentSlide-e.options.slidesToScroll),e.slideCount<=e.options.slidesToShow&&(e.currentSlide=0),e.registerBreakpoints(),e.setProps(),e.setupInfinite(),e.buildArrows(),e.updateArrows(),e.initArrowEvents(),e.buildDots(),e.updateDots(),e.initDotEvents(),e.cleanUpSlideEvents(),e.initSlideEvents(),e.checkResponsive(!1,!0),!0===e.options.focusOnSelect&&i(e.$slideTrack).children().on("click.slick",e.selectHandler),e.setSlideClasses("number"==typeof e.currentSlide?e.currentSlide:0),e.setPosition(),e.focusHandler(),e.paused=!e.options.autoplay,e.autoPlay(),e.$slider.trigger("reInit",[e])},e.prototype.resize=function(){var e=this;i(window).width()!==e.windowWidth&&(clearTimeout(e.windowDelay),e.windowDelay=window.setTimeout(function(){e.windowWidth=i(window).width(),e.checkResponsive(),e.unslicked||e.setPosition()},50))},e.prototype.removeSlide=e.prototype.slickRemove=function(i,e,t){var o=this;if(i="boolean"==typeof i?!0===(e=i)?0:o.slideCount-1:!0===e?--i:i,o.slideCount<1||i<0||i>o.slideCount-1)return!1;o.unload(),!0===t?o.$slideTrack.children().remove():o.$slideTrack.children(this.options.slide).eq(i).remove(),o.$slides=o.$slideTrack.children(this.options.slide),o.$slideTrack.children(this.options.slide).detach(),o.$slideTrack.append(o.$slides),o.$slidesCache=o.$slides,o.reinit()},e.prototype.setCSS=function(i){var e,t,o=this,s={};!0===o.options.rtl&&(i=-i),e="left"==o.positionProp?Math.ceil(i)+"px":"0px",t="top"==o.positionProp?Math.ceil(i)+"px":"0px",s[o.positionProp]=i,!1===o.transformsEnabled?o.$slideTrack.css(s):(s={},!1===o.cssTransitions?(s[o.animType]="translate("+e+", "+t+")",o.$slideTrack.css(s)):(s[o.animType]="translate3d("+e+", "+t+", 0px)",o.$slideTrack.css(s)))},e.prototype.setDimensions=function(){var i=this;!1===i.options.vertical?!0===i.options.centerMode&&i.$list.css({padding:"0px "+i.options.centerPadding}):(i.$list.height(i.$slides.first().outerHeight(!0)*i.options.slidesToShow),!0===i.options.centerMode&&i.$list.css({padding:i.options.centerPadding+" 0px"})),i.listWidth=i.$list.width(),i.listHeight=i.$list.height(),!1===i.options.vertical&&!1===i.options.variableWidth?(i.slideWidth=Math.ceil(i.listWidth/i.options.slidesToShow),i.$slideTrack.width(Math.ceil(i.slideWidth*i.$slideTrack.children(".slick-slide").length))):!0===i.options.variableWidth?i.$slideTrack.width(5e3*i.slideCount):(i.slideWidth=Math.ceil(i.listWidth),i.$slideTrack.height(Math.ceil(i.$slides.first().outerHeight(!0)*i.$slideTrack.children(".slick-slide").length)));var e=i.$slides.first().outerWidth(!0)-i.$slides.first().width();!1===i.options.variableWidth&&i.$slideTrack.children(".slick-slide").width(i.slideWidth-e)},e.prototype.setFade=function(){var e,t=this;t.$slides.each(function(o,s){e=t.slideWidth*o*-1,!0===t.options.rtl?i(s).css({position:"relative",right:e,top:0,zIndex:t.options.zIndex-2,opacity:0}):i(s).css({position:"relative",left:e,top:0,zIndex:t.options.zIndex-2,opacity:0})}),t.$slides.eq(t.currentSlide).css({zIndex:t.options.zIndex-1,opacity:1})},e.prototype.setHeight=function(){var i=this;if(1===i.options.slidesToShow&&!0===i.options.adaptiveHeight&&!1===i.options.vertical){var e=i.$slides.eq(i.currentSlide).outerHeight(!0);i.$list.css("height",e)}},e.prototype.setOption=e.prototype.slickSetOption=function(){var e,t,o,s,n,r=this,l=!1;if("object"===i.type(arguments[0])?(o=arguments[0],l=arguments[1],n="multiple"):"string"===i.type(arguments[0])&&(o=arguments[0],s=arguments[1],l=arguments[2],"responsive"===arguments[0]&&"array"===i.type(arguments[1])?n="responsive":void 0!==arguments[1]&&(n="single")),"single"===n)r.options[o]=s;else if("multiple"===n)i.each(o,function(i,e){r.options[i]=e});else if("responsive"===n)for(t in s)if("array"!==i.type(r.options.responsive))r.options.responsive=[s[t]];else{for(e=r.options.responsive.length-1;e>=0;)r.options.responsive[e].breakpoint===s[t].breakpoint&&r.options.responsive.splice(e,1),e--;r.options.responsive.push(s[t])}l&&(r.unload(),r.reinit())},e.prototype.setPosition=function(){var i=this;i.setDimensions(),i.setHeight(),!1===i.options.fade?i.setCSS(i.getLeft(i.currentSlide)):i.setFade(),i.$slider.trigger("setPosition",[i])},e.prototype.setProps=function(){var i=this,e=document.body.style;i.positionProp=!0===i.options.vertical?"top":"left","top"===i.positionProp?i.$slider.addClass("slick-vertical"):i.$slider.removeClass("slick-vertical"),void 0===e.WebkitTransition&&void 0===e.MozTransition&&void 0===e.msTransition||!0===i.options.useCSS&&(i.cssTransitions=!0),i.options.fade&&("number"==typeof i.options.zIndex?i.options.zIndex<3&&(i.options.zIndex=3):i.options.zIndex=i.defaults.zIndex),void 0!==e.OTransform&&(i.animType="OTransform",i.transformType="-o-transform",i.transitionType="OTransition",void 0===e.perspectiveProperty&&void 0===e.webkitPerspective&&(i.animType=!1)),void 0!==e.MozTransform&&(i.animType="MozTransform",i.transformType="-moz-transform",i.transitionType="MozTransition",void 0===e.perspectiveProperty&&void 0===e.MozPerspective&&(i.animType=!1)),void 0!==e.webkitTransform&&(i.animType="webkitTransform",i.transformType="-webkit-transform",i.transitionType="webkitTransition",void 0===e.perspectiveProperty&&void 0===e.webkitPerspective&&(i.animType=!1)),void 0!==e.msTransform&&(i.animType="msTransform",i.transformType="-ms-transform",i.transitionType="msTransition",void 0===e.msTransform&&(i.animType=!1)),void 0!==e.transform&&!1!==i.animType&&(i.animType="transform",i.transformType="transform",i.transitionType="transition"),i.transformsEnabled=i.options.useTransform&&null!==i.animType&&!1!==i.animType},e.prototype.setSlideClasses=function(i){var e,t,o,s,n=this;if(t=n.$slider.find(".slick-slide").removeClass("slick-active slick-center slick-current").attr("aria-hidden","true"),n.$slides.eq(i).addClass("slick-current"),!0===n.options.centerMode){var r=n.options.slidesToShow%2==0?1:0;e=Math.floor(n.options.slidesToShow/2),!0===n.options.infinite&&(i>=e&&i<=n.slideCount-1-e?n.$slides.slice(i-e+r,i+e+1).addClass("slick-active").attr("aria-hidden","false"):(o=n.options.slidesToShow+i,t.slice(o-e+1+r,o+e+2).addClass("slick-active").attr("aria-hidden","false")),0===i?t.eq(t.length-1-n.options.slidesToShow).addClass("slick-center"):i===n.slideCount-1&&t.eq(n.options.slidesToShow).addClass("slick-center")),n.$slides.eq(i).addClass("slick-center")}else i>=0&&i<=n.slideCount-n.options.slidesToShow?n.$slides.slice(i,i+n.options.slidesToShow).addClass("slick-active").attr("aria-hidden","false"):t.length<=n.options.slidesToShow?t.addClass("slick-active").attr("aria-hidden","false"):(s=n.slideCount%n.options.slidesToShow,o=!0===n.options.infinite?n.options.slidesToShow+i:i,n.options.slidesToShow==n.options.slidesToScroll&&n.slideCount-i<n.options.slidesToShow?t.slice(o-(n.options.slidesToShow-s),o+s).addClass("slick-active").attr("aria-hidden","false"):t.slice(o,o+n.options.slidesToShow).addClass("slick-active").attr("aria-hidden","false"));"ondemand"!==n.options.lazyLoad&&"anticipated"!==n.options.lazyLoad||n.lazyLoad()},e.prototype.setupInfinite=function(){var e,t,o,s=this;if(!0===s.options.fade&&(s.options.centerMode=!1),!0===s.options.infinite&&!1===s.options.fade&&(t=null,s.slideCount>s.options.slidesToShow)){for(o=!0===s.options.centerMode?s.options.slidesToShow+1:s.options.slidesToShow,e=s.slideCount;e>s.slideCount-o;e-=1)t=e-1,i(s.$slides[t]).clone(!0).attr("id","").attr("data-slick-index",t-s.slideCount).prependTo(s.$slideTrack).addClass("slick-cloned");for(e=0;e<o+s.slideCount;e+=1)t=e,i(s.$slides[t]).clone(!0).attr("id","").attr("data-slick-index",t+s.slideCount).appendTo(s.$slideTrack).addClass("slick-cloned");s.$slideTrack.find(".slick-cloned").find("[id]").each(function(){i(this).attr("id","")})}},e.prototype.interrupt=function(i){var e=this;i||e.autoPlay(),e.interrupted=i},e.prototype.selectHandler=function(e){var t=this,o=i(e.target).is(".slick-slide")?i(e.target):i(e.target).parents(".slick-slide"),s=parseInt(o.attr("data-slick-index"));s||(s=0),t.slideCount<=t.options.slidesToShow?t.slideHandler(s,!1,!0):t.slideHandler(s)},e.prototype.slideHandler=function(i,e,t){var o,s,n,r,l,d=null,a=this;if(e=e||!1,!(!0===a.animating&&!0===a.options.waitForAnimate||!0===a.options.fade&&a.currentSlide===i))if(!1===e&&a.asNavFor(i),o=i,d=a.getLeft(o),r=a.getLeft(a.currentSlide),a.currentLeft=null===a.swipeLeft?r:a.swipeLeft,!1===a.options.infinite&&!1===a.options.centerMode&&(i<0||i>a.getDotCount()*a.options.slidesToScroll))!1===a.options.fade&&(o=a.currentSlide,!0!==t?a.animateSlide(r,function(){a.postSlide(o)}):a.postSlide(o));else if(!1===a.options.infinite&&!0===a.options.centerMode&&(i<0||i>a.slideCount-a.options.slidesToScroll))!1===a.options.fade&&(o=a.currentSlide,!0!==t?a.animateSlide(r,function(){a.postSlide(o)}):a.postSlide(o));else{if(a.options.autoplay&&clearInterval(a.autoPlayTimer),s=o<0?a.slideCount%a.options.slidesToScroll!=0?a.slideCount-a.slideCount%a.options.slidesToScroll:a.slideCount+o:o>=a.slideCount?a.slideCount%a.options.slidesToScroll!=0?0:o-a.slideCount:o,a.animating=!0,a.$slider.trigger("beforeChange",[a,a.currentSlide,s]),n=a.currentSlide,a.currentSlide=s,a.setSlideClasses(a.currentSlide),a.options.asNavFor&&(l=(l=a.getNavTarget()).slick("getSlick")).slideCount<=l.options.slidesToShow&&l.setSlideClasses(a.currentSlide),a.updateDots(),a.updateArrows(),!0===a.options.fade)return!0!==t?(a.fadeSlideOut(n),a.fadeSlide(s,function(){a.postSlide(s)})):a.postSlide(s),void a.animateHeight();!0!==t?a.animateSlide(d,function(){a.postSlide(s)}):a.postSlide(s)}},e.prototype.startLoad=function(){var i=this;!0===i.options.arrows&&i.slideCount>i.options.slidesToShow&&(i.$prevArrow.hide(),i.$nextArrow.hide()),!0===i.options.dots&&i.slideCount>i.options.slidesToShow&&i.$dots.hide(),i.$slider.addClass("slick-loading")},e.prototype.swipeDirection=function(){var i,e,t,o,s=this;return i=s.touchObject.startX-s.touchObject.curX,e=s.touchObject.startY-s.touchObject.curY,t=Math.atan2(e,i),(o=Math.round(180*t/Math.PI))<0&&(o=360-Math.abs(o)),o<=45&&o>=0?!1===s.options.rtl?"left":"right":o<=360&&o>=315?!1===s.options.rtl?"left":"right":o>=135&&o<=225?!1===s.options.rtl?"right":"left":!0===s.options.verticalSwiping?o>=35&&o<=135?"down":"up":"vertical"},e.prototype.swipeEnd=function(i){var e,t,o=this;if(o.dragging=!1,o.swiping=!1,o.scrolling)return o.scrolling=!1,!1;if(o.interrupted=!1,o.shouldClick=!(o.touchObject.swipeLength>10),void 0===o.touchObject.curX)return!1;if(!0===o.touchObject.edgeHit&&o.$slider.trigger("edge",[o,o.swipeDirection()]),o.touchObject.swipeLength>=o.touchObject.minSwipe){switch(t=o.swipeDirection()){case"left":case"down":e=o.options.swipeToSlide?o.checkNavigable(o.currentSlide+o.getSlideCount()):o.currentSlide+o.getSlideCount(),o.currentDirection=0;break;case"right":case"up":e=o.options.swipeToSlide?o.checkNavigable(o.currentSlide-o.getSlideCount()):o.currentSlide-o.getSlideCount(),o.currentDirection=1}"vertical"!=t&&(o.slideHandler(e),o.touchObject={},o.$slider.trigger("swipe",[o,t]))}else o.touchObject.startX!==o.touchObject.curX&&(o.slideHandler(o.currentSlide),o.touchObject={})},e.prototype.swipeHandler=function(i){var e=this;if(!(!1===e.options.swipe||"ontouchend"in document&&!1===e.options.swipe||!1===e.options.draggable&&-1!==i.type.indexOf("mouse")))switch(e.touchObject.fingerCount=i.originalEvent&&void 0!==i.originalEvent.touches?i.originalEvent.touches.length:1,e.touchObject.minSwipe=e.listWidth/e.options.touchThreshold,!0===e.options.verticalSwiping&&(e.touchObject.minSwipe=e.listHeight/e.options.touchThreshold),i.data.action){case"start":e.swipeStart(i);break;case"move":e.swipeMove(i);break;case"end":e.swipeEnd(i)}},e.prototype.swipeMove=function(i){var e,t,o,s,n,r,l=this;return n=void 0!==i.originalEvent?i.originalEvent.touches:null,!(!l.dragging||l.scrolling||n&&1!==n.length)&&(e=l.getLeft(l.currentSlide),l.touchObject.curX=void 0!==n?n[0].pageX:i.clientX,l.touchObject.curY=void 0!==n?n[0].pageY:i.clientY,l.touchObject.swipeLength=Math.round(Math.sqrt(Math.pow(l.touchObject.curX-l.touchObject.startX,2))),r=Math.round(Math.sqrt(Math.pow(l.touchObject.curY-l.touchObject.startY,2))),!l.options.verticalSwiping&&!l.swiping&&r>4?(l.scrolling=!0,!1):(!0===l.options.verticalSwiping&&(l.touchObject.swipeLength=r),t=l.swipeDirection(),void 0!==i.originalEvent&&l.touchObject.swipeLength>4&&(l.swiping=!0,i.preventDefault()),s=(!1===l.options.rtl?1:-1)*(l.touchObject.curX>l.touchObject.startX?1:-1),!0===l.options.verticalSwiping&&(s=l.touchObject.curY>l.touchObject.startY?1:-1),o=l.touchObject.swipeLength,l.touchObject.edgeHit=!1,!1===l.options.infinite&&(0===l.currentSlide&&"right"===t||l.currentSlide>=l.getDotCount()&&"left"===t)&&(o=l.touchObject.swipeLength*l.options.edgeFriction,l.touchObject.edgeHit=!0),!1===l.options.vertical?l.swipeLeft=e+o*s:l.swipeLeft=e+o*(l.$list.height()/l.listWidth)*s,!0===l.options.verticalSwiping&&(l.swipeLeft=e+o*s),!0!==l.options.fade&&!1!==l.options.touchMove&&(!0===l.animating?(l.swipeLeft=null,!1):void l.setCSS(l.swipeLeft))))},e.prototype.swipeStart=function(i){var e,t=this;if(t.interrupted=!0,1!==t.touchObject.fingerCount||t.slideCount<=t.options.slidesToShow)return t.touchObject={},!1;void 0!==i.originalEvent&&void 0!==i.originalEvent.touches&&(e=i.originalEvent.touches[0]),t.touchObject.startX=t.touchObject.curX=void 0!==e?e.pageX:i.clientX,t.touchObject.startY=t.touchObject.curY=void 0!==e?e.pageY:i.clientY,t.dragging=!0},e.prototype.unfilterSlides=e.prototype.slickUnfilter=function(){var i=this;null!==i.$slidesCache&&(i.unload(),i.$slideTrack.children(this.options.slide).detach(),i.$slidesCache.appendTo(i.$slideTrack),i.reinit())},e.prototype.unload=function(){var e=this;i(".slick-cloned",e.$slider).remove(),e.$dots&&e.$dots.remove(),e.$prevArrow&&e.htmlExpr.test(e.options.prevArrow)&&e.$prevArrow.remove(),e.$nextArrow&&e.htmlExpr.test(e.options.nextArrow)&&e.$nextArrow.remove(),e.$slides.removeClass("slick-slide slick-active slick-visible slick-current").attr("aria-hidden","true").css("width","")},e.prototype.unslick=function(i){var e=this;e.$slider.trigger("unslick",[e,i]),e.destroy()},e.prototype.updateArrows=function(){var i=this;Math.floor(i.options.slidesToShow/2),!0===i.options.arrows&&i.slideCount>i.options.slidesToShow&&!i.options.infinite&&(i.$prevArrow.removeClass("slick-disabled").attr("aria-disabled","false"),i.$nextArrow.removeClass("slick-disabled").attr("aria-disabled","false"),0===i.currentSlide?(i.$prevArrow.addClass("slick-disabled").attr("aria-disabled","true"),i.$nextArrow.removeClass("slick-disabled").attr("aria-disabled","false")):i.currentSlide>=i.slideCount-i.options.slidesToShow&&!1===i.options.centerMode?(i.$nextArrow.addClass("slick-disabled").attr("aria-disabled","true"),i.$prevArrow.removeClass("slick-disabled").attr("aria-disabled","false")):i.currentSlide>=i.slideCount-1&&!0===i.options.centerMode&&(i.$nextArrow.addClass("slick-disabled").attr("aria-disabled","true"),i.$prevArrow.removeClass("slick-disabled").attr("aria-disabled","false")))},e.prototype.updateDots=function(){var i=this;null!==i.$dots&&(i.$dots.find("li").removeClass("slick-active").end(),i.$dots.find("li").eq(Math.floor(i.currentSlide/i.options.slidesToScroll)).addClass("slick-active"))},e.prototype.visibility=function(){var i=this;i.options.autoplay&&(document[i.hidden]?i.interrupted=!0:i.interrupted=!1)},i.fn.slick=function(){var i,t,o=this,s=arguments[0],n=Array.prototype.slice.call(arguments,1),r=o.length;for(i=0;i<r;i++)if("object"==typeof s||void 0===s?o[i].slick=new e(o[i],s):t=o[i].slick[s].apply(o[i].slick,n),void 0!==t)return t;return o}});
+
+
+/***/ }),
+
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -37054,6 +38441,12 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./script */ "./resources/js/script.js");
+
+__webpack_require__(/*! ../../node_modules/slick-carousel/slick/slick.min.js */ "./node_modules/slick-carousel/slick/slick.min.js");
+
+__webpack_require__(/*! ../../node_modules/jquery-confirm/js/jquery-confirm.js */ "./node_modules/jquery-confirm/js/jquery-confirm.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -37101,6 +38494,50 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/script.js":
+/*!********************************!*\
+  !*** ./resources/js/script.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  $('.navbar-toggler').click(function () {
+    $('.icon').toggleClass('fa-times');
+    $('.icon').toggleClass('fa-bars');
+  });
+  $('.messenger').click(function () {
+    $('.toggle-class').toggle();
+  });
+  $('.close').click(function () {
+    $('.toggle-class').hide();
+  });
+  $('.hapo-feedback-slider').slick({
+    infinite: true,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    adaptiveHeight: false,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    pauseOnFocus: true,
+    pauseOnHover: true,
+    prevArrow: $('.previous-icon'),
+    nextArrow: $('.next-icon'),
+    responsive: [{
+      breakpoint: 769,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }]
+  });
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -37112,27 +38549,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/sass/style.scss":
-/*!***********************************!*\
-  !*** ./resources/sass/style.scss ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
-/*!*****************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/style.scss ***!
-  \*****************************************************************************************/
+/*!*************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! E:\TaiLieu\CongtyHaposoft\project\HapoLearn-v2\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! E:\TaiLieu\CongtyHaposoft\project\HapoLearn-v2\resources\sass\app.scss */"./resources/sass/app.scss");
-module.exports = __webpack_require__(/*! E:\TaiLieu\CongtyHaposoft\project\HapoLearn-v2\resources\sass\style.scss */"./resources/sass/style.scss");
+__webpack_require__(/*! E:\TaiLieu\CongtyHaposoft\software\HapoLearn-v2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\TaiLieu\CongtyHaposoft\software\HapoLearn-v2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
