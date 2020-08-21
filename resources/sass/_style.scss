@@ -355,95 +355,101 @@ body {
   }
 }
 
-.hapo-wrap-feedback {
+.hapo-feedback {
   .hapo-title-feedback {
-    text-align: center;
-    margin-bottom: 30px;
-    margin-top: 90px;
-    text-shadow: 1px 1px 1px;
-    @include fontUTM(bold, 80px, $color_txt);
-  }
+    letter-spacing: -0.02em;
 
-  .hapo-titletext-feedback {
-    padding: 20px 180px;
-    -webkit-text-stroke: 0.05px;
-    @include fontUTM(normal, 25px, #505353);
-  }
-
-  .hapo-feedback-user-item {
-    .hapo-feedback-content {
-      border-radius: 10px;
-      position: relative;
-      box-sizing: border-box;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-      &:after {
-        position: absolute;
-        width: 22px;
-        height: 22px;
-        bottom: -10px;
-        left: 8%;
-        content: "";
-        transform: rotate(45deg);
-        background-color: white;
-        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
-      }
-
-      .hapo-feedback-user-content {
-        border-left: 5px solid #d9dadc;
-        padding: 10px;
-        display: inline-block;
-        margin-left: 10px;
-        @include fontUTM(normal, 16px, #000000);
-      }
+    .hapo-txt-title {
+      -webkit-text-stroke-width: 2px;
+      @include fontUTM(bold, 80px, #11114e);
     }
 
-    .hapo-message {
-      margin-left: 2 0px;
+    hr {
+      width: 30%;
+      height: 6px;
+      margin: 15px auto;
+      background-color: #b2d235;
+      border-radius: 3px;
+    }
 
-      .hapo-user-inf {
-        margin-left: 15px;
-      }
-
-      .hapo-username {
-        font: normal bold 20px/25px UTM;
-        color: $color_txt;
-        -webkit-text-stroke: 1px;
-      }
-
-      .hapo-coursesname {
-        font: normal bold 16px/20px UTM;
-        color: #505353;
-        -webkit-text-stroke: 1px #505353;
-      }
-
-      .hapo-like {
-        color: #f2c54f;
-        font-size: 14px;
-      }
+    .hapo-txt-decs {
+      margin-top: -100px;
+      @include fontUTM(normal, 25px, #505353);
     }
   }
 
-  .hapo-left-right {
-    font-size: 20px;
-    padding: 0 8px;
-    top: -180px;
-    color: #969494;
+  .hapo-slide-block {
+    .hapo-block-cmt {
+      padding: 0;
+    }
 
-    .previous-icon {
-      cursor: pointer;
-      background-color: $main_color;
-      padding-left: 10px;
-      padding-right: 10px;
-      margin-right: -6px;
+    .hapo-carousel-item {
+      margin-right: 0;
+    }
+  }
+
+  .hapo-element-cmt {
+    width: 100%;
+    height: 100%;
+    background: url("../storage/images/Union.png") no-repeat center/cover;
+
+    .hapo-boder-left {
+      width: 4px;
+      height: 70%;
+    }
+
+    .hapo-cmt {
+      line-height: 20px;
+      letter-spacing: -0.05em;
+      padding: 50px 0 60px 0;
+      @include fontUTM(normal, 16px, #000000);
+    }
+  }
+
+  .hapo-element-account {
+    img {
+      width: 60px;
+      height: 60px;
+    }
+
+    .hapo-txt-name {
+      @include fontUTM(bold, 20px, #11114e);
+    }
+
+    .hapo-txt-lang {
+      @include fontUTM(bold, 16px, #505353);
+    }
+
+    i {
+      font-size: 14px;
+      color: #f2c54f;
+    }
+  }
+
+  .controls-top {
+    top: -184px;
+
+    a {
+      background-color: #ffffff;
       border-radius: 50%;
       border: 0.5px solid #c4c4c4;
+      padding-left: -40px;
+      &:hover {
+        cursor: pointer;
+      }
     }
 
-    .next-icon {
-      margin-left: -6px;
-      padding-left: 10px;
-      padding-right: 10px;
-      @extend .previous-icon;
+    i {
+      font-size: 12px;
+      padding: 0 2px;
+    }
+
+    .prev {
+      margin-left: -8px;
+    }
+
+    .next {
+      margin-right: -8px;
     }
   }
 }
