@@ -18,7 +18,7 @@ $(document).ready(function () {
         slidesToScroll: 1,
         adaptiveHeight: false,
         autoplay: true,
-        autoplaySpeed: 4000,
+        autoplaySpeed: 1000000,
         pauseOnFocus: true,
         pauseOnHover: true,
         prevArrow: $('.previous-icon'),
@@ -38,4 +38,24 @@ $(document).ready(function () {
     $(function () {
         $('[data-toggle="tooltip"]').tooltip();
     })
+
+    $('.hapo-slide-block').slick({
+        infinite: true,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000000,
+        prevArrow: $('.prev'),
+        nextArrow: $('.next'),
+        responsive: [
+            {
+                breakpoint: 980,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+        ]
+    });
+
 });
