@@ -7,22 +7,22 @@
         <div class="collapse collapse navbar-collapse col-6 col-md-12 col-xl-8 p-0 justify-content-xl-end justify-content-md-center"  id="sibarNavbar">
             <ul class="navbar-nav align-items-center hapo-nav-item">
                 <li class="nav-item  hapo-list-items">
-                    <a class="nav-link" href="javascript:void(0)">HOME</a>
+                    <a class="nav-link" href="#">HOME</a>
                 </li>
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="javascript:void(0)">All COURSES</a>
+                    <a class="nav-link" href="#">All COURSES</a>
                 </li>
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="javascript:void(0)">LIST LESSON</a>
+                    <a class="nav-link" href="#">LIST LESSON</a>
                 </li>
                  <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="javascript:void(0)">LESSON DETAIL</a>
+                    <a class="nav-link" href="#">LESSON DETAIL</a>
                 </li>
                 <li class="nav-item hapo-list-item">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">LOGIN/REGISTER</a>
                 </li>
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="javascript:void(0)">PROFILE</a>
+                    <a class="nav-link" href="#">PROFILE</a>
                 </li>
             </ul>
         </div>
