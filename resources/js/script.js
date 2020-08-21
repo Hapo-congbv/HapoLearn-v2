@@ -12,39 +12,12 @@ $(document).ready(function () {
         $('.toggle-class').hide();
     });
 
-    $('.hapo-feedback-slider').slick({
-        infinite: true,
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        adaptiveHeight: false,
-        autoplay: true,
-        autoplaySpeed: 1000000,
-        pauseOnFocus: true,
-        pauseOnHover: true,
-        prevArrow: $('.previous-icon'),
-        nextArrow: $('.next-icon'),
-
-        responsive: [
-            {
-                breakpoint: 769,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    });
-
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    })
-
     $('.hapo-slide-block').slick({
         infinite: true,
         slidesToShow: 2,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 2000000,
+        autoplaySpeed: 4000,
         prevArrow: $('.prev'),
         nextArrow: $('.next'),
         responsive: [
@@ -58,4 +31,7 @@ $(document).ready(function () {
         ]
     });
 
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
 });
