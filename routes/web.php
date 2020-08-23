@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'CourseController@index')->name('course');
+Route::get('/', function () {
+    return view('welcome');
+})->name('wellcome');
 
 Auth::routes();
 

@@ -14,28 +14,58 @@
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
-                            <form class="hapo-form-login px-4 py-2">
+                            <form class="hapo-form-login px-4 py-2" method="POST" action="{{ route('login') }}" >
+                                @csrf
                                 <div class="form-group hapo-login">
                                     <label for="username">User Name:</label>
-                                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="User Name">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group hapo-login">
                                     <label for="password">Password: </label>
-                                    <input type="password" class="form-control" id="password" placeholder="**********">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                                <div class="form-check d-flex justify-content-lg-between">
-                                    <div class="hapo-remember-me">
-                                        <input type="checkbox" class="form-check-input" id="remember-me">
-                                        <label class="form-check-label" for="remember-me">Remember me</label>
+                                <div class="form-check d-flex justify-content-between">
+                                    <div class="hapo-remember-me d-flex align-items-center">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="remember">
+                                            {{ __('Remember Me') }}
+                                        </label>
                                     </div>
                                     <div class="hapo-forgot">
-                                        <a href="">Forgot password</a>
+                                        @if (Route::has('password.request'))
+                                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="hapo-login-link d-flex justify-content-lg-center align-items-center mt-3">
-                                    <button type="submit" class="btn btn-primary hapo-login-linkbut text-center">Submit</button>
+                                    <button type="submit" class="btn btn-primary hapo-login-linkbut text-center">
+                                        {{ __('Login') }}
+                                    </button>
                                 </div>
                             </form>
+                            <div class="modal-footer pb-3">
+                                <span class="login-other mx-auto position-relative">Login with</span>
+                                <button type="button" class="btn btn-google col-12 mx-auto border-none mt-n3">
+                                    <i class="fab fa-google-plus-g logo-sz"></i> Google
+                                </button>
+                                <button type="button" class="btn btn-face col-12 mx-auto border-none">
+                                    <i class="fab fa-facebook-f logo-sz"></i> Facebook
+                                </button>
+                            </div>
                             <div class="hapo-login-hr d-flex align-items-center justify-content-center">
                                 <hr  width="37%" align="left" /><span class="">Login With</span><hr  width="37%" align="right" />
                             </div>

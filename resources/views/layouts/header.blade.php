@@ -12,6 +12,7 @@
                 <li class="nav-item hapo-list-item">
                     <a class="nav-link" href="#">All COURSES</a>
                 </li>
+                @if(Auth::check())
                 <li class="nav-item hapo-list-item">
                     <a class="nav-link" href="#">LIST LESSON</a>
                 </li>
@@ -19,11 +20,23 @@
                     <a class="nav-link" href="#">LESSON DETAIL</a>
                 </li>
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">LOGIN/REGISTER</a>
-                </li>
-                <li class="nav-item hapo-list-item">
                     <a class="nav-link" href="#">PROFILE</a>
                 </li>
+                <li class="nav-item logout hapo-list-item">
+                    <a class="nav-link" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        {{ __('LOGOUT') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
+                @else
+                <li class="nav-item hapo-list-item">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">LOGIN/REGISTER</a>
+                </li>
+                @endif
             </ul>
         </div>
     </nav>
