@@ -104,7 +104,7 @@
                                 </div>
                                  <div class="form-group hapo-register">
                                     <label for="password">Repeat Password: </label>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <input id="passwordConfirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                                 <div class="hapo-register-link d-flex justify-content-lg-center align-items-center mt-4 mb-5">
                                     <button type="submit" class="btn btn-primary hapo-register-linkbut text-center">Submit</button>
