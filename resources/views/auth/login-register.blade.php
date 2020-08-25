@@ -18,7 +18,7 @@
                                 @csrf
                                 <div class="form-group hapo-login">
                                     <label for="login_email">Email:</label>
-                                    <input id="login_email" type="email" class="form-control @error('login_email') is-invalid @enderror" name="login_email" value="{{ old('login_email') }}" required autocomplete="login_email" autofocus>
+                                    <input id="loginEmail" type="email" class="form-control @error('login_email') is-invalid @enderror" name="login_email" value="{{ old('login_email') }}" required autocomplete="login_email" autofocus>
 
                                     @error('login_email')
                                     <span class="invalid-feedback" role="alert">
@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="form-group hapo-login">
                                     <label for="login_password">Password: </label>
-                                    <input id="login_password" type="password" class="form-control @error('login_password') is-invalid @enderror" name="login_password" required autocomplete="current-password">
+                                    <input id="loginPassword" type="password" class="form-control @error('login_password') is-invalid @enderror" name="login_password" required autocomplete="current-password">
 
                                     @error('login_password')
                                         <span class="invalid-feedback" role="alert">
