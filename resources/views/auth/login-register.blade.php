@@ -17,20 +17,20 @@
                             <form class="hapo-form-login px-4 py-2" method="POST" action="{{ route('login') }}" >
                                 @csrf
                                 <div class="form-group hapo-login">
-                                    <label for="username">Email:</label>
-                                    <input id="email_login" type="email" class="form-control @error('email_login') is-invalid @enderror" name="email_login" value="{{ old('email_login') }}" required autocomplete="email_login" autofocus>
+                                    <label for="login_email">Email:</label>
+                                    <input id="login_email" type="email" class="form-control @error('login_email') is-invalid @enderror" name="login_email" value="{{ old('login_email') }}" required autocomplete="login_email" autofocus>
 
-                                    @error('email_login')
+                                    @error('login_email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
                                 <div class="form-group hapo-login">
-                                    <label for="password_login">Password: </label>
-                                    <input id="password_login" type="password" class="form-control @error('password_login') is-invalid @enderror" name="password_login" required autocomplete="current-password">
+                                    <label for="login_password">Password: </label>
+                                    <input id="login_password" type="password" class="form-control @error('login_password') is-invalid @enderror" name="login_password" required autocomplete="current-password">
 
-                                    @error('password_login')
+                                    @error('login_password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
