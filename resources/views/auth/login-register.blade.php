@@ -17,20 +17,20 @@
                             <form class="hapo-form-login px-4 py-2" method="POST" action="{{ route('login') }}" >
                                 @csrf
                                 <div class="form-group hapo-login">
-                                    <label for="username">User Name:</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    <label for="username">Email:</label>
+                                    <input id="email_login" type="email" class="form-control @error('email_login') is-invalid @enderror" name="email_login" value="{{ old('email_login') }}" required autocomplete="email_login" autofocus>
 
-                                    @error('email')
+                                    @error('email_login')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
                                 </div>
                                 <div class="form-group hapo-login">
-                                    <label for="password">Password: </label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    <label for="password_login">Password: </label>
+                                    <input id="password_login" type="password" class="form-control @error('password_login') is-invalid @enderror" name="password_login" required autocomplete="current-password">
 
-                                    @error('password')
+                                    @error('password_login')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -57,15 +57,6 @@
                                     </button>
                                 </div>
                             </form>
-                            <div class="modal-footer pb-3">
-                                <span class="login-other mx-auto position-relative">Login with</span>
-                                <button type="button" class="btn btn-google col-12 mx-auto border-none mt-n3">
-                                    <i class="fab fa-google-plus-g logo-sz"></i> Google
-                                </button>
-                                <button type="button" class="btn btn-face col-12 mx-auto border-none">
-                                    <i class="fab fa-facebook-f logo-sz"></i> Facebook
-                                </button>
-                            </div>
                             <div class="hapo-login-hr d-flex align-items-center justify-content-center">
                                 <hr  width="37%" align="left" /><span class="">Login With</span><hr  width="37%" align="right" />
                             </div>
@@ -79,22 +70,41 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
-                             <form class="hapo-form-login px-4 py-2">
+                             <form class="hapo-form-login px-4 py-2" method="POST" action="{{ route('register') }}">
+                                @csrf
                                 <div class="form-group hapo-register">
                                     <label for="username">User Name:</label>
-                                    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="User Name">
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group hapo-register">
                                     <label for="email">Email: </label>
-                                    <input type="email" class="form-control" id="email" placeholder="abc@123gmail.com">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="abc@123gmail.com">
+
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="form-group hapo-register">
                                     <label for="password">Password: </label>
-                                    <input type="password" class="form-control" id="password" placeholder="**********">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="**********">
+
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                  <div class="form-group hapo-register">
                                     <label for="password">Repeat Password: </label>
-                                    <input type="password" class="form-control" id="repeatpassword" placeholder="**********">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                                 <div class="hapo-register-link d-flex justify-content-lg-center align-items-center mt-4 mb-5">
                                     <button type="submit" class="btn btn-primary hapo-register-linkbut text-center">Submit</button>
