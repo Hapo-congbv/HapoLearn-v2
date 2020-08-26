@@ -17464,6 +17464,7 @@ body {
   text-align: center;
   margin-right: 20px;
   border-radius: 17px;
+  text-transform: uppercase;
 }
 #sibarNavbar li a:hover {
   color: #ffffff;

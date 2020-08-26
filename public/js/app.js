@@ -41534,9 +41534,11 @@ $(document).ready(function () {
       }
     }]
   });
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
+  $('[data-toggle="tooltip"]').tooltip();
+
+  if ($("#exampleModal input").hasClass("is-invalid")) {
+    $("#exampleModal").modal("show");
+  }
 });
 
 /***/ }),
