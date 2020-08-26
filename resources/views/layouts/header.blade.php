@@ -29,15 +29,15 @@
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                            {{ __('LOGOUT') }}
+                        onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+                            {{ __('Logout') }}
                         </a>
+
                         <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </div>
-                  </li>
+                </li>
                 @else
                 <li class="nav-item hapo-list-item">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">LOGIN/REGISTER</a>
