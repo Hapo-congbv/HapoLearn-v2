@@ -52,5 +52,4 @@ class Lesson extends Model
     {
         return $this->lesson('time')->get();
     }
-
 }
