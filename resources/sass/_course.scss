@@ -34,8 +34,8 @@
 
   .card {
     .card-title-course {
-      @include fontUTM(bold, 25px, #505353);
       -webkit-text-stroke: 0.8px;
+      @include fontUTM(bold, 25px, #505353);
     }
 
     .card-link-more {

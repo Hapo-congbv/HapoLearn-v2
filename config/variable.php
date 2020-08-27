@@ -2,5 +2,5 @@
 <?php
 return [
     'pagination' => '10',
-    'otherCourse' => '6',
+    'other_course' => '6',
 ];

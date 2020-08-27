@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Lesson;
+use App\Models\Lesson;
 use App\User;
-use App\Tag;
+use App\Models\Tag;
 
 class Course extends Model
 {

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Course;
-use App\Lesson;
+use App\Models\Course;
+use App\Models\Lesson;
 
 class LessonController extends Controller
 {
@@ -48,9 +48,9 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        $otherCourses = Course::limit(config('variable.otherCourse'))->get();
+        $otherCourses = Course::limit(config('variable.other_course'))->get();
         $lesson = Lesson::findOrfail($id);
-        return view('lessonDetail', compact(['lesson', 'otherCourses']));
+        return view('lesson_detail', compact(['lesson', 'otherCourses']));
     }
 
     /**

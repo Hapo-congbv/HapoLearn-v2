@@ -96,7 +96,7 @@
                         <div class="other-list">
                             @foreach ($otherCourses as $key => $other)
                                 <div class="other-list-item py-3 row mx-0 ">
-                                  <a href="{{ route('course.detail',$other->id) }}" class="col-10 no-gutters-custom"><strong>{{ ++$key }}.</strong> {{ $other->course_name }}.</a>
+                                  <a href="{{ route('course.detail', $other->id) }}" class="col-10 no-gutters-custom"><strong>{{ ++$key }}.</strong> {{ $other->course_name }}.</a>
                                 </div>
                             @endforeach
                             <div class="text-center p-4">
