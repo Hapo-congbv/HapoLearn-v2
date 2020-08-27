@@ -7,10 +7,10 @@
         <div class="collapse collapse navbar-collapse col-6 col-md-12 col-xl-8 p-0 justify-content-xl-end justify-content-md-center"  id="sibarNavbar">
             <ul class="navbar-nav align-items-center hapo-nav-item">
                 <li class="nav-item  hapo-list-items">
-                    <a class="nav-link" href="#">HOME</a>
+                    <a class="nav-link" href=" {{ route('home') }} ">HOME</a>
                 </li>
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="#">All COURSES</a>
+                    <a class="nav-link" href="{{ route('course.all') }}">All COURSES</a>
                 </li>
                 @if(Auth::check())
                 <li class="nav-item hapo-list-item">

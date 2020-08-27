@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Course;
+use App\Models\Course;
+use App\Models\Lesson;
 
-class CourseController extends Controller
+class LessonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //
     }
 
     /**
@@ -46,7 +48,9 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        //
+        $otherCourses = Course::limit(config('variable.other_course'))->get();
+        $lesson = Lesson::findOrfail($id);
+        return view('lesson_detail', compact(['lesson', 'otherCourses']));
     }
 
     /**

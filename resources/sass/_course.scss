@@ -1,0 +1,232 @@
+.filter {
+  .filter-icon {
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    background-color: $main_color;
+
+    .filter-text {
+      font: bold 16px/22px Open Sans;
+    }
+  }
+
+  .filter-search {
+    @extend .filter-icon;
+    .text-search {
+      width: 300px;
+      border: none;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .fa {
+      font-size: 20px;
+    }
+  }
+}
+
+.wrap-all-course {
+  .wrap-course-image {
+    width: 89px;
+    height: 89px;
+    border-radius: 50%;
+  }
+
+  .card {
+    .card-title-course {
+      -webkit-text-stroke: 0.8px;
+      @include fontUTM(bold, 25px, #505353);
+    }
+
+    .card-link-more {
+      font: bold 22px/25px UTM;
+      color: $main_color;
+      background-color: $color_link;
+      border-radius: 40px;
+    }
+
+    .card-text-course {
+      font: 18px/25px UTM;
+      color: #505353;
+      height: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-text-stroke: 0.3px;
+    }
+
+    .wrap-learners,
+    .wrap-lessons,
+    .wrap-quizes {
+      .card-link {
+        -webkit-text-stroke: 0.4px;
+        @include fontUTM(bold, 25px, #505353);
+      }
+
+      p {
+        font: bold 30px/37px UTM;
+        color: $color_link;
+      }
+    }
+  }
+}
+
+.hapo-detail {
+  background: #f2f2f2;
+}
+
+.hapo-detail-course-header {
+  height: 439px;
+  background: #3f6185;
+  border-radius: 10px;
+
+  img {
+    padding: 100px;
+  }
+}
+
+.hapo-detail-content-left {
+  background-color: $main_color;
+
+  .hapo-nav-detail {
+    border-bottom: 1px solid #e2e0e0;
+  }
+
+  .nav-tabs {
+    width: 50%;
+
+    .nav-item {
+      @include fontUTM(bold, 20px, #505353);
+    }
+  }
+
+  .hapo-nav-tabs {
+    width: 80%;
+  }
+
+  .hapo-filter {
+    width: 80px;
+    height: 30px;
+    margin-right: 15px;
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+
+    img {
+      margin-right: 5px;
+    }
+
+    p {
+      font: normal bold 16px/22px Open Sans;
+      color: #505353;
+      display: contents;
+    }
+  }
+
+  .hapo-header-form {
+    height: 30px;
+    position: relative;
+
+    .hapo-search {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border: 1px solid #c4c4c4;
+      border-radius: 5px;
+      padding-left: 10px;
+      color: #bababa;
+      font: normal bold 16px/22px Open Sans;
+    }
+
+    a {
+      position: absolute;
+      right: 5%;
+      margin-top: 5px;
+      font-size: 20px;
+      line-height: 23px;
+      color: #505353;
+    }
+  }
+
+  .course-lesson-detail {
+    .border-top-bot {
+      border-top: 1px solid #e2e0e0;
+      border-bottom: 1px solid #e2e0e0;
+    }
+
+    p {
+      @include fontUTM(bold, 18px, #505353);
+    }
+  }
+
+  .hapo-lesson-description,
+  .hapo-lesson-requirement {
+    .hapo-description-header,
+    .hapo-requirement-header {
+      @include fontUTM(bold, 25px, #505353);
+    }
+  }
+}
+
+.btn-learn {
+  background-color: $color_link;
+  box-shadow: inset 0 1.5px 2px #6f8710;
+  border-radius: 22px;
+  @include fontUTM(bold, 15px, $main_color);
+}
+
+.course-info {
+  @include fontUTM(normal, 25px, #bdb9b9);
+
+  .hapo-description {
+    background-color: $main_color;
+    height: 439px;
+
+    .hapo-description-header {
+      -webkit-text-stroke: 0.5px;
+      @include fontUTM(bold, 25px, #505353);
+    }
+
+    hr {
+      background-color: $color_link;
+    }
+  }
+
+  .course-info-text {
+    background-color: $main_color;
+    padding: 20px;
+    border-top: 1px solid #e2e0e0;
+    border-bottom: 1px solid #e2e0e0;
+  }
+
+  .course-info-tittle {
+    background-color: #b2d235;
+    padding: 20px;
+    @include fontUTM(bold, 25px, $main_color);
+  }
+
+  .btn-learn {
+    font-size: 18px;
+  }
+
+  .other-list {
+    background-color: $main_color;
+
+    .other-list-item {
+      border-top: 1px solid #e2e0e0;
+      border-bottom: 1px solid #e2e0e0;
+      -webkit-text-stroke: 0.3px #505353;
+      @include fontUTM(normal, 16px, #505353);
+
+      a {
+        color: #505353;
+        -webkit-text-stroke: 0.5px #505353;
+
+        &:hover {
+          -webkit-text-stroke: 0.8px $color_link;
+          text-decoration: none;
+          color: $color_link;
+        }
+      }
+    }
+  }
+}

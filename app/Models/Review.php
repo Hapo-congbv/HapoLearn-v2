@@ -1,24 +1,24 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Course extends Model
+class Review extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'courses';
+    protected $table = 'reviews';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['course_name', 'description', 'image', 'price', 'time', 'quizze', 'teacher_id'];
+    protected $fillable = ['content', 'type', 'rating', 'target_id'];
 
     /**
      * Indicates if the model should be timestamped.
