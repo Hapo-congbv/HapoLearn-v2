@@ -6,7 +6,7 @@
             <div class="row pt-5">
                 <div class="col-7 p-0">
                     <div class="hapo-detail-course-header d-flex justify-content-center">
-                        <img src="{{ asset('storage/images/'.$lesson->course_lesson->image) }} " alt="">
+                        <img src="{{ asset('storage/images/'.$lesson->course->image) }} " alt="">
                     </div>
                     <div class="hapo-detail-content-left mt-3">
                         <nav class="hapo-nav-detail">
@@ -38,7 +38,7 @@
                                 <div class="hapo-tag px-3 mt-5 mb-3 d-flex">
                                        <div class="d-flex justify-content-center">
                                             <h4>Tag: </h4>
-                                            @foreach ($lesson->course_lesson->tags as $tag)
+                                            @foreach ($lesson->course->tags as $tag)
                                                 <span class="tag-item ml-3 d-block btn btn-light">{{ $tag->tag_name }}</span>
                                             @endforeach
                                        </div>
@@ -69,7 +69,7 @@
                             <i class="far fa-clock"></i> Times:  {{ $lesson->time_lesson }}
                         </div>
                         <div class="course-info-text">
-                            <i class="fas fa-hashtag"></i> Tags: {{ $lesson->course_lesson->tag_course }}
+                            <i class="fas fa-hashtag"></i> Tags: {{ $lesson->course->tag_course }}
                         </div>
                         <div class="course-info-text">
                             <i class="far fa-money-bill-alt"></i> Price: {{ number_format($lesson->price) }} $
