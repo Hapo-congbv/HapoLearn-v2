@@ -66,7 +66,7 @@
                             <i class="fas fa-users"></i> Learners: {{ $lesson->count_user }}
                         </div>
                         <div class="course-info-text">
-                            <i class="far fa-clock"></i> Times:  {{ floor($lesson->time / 60) }} hours {{ ceil($lesson->time - floor($lesson->time / 60) * 60) }} minutes
+                            <i class="far fa-clock"></i> Times:  {{ $lesson->time_lesson }}
                         </div>
                         <div class="course-info-text">
                             <i class="fas fa-hashtag"></i> Tags: {{ $lesson->course_lesson->tag_course }}

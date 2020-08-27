@@ -49,7 +49,7 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $otherCourses = Course::limit(config('variable.otherCourse'))->get();
+        $otherCourses = Course::limit(config('variable.other_course'))->get();
         $course = Course::findOrfail($id);
         $lessonCourse = $course->lesson()->paginate(config('variable.pagination'));
         return view('course_detail', compact(['course', 'lessonCourse', 'otherCourses']));

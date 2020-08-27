@@ -57,7 +57,10 @@ class Course extends Model
 
     public function getTimeAttribute()
     {
-        return $this->lesson()->sum('time');
+        $time = $this->lesson()->sum('time');
+        $hours = floor($time / 3600);
+        $minutes = ceil(($time / 3600 - $hours) * 60);
+        return $hours . " hours" . $minutes . " minutes";
     }
 
     public function getTagsAttribute()

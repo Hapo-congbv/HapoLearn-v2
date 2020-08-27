@@ -50,6 +50,9 @@ class Lesson extends Model
 
     public function getTimeLessonAttribute()
     {
-        return $this->lesson('time')->get();
+        $time = $this->time;
+        $hours = floor($time / 3600);
+        $minutes = ceil(($time / 3600 - $hours) * 60);
+        return $hours . " hours" . $minutes . " minutes";
     }
 }

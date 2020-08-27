@@ -82,7 +82,7 @@
                             <i class="far fa-list-alt"></i> Lessons: {{ $course->count_lesson }} lessons
                         </div>
                         <div class="course-info-text">
-                            <i class="far fa-clock"></i> Times:  {{ floor($course->time / 60) }} hours {{ ceil($course->time - floor($course->time / 60) * 60) }} minutes
+                            <i class="far fa-clock"></i> Times: {{ $course->time }}
                         </div>
                         <div class="course-info-text">
                             <i class="fas fa-hashtag"></i> Tags: {{ $course->tag_course }}
