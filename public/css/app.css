@@ -17464,6 +17464,7 @@ body {
   text-align: center;
   margin-right: 20px;
   border-radius: 17px;
+  text-transform: uppercase;
 }
 #sibarNavbar li a:hover {
   color: #ffffff;
@@ -18482,4 +18483,202 @@ footer .hapo-copyright p {
   .color-fix {
     height: 320px;
   }
+}
+.filter .filter-icon, .filter .filter-search {
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+.filter .filter-icon .filter-text, .filter .filter-search .filter-text {
+  font: bold 16px/22px Open Sans;
+}
+.filter .filter-search .text-search {
+  width: 300px;
+  border: none;
+}
+.filter .filter-search .text-search:focus {
+  outline: none;
+}
+.filter .filter-search .fa {
+  font-size: 20px;
+}
+
+.wrap-all-course .wrap-course-image {
+  width: 89px;
+  height: 89px;
+  border-radius: 50%;
+}
+.wrap-all-course .card .card-title-course {
+  -webkit-text-stroke: 0.8px;
+  font: bold 25px UTM;
+  color: #505353;
+}
+.wrap-all-course .card .card-link-more {
+  font: bold 22px/25px UTM;
+  color: #ffffff;
+  background-color: #b2d235;
+  border-radius: 40px;
+}
+.wrap-all-course .card .card-text-course {
+  font: 18px/25px UTM;
+  color: #505353;
+  height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-stroke: 0.3px;
+}
+.wrap-all-course .card .wrap-learners .card-link,
+.wrap-all-course .card .wrap-lessons .card-link,
+.wrap-all-course .card .wrap-quizes .card-link {
+  -webkit-text-stroke: 0.4px;
+  font: bold 25px UTM;
+  color: #505353;
+}
+.wrap-all-course .card .wrap-learners p,
+.wrap-all-course .card .wrap-lessons p,
+.wrap-all-course .card .wrap-quizes p {
+  font: bold 30px/37px UTM;
+  color: #b2d235;
+}
+
+.hapo-detail {
+  background: #f2f2f2;
+}
+
+.hapo-detail-course-header {
+  height: 439px;
+  background: #3f6185;
+  border-radius: 10px;
+}
+.hapo-detail-course-header img {
+  padding: 100px;
+}
+
+.hapo-detail-content-left {
+  background-color: #ffffff;
+}
+.hapo-detail-content-left .hapo-nav-detail {
+  border-bottom: 1px solid #e2e0e0;
+}
+.hapo-detail-content-left .nav-tabs {
+  width: 50%;
+}
+.hapo-detail-content-left .nav-tabs .nav-item {
+  font: bold 20px UTM;
+  color: #505353;
+}
+.hapo-detail-content-left .hapo-nav-tabs {
+  width: 80%;
+}
+.hapo-detail-content-left .hapo-filter {
+  width: 80px;
+  height: 30px;
+  margin-right: 15px;
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+}
+.hapo-detail-content-left .hapo-filter img {
+  margin-right: 5px;
+}
+.hapo-detail-content-left .hapo-filter p {
+  font: normal bold 16px/22px Open Sans;
+  color: #505353;
+  display: contents;
+}
+.hapo-detail-content-left .hapo-header-form {
+  height: 30px;
+  position: relative;
+}
+.hapo-detail-content-left .hapo-header-form .hapo-search {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  padding-left: 10px;
+  color: #bababa;
+  font: normal bold 16px/22px Open Sans;
+}
+.hapo-detail-content-left .hapo-header-form a {
+  position: absolute;
+  right: 5%;
+  margin-top: 5px;
+  font-size: 20px;
+  line-height: 23px;
+  color: #505353;
+}
+.hapo-detail-content-left .course-lesson-detail .border-top-bot {
+  border-top: 1px solid #e2e0e0;
+  border-bottom: 1px solid #e2e0e0;
+}
+.hapo-detail-content-left .course-lesson-detail p {
+  font: bold 18px UTM;
+  color: #505353;
+}
+.hapo-detail-content-left .hapo-lesson-description .hapo-description-header,
+.hapo-detail-content-left .hapo-lesson-description .hapo-requirement-header,
+.hapo-detail-content-left .hapo-lesson-requirement .hapo-description-header,
+.hapo-detail-content-left .hapo-lesson-requirement .hapo-requirement-header {
+  font: bold 25px UTM;
+  color: #505353;
+}
+
+.btn-learn {
+  background-color: #b2d235;
+  box-shadow: inset 0 1.5px 2px #6f8710;
+  border-radius: 22px;
+  font: bold 15px UTM;
+  color: #ffffff;
+}
+
+.course-info {
+  font: normal 25px UTM;
+  color: #bdb9b9;
+}
+.course-info .hapo-description {
+  background-color: #ffffff;
+  height: 439px;
+}
+.course-info .hapo-description .hapo-description-header {
+  -webkit-text-stroke: 0.5px;
+  font: bold 25px UTM;
+  color: #505353;
+}
+.course-info .hapo-description hr {
+  background-color: #b2d235;
+}
+.course-info .course-info-text {
+  background-color: #ffffff;
+  padding: 20px;
+  border-top: 1px solid #e2e0e0;
+  border-bottom: 1px solid #e2e0e0;
+}
+.course-info .course-info-tittle {
+  background-color: #b2d235;
+  padding: 20px;
+  font: bold 25px UTM;
+  color: #ffffff;
+}
+.course-info .btn-learn {
+  font-size: 18px;
+}
+.course-info .other-list {
+  background-color: #ffffff;
+}
+.course-info .other-list .other-list-item {
+  border-top: 1px solid #e2e0e0;
+  border-bottom: 1px solid #e2e0e0;
+  -webkit-text-stroke: 0.3px #505353;
+  font: normal 16px UTM;
+  color: #505353;
+}
+.course-info .other-list .other-list-item a {
+  color: #505353;
+  -webkit-text-stroke: 0.5px #505353;
+}
+.course-info .other-list .other-list-item a:hover {
+  -webkit-text-stroke: 0.8px #b2d235;
+  text-decoration: none;
+  color: #b2d235;
 }

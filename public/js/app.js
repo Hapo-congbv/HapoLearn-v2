@@ -41534,8 +41534,21 @@ $(document).ready(function () {
       }
     }]
   });
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').tooltip();
+
+  if ($("#exampleModal input").hasClass("is-invalid")) {
+    $("#exampleModal").modal("show");
+  } // search filter
+
+
+  $(document).ready(function () {
+    $('#myInput').on('keyup', function (event) {
+      event.preventDefault();
+      var key = $(this).val().toLowerCase();
+      $('#myTable tr').filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(key) > -1);
+      });
+    });
   });
 });
 

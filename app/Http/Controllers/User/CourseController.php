@@ -92,7 +92,7 @@ class CourseController extends Controller
     public function search(Request $request)
     {
         $courses = Course::where('course_name', 'like', '%'. $request->search .'%')
-                ->paginate(config('variable.pagination'));
+        ->paginate(config('variable.pagination'));
         return view('course', compact('courses'));
     }
 }
