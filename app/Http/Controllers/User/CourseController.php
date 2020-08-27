@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
 
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Course;
 
@@ -14,7 +16,8 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $courses = Course::paginate(config('variable.pagination'));
+        return view('course', compact('courses'));
     }
 
     /**
@@ -46,7 +49,10 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        //
+        $otherCourses = Course::limit(config('variable.otherCourse'))->get();
+        $course = Course::findOrfail($id);
+        $lessonCourse = $course->lesson()->paginate(config('variable.pagination'));
+        return view('courseDetail', compact(['course', 'lessonCourse', 'otherCourses']));
     }
 
     /**
@@ -81,5 +87,12 @@ class CourseController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $courses = Course::where('course_name', 'like', '%'. $request->search .'%')
+                ->paginate(config('variable.pagination'));
+        return view('course', compact('courses'));
     }
 }

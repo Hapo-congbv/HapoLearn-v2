@@ -20,3 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/course_all', 'User\CourseController@index')->name('course.all');
+
+Route::post('/course_search', 'User\CourseController@search')->name('course.search');
+
+Route::get('/course_detail/{id}', 'User\CourseController@show')->name('course.detail');
+
+Route::get('/lesson_detail/{id}', 'User\LessonController@show')->name('lesson.detail');

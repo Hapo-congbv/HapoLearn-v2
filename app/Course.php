@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Lesson;
+use App\User;
+use App\Tag;
 
 class Course extends Model
 {
@@ -26,4 +29,55 @@ class Course extends Model
      * @var bool
      */
     public $timestamps = true;
+
+    public function lesson()
+    {
+        return $this->hasMany(Lesson::class, 'course_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class, 'course_users');
+    }
+
+    public function tag()
+    {
+        return $this->belongsToMany(Tag::class, 'course_tags');
+    }
+
+    public function getCountUserAttribute()
+    {
+        return $this->user()->count();
+    }
+
+    public function getCountLessonAttribute()
+    {
+        return $this->lesson()->count();
+    }
+
+    public function getTimeAttribute()
+    {
+        return $this->lesson()->sum('time');
+    }
+
+    public function getTagsAttribute()
+    {
+        return $this->tag;
+    }
+
+    public function getTagCourseAttribute()
+    {
+        $tagArr = $this->tag;
+        if (count($tagArr)) {
+            $tagString = $tagArr->first()->tag_name;
+
+            for ($i = 1; $i < count($tagArr); $i++) {
+                $tagString .= ", " . $tagArr[$i]->tag_name;
+            }
+        } else {
+            $tagString = "";
+        }
+
+        return $tagString;
+    }
 }

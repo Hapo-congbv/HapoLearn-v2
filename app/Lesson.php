@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Course;
 
 class Lesson extends Model
 {
@@ -26,4 +27,30 @@ class Lesson extends Model
      * @var bool
      */
     public $timestamps = true;
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
+    }
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function getCourseLessonAttribute()
+    {
+        return $this->course;
+    }
+
+    public function getCountUserLessonAttribute()
+    {
+        return $this->user()->count();
+    }
+
+    public function getTimeLessonAttribute()
+    {
+        return $this->lesson('time')->get();
+    }
+
 }
