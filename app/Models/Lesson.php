@@ -38,11 +38,6 @@ class Lesson extends Model
         return $this->hasMany(User::class);
     }
 
-    public function getCourseLessonAttribute()
-    {
-        return $this->course;
-    }
-
     public function getCountUserLessonAttribute()
     {
         return $this->user()->count();

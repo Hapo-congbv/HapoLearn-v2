@@ -60,7 +60,7 @@
                 <div class="col-4 course-info h-50 ml-5 w-100 px-0">
                     <div class="hapo-data-lesson-detail">
                         <div class="course-info-text">
-                            <i class="fas fa-book"></i> Course: {{ $lesson->course_lesson->course_name }}
+                            <i class="fas fa-book"></i> Course: {{ $lesson->course->course_name }}
                         </div>
                         <div class="course-info-text">
                             <i class="fas fa-users"></i> Learners: {{ $lesson->count_user }}
