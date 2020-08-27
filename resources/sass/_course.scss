@@ -58,8 +58,8 @@
     .wrap-lessons,
     .wrap-quizes {
       .card-link {
-        @include fontUTM(bold, 25px, #505353);
         -webkit-text-stroke: 0.4px;
+        @include fontUTM(bold, 25px, #505353);
       }
 
       p {
