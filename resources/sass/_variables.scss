@@ -10,6 +10,7 @@
 $color_link: #b2d235;
 $main_color: #ffffff;
 $color_txt: #11114e;
+$color_title: #505353;
 
 @mixin fontUTM($weight, $size, $color) {
   font: $weight $size UTM;
