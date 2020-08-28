@@ -18556,6 +18556,7 @@ footer .hapo-copyright p {
 
 .hapo-detail-content-left {
   background-color: #ffffff;
+  border-radius: 10px;
 }
 .hapo-detail-content-left .hapo-nav-detail {
   border-bottom: 1px solid #e2e0e0;
@@ -18566,6 +18567,13 @@ footer .hapo-copyright p {
 .hapo-detail-content-left .nav-tabs .nav-item {
   font: bold 20px UTM;
   color: #505353;
+}
+.hapo-detail-content-left .nav-tabs .nav-item:hover {
+  color: #b2d235;
+}
+.hapo-detail-content-left .nav-tabs .nav-link.active {
+  color: #ffffff;
+  background-color: #b2d235;
 }
 .hapo-detail-content-left .hapo-nav-tabs {
   width: 80%;
@@ -18618,10 +18626,43 @@ footer .hapo-copyright p {
 }
 .hapo-detail-content-left .hapo-lesson-description .hapo-description-header,
 .hapo-detail-content-left .hapo-lesson-description .hapo-requirement-header,
+.hapo-detail-content-left .hapo-lesson-description .hapo-teacher-header,
+.hapo-detail-content-left .hapo-lesson-description .hapo-program-header,
+.hapo-detail-content-left .hapo-lesson-description .hapo-review-header,
+.hapo-detail-content-left .hapo-lesson-description .hapo-review-leave-comment,
 .hapo-detail-content-left .hapo-lesson-requirement .hapo-description-header,
-.hapo-detail-content-left .hapo-lesson-requirement .hapo-requirement-header {
+.hapo-detail-content-left .hapo-lesson-requirement .hapo-requirement-header,
+.hapo-detail-content-left .hapo-lesson-requirement .hapo-teacher-header,
+.hapo-detail-content-left .hapo-lesson-requirement .hapo-program-header,
+.hapo-detail-content-left .hapo-lesson-requirement .hapo-review-header,
+.hapo-detail-content-left .hapo-lesson-requirement .hapo-review-leave-comment,
+.hapo-detail-content-left .tab-pane .hapo-description-header,
+.hapo-detail-content-left .tab-pane .hapo-requirement-header,
+.hapo-detail-content-left .tab-pane .hapo-teacher-header,
+.hapo-detail-content-left .tab-pane .hapo-program-header,
+.hapo-detail-content-left .tab-pane .hapo-review-header,
+.hapo-detail-content-left .tab-pane .hapo-review-leave-comment,
+.hapo-detail-content-left .leave-commnent .hapo-description-header,
+.hapo-detail-content-left .leave-commnent .hapo-requirement-header,
+.hapo-detail-content-left .leave-commnent .hapo-teacher-header,
+.hapo-detail-content-left .leave-commnent .hapo-program-header,
+.hapo-detail-content-left .leave-commnent .hapo-review-header,
+.hapo-detail-content-left .leave-commnent .hapo-review-leave-comment {
+  -webkit-text-stroke: 0.5px;
   font: bold 25px UTM;
   color: #505353;
+}
+.hapo-detail-content-left .hapo-lesson-description .hapo-lesson-contentdes,
+.hapo-detail-content-left .hapo-lesson-description .hapo-lesson-requicontent,
+.hapo-detail-content-left .hapo-lesson-requirement .hapo-lesson-contentdes,
+.hapo-detail-content-left .hapo-lesson-requirement .hapo-lesson-requicontent,
+.hapo-detail-content-left .tab-pane .hapo-lesson-contentdes,
+.hapo-detail-content-left .tab-pane .hapo-lesson-requicontent,
+.hapo-detail-content-left .leave-commnent .hapo-lesson-contentdes,
+.hapo-detail-content-left .leave-commnent .hapo-lesson-requicontent {
+  -webkit-text-stroke: 0.05px;
+  font: normal 18px UTM;
+  color: #949292;
 }
 
 .btn-learn {
@@ -18681,4 +18722,123 @@ footer .hapo-copyright p {
   -webkit-text-stroke: 0.8px #b2d235;
   text-decoration: none;
   color: #b2d235;
+}
+
+.hapo-teacher-body .hapo-teacher-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.hapo-teacher-body .hapo-teacher-name {
+  text-transform: capitalize;
+  -webkit-text-stroke: 0.4px;
+  font: bold 22px UTM;
+  color: #505353;
+}
+.hapo-teacher-body .hapo-teacher-experience {
+  font: normal 14px UTM;
+  color: #bdb9d9;
+}
+.hapo-teacher-body .hapo-teacher-contact .fab {
+  margin: 0 3px;
+  border-radius: 50%;
+  border: 0.5px solid #f44336;
+  box-sizing: border-box;
+}
+.hapo-teacher-body .hapo-teacher-contact .fa-google-plus-g {
+  color: #f44336;
+  padding: 3px;
+}
+.hapo-teacher-body .hapo-teacher-contact .fa-facebook-f {
+  color: #1976d2;
+  padding: 4px 8px;
+}
+.hapo-teacher-body .hapo-teacher-contact .fa-slack {
+  color: #b2d235;
+  padding: 4px 5px;
+}
+
+.hapo-teacher-description {
+  font: 18px/26px UTM;
+  color: #949292;
+  letter-spacing: -0.02em;
+  -webkit-text-stroke: 0.04px;
+}
+
+.hapo-program-lesson {
+  font: normal 14px UTM;
+  color: #bdb9d9;
+}
+
+.hapo-program-name {
+  -webkit-text-stroke: 0.5px;
+  font: bold 18px UTM;
+  color: #505353;
+}
+
+.hapo-review-bodyleft {
+  background: #505353;
+  padding: 20px;
+  width: 40%;
+}
+.hapo-review-bodyleft .hapo-review-star {
+  -webkit-text-stroke: 0.5px;
+  font: bold 60px UTM;
+  color: #ffffff;
+}
+.hapo-review-bodyleft .fa-star {
+  color: #ffd567;
+  font-size: 25px;
+}
+.hapo-review-bodyleft .hapo-review-rating {
+  font: normal 16px UTM;
+  color: #ffffff;
+}
+
+.hapo-review-bodyright {
+  border: 1px solid #dfdfdf;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 60%;
+}
+.hapo-review-bodyright .progress {
+  height: 5px;
+}
+.hapo-review-bodyright .progress .progress-bar {
+  background: #b2d235;
+  width: 100%;
+}
+
+.hapo-review-content .hapo-review-showall {
+  -webkit-text-stroke: 1px;
+  font: bold 18px UTM;
+  color: #505353;
+}
+.hapo-review-content .hapo-review-content-header img {
+  width: 40px;
+  height: 40px;
+}
+.hapo-review-content .hapo-review-content-header .hapo-review-content-username {
+  text-transform: capitalize;
+  -webkit-text-stroke: 1px;
+  font: bold 18px UTM;
+  color: #505353;
+}
+.hapo-review-content .hapo-review-content-header .hapo-review-content-rating {
+  color: #b2d235;
+}
+.hapo-review-content .hapo-review-content-header .hapo-review-content-time {
+  font: normal 14px UTM;
+  color: #bdb9d9;
+}
+.hapo-review-content .hapo-review-content-body {
+  -webkit-text-stroke: 0.05px;
+  font: normal 18px UTM;
+  color: #949292;
+}
+
+.leave-commnent textarea {
+  -webkit-text-stroke: 0.1px;
+  font: normal 18px UTM;
+  color: #747474;
 }
