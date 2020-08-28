@@ -101,7 +101,7 @@
                                    05 Reviews
                                 </h4>
                                 <hr>
-                                <div class="hapo-review-body p-3 d-flex">
+                                <div class="hapo-review-body px-3 d-flex">
                                     <div class="hapo-review-bodyleft d-flex justify-content-center align-items-center flex-column">
                                        <p class="hapo-review-star m-0">5</p>
                                        <span>
@@ -185,9 +185,13 @@
                                     </div>
                                     <hr>
                                 </div>
+                                <div class="leave-commnent">
+                                    <div class="hapo-review-leave-comment mb-3">Leave a Comment</div>
+                                    <textarea name="comment" id="" cols="30" rows="3" class="form-control mb-3" placeholder="Message"></textarea>
+                                    <button class="btn btn-learn px-3">Send</button>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-4 course-info h-50 ml-5 w-100 px-0">

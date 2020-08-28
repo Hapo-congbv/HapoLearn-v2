@@ -35,7 +35,7 @@
   .card {
     .card-title-course {
       -webkit-text-stroke: 0.8px;
-      @include fontUTM(bold, 25px, #505353);
+      @include fontUTM(bold, 25px, $color_title);
     }
 
     .card-link-more {
@@ -47,7 +47,7 @@
 
     .card-text-course {
       font: 18px/25px UTM;
-      color: #505353;
+      color: $color_title;
       height: 100px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -59,7 +59,7 @@
     .wrap-quizes {
       .card-link {
         -webkit-text-stroke: 0.4px;
-        @include fontUTM(bold, 25px, #505353);
+        @include fontUTM(bold, 25px, $color_title);
       }
 
       p {
@@ -96,7 +96,7 @@
     width: 50%;
 
     .nav-item {
-      @include fontUTM(bold, 20px, #505353);
+      @include fontUTM(bold, 20px, $color_title);
       &:hover {
         color: $color_link;
       }
@@ -126,7 +126,7 @@
 
     p {
       font: normal bold 16px/22px Open Sans;
-      color: #505353;
+      color: $color_title;
       display: contents;
     }
   }
@@ -152,7 +152,7 @@
       margin-top: 5px;
       font-size: 20px;
       line-height: 23px;
-      color: #505353;
+      color: $color_title;
     }
   }
 
@@ -163,19 +163,22 @@
     }
 
     p {
-      @include fontUTM(bold, 18px, #505353);
+      @include fontUTM(bold, 18px, $color_title);
     }
   }
 
   .hapo-lesson-description,
   .hapo-lesson-requirement,
-  .tab-pane {
+  .tab-pane,
+  .leave-commnent {
     .hapo-description-header,
     .hapo-requirement-header,
     .hapo-teacher-header,
-    .hapo-program-header {
-      -webkit-text-stroke: 0.4px;
-      @include fontUTM(bold, 25px, #505353);
+    .hapo-program-header,
+    .hapo-review-header,
+    .hapo-review-leave-comment {
+      -webkit-text-stroke: 0.5px;
+      @include fontUTM(bold, 25px, $color_title);
     }
 
     .hapo-lesson-contentdes,
@@ -202,7 +205,7 @@
 
     .hapo-description-header {
       -webkit-text-stroke: 0.5px;
-      @include fontUTM(bold, 25px, #505353);
+      @include fontUTM(bold, 25px, $color_title);
     }
 
     hr {
@@ -233,12 +236,12 @@
     .other-list-item {
       border-top: 1px solid #e2e0e0;
       border-bottom: 1px solid #e2e0e0;
-      -webkit-text-stroke: 0.3px #505353;
-      @include fontUTM(normal, 16px, #505353);
+      -webkit-text-stroke: 0.3px $color_title;
+      @include fontUTM(normal, 16px, $color_title);
 
       a {
-        color: #505353;
-        -webkit-text-stroke: 0.5px #505353;
+        color: $color_title;
+        -webkit-text-stroke: 0.5px $color_title;
 
         &:hover {
           -webkit-text-stroke: 0.8px $color_link;
@@ -260,7 +263,7 @@
   .hapo-teacher-name {
     text-transform: capitalize;
     -webkit-text-stroke: 0.4px;
-    @include fontUTM(bold, 22px, #505353);
+    @include fontUTM(bold, 22px, $color_title);
   }
 
   .hapo-teacher-experience {
@@ -305,16 +308,11 @@
 
 .hapo-program-name {
   -webkit-text-stroke: 0.5px;
-  @include fontUTM(bold, 18px, #505353);
-}
-
-.hapo-review-header {
-  -webkit-text-stroke: 0.5px;
-  @include fontUTM(bold, 25px, #505353);
+  @include fontUTM(bold, 18px, $color_title);
 }
 
 .hapo-review-bodyleft {
-  background: #505353;
+  background: $color_title;
   padding: 20px;
   width: 40%;
 
@@ -352,7 +350,7 @@
 .hapo-review-content {
   .hapo-review-showall {
     -webkit-text-stroke: 1px;
-    @include fontUTM(bold, 18px, #505353);
+    @include fontUTM(bold, 18px, $color_title);
   }
 
   .hapo-review-content-header {
@@ -364,7 +362,7 @@
     .hapo-review-content-username {
       text-transform: capitalize;
       -webkit-text-stroke: 1px;
-      @include fontUTM(bold, 18px, #505353);
+      @include fontUTM(bold, 18px, $color_title);
     }
 
     .hapo-review-content-rating {
@@ -380,4 +378,11 @@
     -webkit-text-stroke: 0.05px;
     @include fontUTM(normal, 18px, #949292);
   }
+}
+
+.leave-commnent {
+    textarea {
+        -webkit-text-stroke: 0.1px;
+        @include fontUTM(normal, 18px, #747474);
+    }
 }
