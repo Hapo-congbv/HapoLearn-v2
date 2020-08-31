@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Course;
 
-class CourseSeeder extends Seeder
+class CourseTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class CourseSeeder extends Seeder
      */
     public function run()
     {
-        factory(Course::class, 10)->create();
+        factory(Course::class, 20)->create();
     }
 }
