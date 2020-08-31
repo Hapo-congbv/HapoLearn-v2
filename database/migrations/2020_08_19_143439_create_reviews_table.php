@@ -15,10 +15,11 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('content')->nullable();
-            $table->string('type')->nullable();
+            $table->text('content')->nullable();
             $table->integer('rating')->nullable();
-            $table->integer('target_id')->nullable();
+            $table->integer('user_id')->nullable();
+            $table->integer('course_id')->nullable();
+            $table->integer('lesson_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
