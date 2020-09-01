@@ -17,7 +17,6 @@
         </div>
         <div class="course-all row">
             @foreach ($courses as $key => $item)
-            {{-- {{ dd($item->teacher_id)}} --}}
             <div class="left-course col-6 my-4">
                 <div class="card">
                     <div class="card-body">
