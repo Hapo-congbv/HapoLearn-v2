@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Lesson;
 use App\User;
+use App\Models\Review;
 use App\Models\Tag;
 
 class Course extends Model
@@ -35,9 +36,19 @@ class Course extends Model
         return $this->hasMany(Lesson::class, 'course_id');
     }
 
+    public function teacher()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function user()
     {
         return $this->belongsToMany(User::class, 'course_users');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'course_id')->whereNull('lesson_id');
     }
 
     public function tag()
@@ -82,5 +93,30 @@ class Course extends Model
         }
 
         return $tagString;
+    }
+
+    public function getCourseReviewCountAttribute()
+    {
+        return $this->reviews->count();
+    }
+
+    public function getCourseAvgStarAttribute()
+    {
+        $avgStar = $this->reviews->avg('rating');
+        return floor($avgStar);
+    }
+
+    public function getCourseRatingCount($star)
+    {
+        $query = $this->reviews->where('rating', $star)->count();
+        return $query;
+    }
+
+    public function getCoursePrecentRating($star)
+    {
+        $query = $this->getCourseRatingCount($star);
+        $allRatingCount = ($this->course_review_count) ?: 1;
+        $percent = $query / $allRatingCount * 100;
+        return $percent;
     }
 }

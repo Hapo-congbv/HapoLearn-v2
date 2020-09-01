@@ -63,7 +63,7 @@
                                          <img src="{{ asset('storage/images/teacher.png') }} " alt="">
                                      </div>
                                      <div class="hapo-teacher-content ml-3 d-flex flex-column ">
-                                         <span class="hapo-teacher-name">Luu trung nghia</span>
+                                         <span class="hapo-teacher-name">{{ $course->teacher->name }} </span>
                                          <span class="hapo-teacher-experience">Second Year Teacher</span>
                                          <span class="hapo-teacher-contact mt-2">
                                             <a href="#"><i class="fab fa-google-plus-g"></i></a>
@@ -85,85 +85,95 @@
                             <div class="tab-pane fade" id="navReview" role="tabpanel" aria-labelledby="navReviewTab">
                                <div class="px-3">
                                     <h4 class="hapo-review-header mt-2 px-3">
-                                        05 Reviews
+                                        {{ $course->course_review_count }} Reviews
                                     </h4>
                                     <hr>
-                                    <div class="hapo-review-body p-3 d-flex">
+                                    <div class="hapo-review-body px-3 d-flex">
                                         <div class="hapo-review-bodyleft d-flex justify-content-center align-items-center flex-column">
-                                        <p class="hapo-review-star m-0">5</p>
-                                        <span>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                           <p class="hapo-review-star m-0">{{ $course->course_avg_star }}/5</p>
+                                           <span>
+                                            @for ($i = 0; $i < $ratingStar['five_star']; $i++)
+                                                @if ($i < $course->course_avg_star)
+                                                    <i class="fas fa-star"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
                                             </span>
-                                            <p class="hapo-review-rating">2 Ratings</p>
+                                            <p class="hapo-review-rating">{{ $course->course_review_count }} Ratings</p>
                                         </div>
                                         <div class="hapo-review-bodyright ml-4">
-                                        <div class="mt-2 d-flex align-items-center justify-content-between px-3 ">
+                                           <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">5 start</div>
                                                 <div class="progress w-75">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div class="">2</div>
-                                        </div>
-                                        <div class="mt-2 d-flex align-items-center justify-content-between px-3 ">
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['five_star']) }}%" hidden id="fiveStarVal">
+                                                    <div class="progress-bar" id="fiveStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                  </div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['five_star']) }}</div>
+                                           </div>
+                                           <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">4 start</div>
                                                 <div class="progress w-75">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['four_star']) }}%" hidden id="fourStarVal">
+                                                    <div class="progress-bar" id="fourStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="">2</div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['four_star']) }}</div>
                                             </div>
-                                            <div class="mt-2 d-flex align-items-center justify-content-between px-3 ">
+                                            <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">3 start</div>
                                                 <div class="progress w-75">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['three_star']) }}%" hidden id="threeStarVal">
+                                                    <div class="progress-bar" id="threeStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="">2</div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['three_star']) }}</div>
                                             </div>
-                                            <div class="mt-2 d-flex align-items-center justify-content-between px-3 ">
+                                            <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">2 start</div>
                                                 <div class="progress w-75">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['two_star']) }}%" hidden id="twoStarVal">
+                                                    <div class="progress-bar" id="twoStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="">2</div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['two_star']) }}</div>
                                             </div>
-                                            <div class="mt-2 d-flex align-items-center justify-content-between px-3 ">
+                                            <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">1 start</div>
                                                 <div class="progress w-75">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['one_star']) }}%" hidden id="oneStarVal">
+                                                    <div class="progress-bar" id="oneStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="">2</div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['one_star']) }}</div>
                                             </div>
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="hapo-review-content">
                                         <div class="hapo-review-showall">Show all review <i class="fas fa-sort-down"></i></div>
+                                        @foreach ($courReviews as $courseReview)
                                         <div class="hapo-review-user">
                                             <div class="hapo-review-content-header d-flex justify-content-start align-items-center mt-5">
                                                 <div class="hapo-review-content-avatar mr-3">
                                                     <img class="rounded-circle" src="{{ asset('storage/images/user.png') }} " alt="">
                                                 </div>
                                                 <div class="hapo-review-content-username mr-3">
-                                                    <p class="m-0 p-0">Nam hoang</p>
+                                                <p class="m-0 p-0">{{ $courseReview->user->name }} </p>
                                                 </div>
+                                                <?php $star = $courseReview->rating ?>
                                                 <div class="hapo-review-content-rating mr-3">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
+                                                    @for ($i = 0; $i < $ratingStar['five_star']; $i++)
+                                                        @if ($i < $star)
+                                                            <i class="fas fa-star"></i>
+                                                        @else
+                                                            <i class="far fa-star"></i>
+                                                        @endif
+                                                    @endfor
                                                 </div>
                                                 <div class="hapo-review-content-time">
-                                                    <p class="m-0 p-0">August 4, 2020 at 1:30 pm</p>
+                                                    <p class="m-0 p-0">{{ $courseReview->created_at }} </p>
                                                 </div>
                                             </div>
                                             <div class="hapo-review-content-body">
                                                 <p class="text-justify">
-                                                    Vivamus volutpat eros pulvinar velit laoreet, sit amet egestas erat dignissim. Sed quis rutrum tellus, sit amet viverra felis. Cras sagittis sem sit amet urna feugiat rutrum.
-                                                    Nam nulla ipsum, venenatis malesuada felis quis, ultricies convallis neque. Pellentesque tristique
+                                                    {{ $courseReview->content }}
                                                 </p>
                                             </div>
                                             <div class="hapo-review-footer">
@@ -171,6 +181,12 @@
                                             </div>
                                         </div>
                                         <hr>
+                                        @endforeach
+                                    </div>
+                                    <div class="leave-commnent">
+                                        <div class="hapo-review-leave-comment mb-3">Leave a Comment</div>
+                                        <textarea name="comment" id="" cols="30" rows="3" class="form-control mb-3" placeholder="Message"></textarea>
+                                        <button class="btn btn-learn px-3">Send</button>
                                     </div>
                                </div>
                             </div>

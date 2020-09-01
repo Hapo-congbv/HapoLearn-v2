@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
+use App\Models\Course;
 
 class Review extends Model
 {
@@ -18,7 +20,7 @@ class Review extends Model
      *
      * @var array
      */
-    protected $fillable = ['content', 'type', 'rating', 'target_id'];
+    protected $fillable = ['content', 'rating', 'user_id', 'type', 'target_id'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -26,4 +28,9 @@ class Review extends Model
      * @var bool
      */
     public $timestamps = true;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -50,7 +50,15 @@ class LessonController extends Controller
     {
         $otherCourses = Course::limit(config('variable.other_course'))->get();
         $lesson = Lesson::findOrfail($id);
-        return view('lesson_detail', compact(['lesson', 'otherCourses']));
+        $lessonReviews = $lesson->lessonReviews;
+        $ratingStar = [
+            'five_star' => config('variable.five_star'),
+            'four_star' => config('variable.four_star'),
+            'three_star' => config('variable.three_star'),
+            'two_star' => config('variable.two_star'),
+            'one_star' => config('variable.one_star')
+        ];
+        return view('lesson_detail', compact(['lesson', 'otherCourses', 'lessonReviews', 'ratingStar']));
     }
 
     /**
