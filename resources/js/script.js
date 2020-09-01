@@ -47,4 +47,15 @@ $(document).ready(function () {
             });
         });
     });
+
+    var fullRating = $('#fiveStarVal').val();
+    var fourStar = $('#fourStarVal').val();
+    var threeStar = $('#threeStarVal').val();
+    var twoStar = $('#twoStarVal').val();
+    var oneStar = $('#oneStarVal').val();
+    $('#fiveStar').width(fullRating);
+    $('#fourStar').width(fourStar);
+    $('#threeStar').width(threeStar);
+    $('#twoStar').width(twoStar);
+    $('#oneStar').width(oneStar);
 });

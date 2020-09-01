@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Course;
+use App\Models\Review;
 
 class Lesson extends Model
 {
@@ -33,14 +34,24 @@ class Lesson extends Model
         return $this->belongsTo(Course::class, 'course_id');
     }
 
-    public function user()
+    public function userLesson()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(UserLesson::class);
+    }
+
+    // public function lessonReviews()
+    // {
+    //     return $this->hasMany(Review::class, 'lesson_id')->where('target_id', '=', 2);
+    // }
+
+    public function lessonReviews()
+    {
+        return $this->hasMany(Review::class, 'lesson_id');
     }
 
     public function getCountUserLessonAttribute()
     {
-        return $this->user()->count();
+        return $this->userLesson()->count();
     }
 
     public function getTimeLessonAttribute()
@@ -49,5 +60,30 @@ class Lesson extends Model
         $hours = floor($time / 3600);
         $minutes = ceil(($time / 3600 - $hours) * 60);
         return $hours . " hours" . $minutes . " minutes";
+    }
+
+    public function getLessonReviewCountAttribute()
+    {
+        return $this->lessonReviews->count();
+    }
+
+    public function getLessonAvgStarAttribute()
+    {
+        $avgStar = $this->lessonReviews->avg('rating');
+        return floor($avgStar);
+    }
+
+    public function scopeLessonRatingCount($query, $star)
+    {
+        $query = $this->lessonReviews->where('rating', $star)->count();
+        return $query;
+    }
+
+    public function scopeLessonPrecentRating($query, $star)
+    {
+        $query = $this->LessonRatingCount($star);
+        $allRatingCount = ($this->lesson_review_count) ?: 1;
+        $percent = $query / $allRatingCount * 100;
+        return $percent;
     }
 }

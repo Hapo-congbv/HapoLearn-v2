@@ -336,6 +336,8 @@
   box-sizing: border-box;
   border-radius: 5px;
   width: 60%;
+  -webkit-text-stroke: 0.5px;
+  @include fontUTM(bold, 16px, $color_title);
 
   .progress {
     height: 5px;
