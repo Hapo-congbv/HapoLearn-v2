@@ -68,15 +68,15 @@ class Lesson extends Model
         return floor($avgStar);
     }
 
-    public function scopeLessonRatingCount($query, $star)
+    public function lessonRatingCount($star)
     {
         $query = $this->lessonReviews->where('rating', $star)->count();
         return $query;
     }
 
-    public function scopeLessonPrecentRating($query, $star)
+    public function lessonPrecentRating($star)
     {
-        $query = $this->LessonRatingCount($star);
+        $query = $this->lessonRatingCount($star);
         $allRatingCount = ($this->lesson_review_count) ?: 1;
         $percent = $query / $allRatingCount * 100;
         return $percent;
