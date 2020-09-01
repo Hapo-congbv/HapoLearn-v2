@@ -106,15 +106,15 @@ class Course extends Model
         return floor($avgStar);
     }
 
-    public function courseRatingCount($star)
+    public function getCourseRatingCount($star)
     {
         $query = $this->reviews->where('rating', $star)->count();
         return $query;
     }
 
-    public function coursePrecentRating($star)
+    public function getCoursePrecentRating($star)
     {
-        $query = $this->courseRatingCount($star);
+        $query = $this->getCourseRatingCount($star);
         $allRatingCount = ($this->course_review_count) ?: 1;
         $percent = $query / $allRatingCount * 100;
         return $percent;

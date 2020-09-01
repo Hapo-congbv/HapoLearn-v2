@@ -68,15 +68,15 @@ class Lesson extends Model
         return floor($avgStar);
     }
 
-    public function lessonRatingCount($star)
+    public function getLessonRatingCount($star)
     {
         $query = $this->lessonReviews->where('rating', $star)->count();
         return $query;
     }
 
-    public function lessonPrecentRating($star)
+    public function getLessonPrecentRating($star)
     {
-        $query = $this->lessonRatingCount($star);
+        $query = $this->getLessonRatingCount($star);
         $allRatingCount = ($this->lesson_review_count) ?: 1;
         $percent = $query / $allRatingCount * 100;
         return $percent;

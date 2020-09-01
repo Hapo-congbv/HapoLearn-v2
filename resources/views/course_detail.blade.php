@@ -85,7 +85,7 @@
                             <div class="tab-pane fade" id="navReview" role="tabpanel" aria-labelledby="navReviewTab">
                                <div class="px-3">
                                     <h4 class="hapo-review-header mt-2 px-3">
-                                        {{ $course->lesson_review_count }} Reviews
+                                        {{ $course->course_review_count }} Reviews
                                     </h4>
                                     <hr>
                                     <div class="hapo-review-body px-3 d-flex">
@@ -106,42 +106,42 @@
                                            <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">5 start</div>
                                                 <div class="progress w-75">
-                                                    <input type="text" value="{{ $course->coursePrecentRating($ratingStar['five_star']) }}%" hidden id="fiveStarVal">
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['five_star']) }}%" hidden id="fiveStarVal">
                                                     <div class="progress-bar" id="fiveStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                   </div>
-                                                <div class="">{{ $course->courseRatingCount($ratingStar['five_star']) }}</div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['five_star']) }}</div>
                                            </div>
                                            <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">4 start</div>
                                                 <div class="progress w-75">
-                                                    <input type="text" value="{{ $course->coursePrecentRating($ratingStar['four_star']) }}%" hidden id="fourStarVal">
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['four_star']) }}%" hidden id="fourStarVal">
                                                     <div class="progress-bar" id="fourStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="">{{ $course->courseRatingCount($ratingStar['four_star']) }}</div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['four_star']) }}</div>
                                             </div>
                                             <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">3 start</div>
                                                 <div class="progress w-75">
-                                                    <input type="text" value="{{ $course->coursePrecentRating($ratingStar['three_star']) }}%" hidden id="threeStarVal">
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['three_star']) }}%" hidden id="threeStarVal">
                                                     <div class="progress-bar" id="threeStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="">{{ $course->courseRatingCount($ratingStar['three_star']) }}</div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['three_star']) }}</div>
                                             </div>
                                             <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">2 start</div>
                                                 <div class="progress w-75">
-                                                    <input type="text" value="{{ $course->coursePrecentRating($ratingStar['two_star']) }}%" hidden id="twoStarVal">
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['two_star']) }}%" hidden id="twoStarVal">
                                                     <div class="progress-bar" id="twoStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="">{{ $course->courseRatingCount($ratingStar['two_star']) }}</div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['two_star']) }}</div>
                                             </div>
                                             <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
                                                 <div class="pr-0">1 start</div>
                                                 <div class="progress w-75">
-                                                    <input type="text" value="{{ $course->coursePrecentRating($ratingStar['one_star']) }}%" hidden id="oneStarVal">
+                                                    <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['one_star']) }}%" hidden id="oneStarVal">
                                                     <div class="progress-bar" id="oneStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
-                                                <div class="">{{ $course->courseRatingCount($ratingStar['one_star']) }}</div>
+                                                <div class="">{{ $course->getCourseRatingCount($ratingStar['one_star']) }}</div>
                                             </div>
                                         </div>
                                     </div>
