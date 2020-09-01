@@ -39,11 +39,6 @@ class Lesson extends Model
         return $this->hasMany(UserLesson::class);
     }
 
-    // public function lessonReviews()
-    // {
-    //     return $this->hasMany(Review::class, 'lesson_id')->where('target_id', '=', 2);
-    // }
-
     public function lessonReviews()
     {
         return $this->hasMany(Review::class, 'lesson_id');
