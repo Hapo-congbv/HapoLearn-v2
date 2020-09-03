@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\User;
+use Facade\Ignition\QueryRecorder\Query;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -17,9 +18,12 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::orderByDesc('id')->paginate(config('variable.pagination'));
-        $users = User::where('name', 'like', '%' . $request->name . '%')
-        ->orderByDesc('id')->paginate(config('variable.pagination'));
+        $users = User::query();
+        if ($request->name) {
+            $users->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        $users = $users->orderByDesc('id')->paginate(config('variable.pagination'));
         return view('admin.user.index', compact('users'));
     }
 
