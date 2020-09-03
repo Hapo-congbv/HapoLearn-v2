@@ -23,8 +23,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/course-all', 'User\CourseController@index')->name('course.all');
 
-Route::post('/course-search', 'User\CourseController@search')->name('course.search');
+Route::get('/course-search', 'User\CourseController@search')->name('course.search');
 
 Route::get('/course-detail/{id}', 'User\CourseController@show')->name('course.detail');
 
 Route::get('/lesson-detail/{id}', 'User\LessonController@show')->name('lesson.detail');
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/', 'Admin\AdminController@index')->name('index');
+    Route::resource('users', 'Admin\UserController');
+    Route::resource('courses', 'Admin\CourseController');
+});

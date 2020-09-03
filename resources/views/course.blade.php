@@ -8,9 +8,8 @@
                 <span class="filter-text ml-xl-1">Filter</span>
             </div>
             <div class="filter-search col-xl-4 d-flex justify-content-around align-items-center py-2">
-                <form action="{{ Route('course.search') }}" method="POST">
-                    @csrf
-                    <input type="text" class="text-search" placeholder="Search..." name="search">
+                <form action="{{ Route('course.search') }}" method="GET">
+                    <input type="text" class="text-search" placeholder="Search..." name="name" value="{{ request('name') }}">
                 </form>
                 <i class="fa fa-search"></i>
             </div>
@@ -25,11 +24,10 @@
                             <div class="wrap-content col-xl-9 offset-1 pl-0">
                                 <h5 class="card-title-course card-title">{{ $item->course_name }} </h5>
                                 <p class="card-text-course card-text mb-0 text-justify">{{ $item->description }}</p>
-                                @if(Auth::check())
-                                    <a href="{{ route('course.detail', $item->id) }} " class="card-link-more col-4 offset-8 d-block text-center py-xl-2 my-xl-3">More</a>
-                                @else
-                                    <a class="card-link-more col-4 offset-8 d-block text-center py-xl-2 my-xl-3" href="#" data-toggle="modal" data-target="#exampleModal">More</a>
-                                @endif
+                                <a href="{{ route('course.detail', $item->id) }}"
+                                    class="card-link-more col-4 offset-8 d-block text-center py-xl-2 my-xl-3"
+                                    {{ Auth::check() ? '' : 'data-toggle=modal data-target=#exampleModal' }}>More</a>
+                                <input type="text" hidden value="{{ $item->id }}" class="idDirect">
                             </div>
                         </div>
                         <hr>
@@ -53,7 +51,7 @@
             @endforeach
         </div>
         <div class="pagination col-12 mt-5 d-flex justify-content-end">
-            {{ $courses->links() }}
+            {{ $courses->appends($_GET)->links() }}
         </div>
     </div>
 @endsection
