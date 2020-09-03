@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::orderBy('id', 'desc')->paginate(config('variable.pagination'));
+        $users = User::orderByDesc('id')->paginate(config('variable.pagination'));
         $users = User::where('name', 'like', '%' . $request->name . '%')
         ->orderByDesc('id')->paginate(config('variable.pagination'));
         return view('admin.user.index', compact('users'));
