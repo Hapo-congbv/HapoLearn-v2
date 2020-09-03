@@ -18,10 +18,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('id', 'desc')->paginate(config('variable.pagination'));
-        $data = [
-            'users' => $users
-        ];
-        return view('admin.user.index', $data);
+        return view('admin.user.index', compact('users'));
     }
 
     /**
@@ -63,10 +60,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $data = [
-            'user' => $user
-        ];
-        return view('admin.user.show', $data);
+        return view('admin.user.show', compact('user'));
     }
 
     /**
@@ -78,10 +72,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $data = [
-            'user' => $user
-        ];
-        return view('admin.user.edit', $data);
+        return view('admin.user.edit', compact('user'));
     }
 
     /**
@@ -123,9 +114,6 @@ class UserController extends Controller
         $userName = $request->name;
         $users = User::where('name', 'like', '%' . $userName . '%')
         ->orderByDesc('id')->paginate(config('variable.pagination'));
-        $data = [
-            'users' => $users,
-        ];
-        return view('admin.user.index', $data);
+        return view('admin.user.index', compact('users'));
     }
 }
