@@ -14,7 +14,7 @@
                 <div class="hapo-admin-header-name px-3 d-flex align-items-center">
                     List Users
                 </div>
-                <form class="form-inline col-xs-7 text-center" method="GET" action="{{ route('admin.users.search') }}" id="formSearchUser">
+                <form class="form-inline col-xs-7 text-center" method="GET" action="{{ route('admin.users.index') }}" id="formSearchUser">
                     <input class="form-control" type="text" placeholder="Search" name="name" value="{{ request('name') }}">
                     <i class="fa fa-search"></i>
                 </form>
@@ -126,9 +126,5 @@
             $('.modal-content').html(res);
         })
     });
-
-    // $('.icon-delete').confirm({
-    //     content: "Bạn có muốn xóa không?",
-    // });
 </script>
 @endsection

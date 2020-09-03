@@ -15,9 +15,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = User::orderBy('id', 'desc')->paginate(config('variable.pagination'));
+        $users = User::where('name', 'like', '%' . $request->name . '%')
+        ->orderByDesc('id')->paginate(config('variable.pagination'));
         return view('admin.user.index', compact('users'));
     }
 
@@ -107,13 +109,5 @@ class UserController extends Controller
     {
         User::findOrFail($id)->delete();
         return redirect()->route('admin.users.index')->with('message', __('messages.delete_message'));
-    }
-
-    public function search(Request $request)
-    {
-        $userName = $request->name;
-        $users = User::where('name', 'like', '%' . $userName . '%')
-        ->orderByDesc('id')->paginate(config('variable.pagination'));
-        return view('admin.user.index', compact('users'));
     }
 }
