@@ -197,7 +197,8 @@
                                                             <a href="#" class="course-other-item-button px-3 py-2 btn-learn hapo-review-reply">Reply</a>
                                                         </div>
                                                     </div>
-                                                    <div class="hapo-form-review-hidden" id="form{{ $lessonReview->id }}" style="display: none">
+                                                    @if(Auth::user() && Auth::user()->id == $lessonReview->user->id)
+                                                    <div class="hapo-form-review-hidden" id="form{{ $lessonReview->id }}">
                                                         <form action=" {{ route('review.update.lesson', $lessonReview->id) }} " method="POST">
                                                             @csrf
                                                             <input type="text" hidden name="lesson_id" id="lessonId" value="{{ $lesson->id }} " data-id=" {{ $lesson->id }} ">
@@ -207,7 +208,7 @@
                                                             @enderror
                                                            <div class="d-flex align-items-center justify-content-end">
                                                                 <div class="d-flex align-items-center"></div>
-                                                                <button class="btn btn-learn cancelLesson px-3 mr-2">Cancel</button>
+                                                                <button class="btn btn-info cancelLesson px-3 mr-2">Cancel</button>
                                                                 <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $lesson->id }} ">Update</button>
                                                            </div>
                                                         </form>
@@ -223,23 +224,13 @@
                                                             <a href=" {{ route('review.destroy.lessson', $lessonReview->id) }} " class="dropdown-item">Delete message</a>
                                                         </div>
                                                     </div>
+                                                    @endif
                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <hr>
                                     @endforeach
-                                    {{-- @for ($i = 0; $i < 3; $i++)
-                                        <div class="pane alt" id="{{ $i}}">
-                                        <h3>Nick says:</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi malesuada</p>
-                                        <p>
-                                          <a href="#" class="btn-delete">Delete</a>  <div class="btn-unapprove">Unapprove</div>
-                                          <a href="#" class="btn-approve" style="display:none">Approve</a>
-                                        </p>
-                                      </div>
-                                    @endfor --}}
-
                                 </div>
                                 <div class="leave-commnent">
                                     <div class="hapo-review-leave-comment mb-3">Leave a Comment</div>

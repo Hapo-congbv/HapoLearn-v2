@@ -8,7 +8,7 @@
                     <div class="hapo-detail-course-header d-flex justify-content-center">
                         <img src="{{ asset('storage/images/'.$course->image) }} " alt="">
                     </div>
-                    <div class="hapo-detail-content-left mt-3">
+                    <div class="hapo-detail-content-left mt-3 mb-5">
                         <nav class="hapo-nav-detail">
                             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active" id="navLessonTab" data-toggle="tab" href="#navLesson" role="tab" aria-controls="nav-login" aria-selected="true">Lesson</a>
@@ -179,40 +179,42 @@
                                             <div class="hapo-review-content-body">
                                                 <div class="hapo-review">
                                                     <div class="hapo-form-review" id="{{ $courseReview->id }}">
-                                                         <div class="m-2 hapo-content-review" id="content{{ $courseReview->id }}">
-                                                             <p class="text-justify">
-                                                                 {{ $courseReview->content }}
-                                                             </p>
-                                                             <div class="hapo-review-footer">
-                                                                 <a href="#" class="course-other-item-button px-3 py-2 btn-learn hapo-review-reply">Reply</a>
-                                                             </div>
-                                                         </div>
-                                                         <div class="hapo-form-review-hidden" id="form{{ $courseReview->id }}" style="display: none">
-                                                             <form action=" {{ route('review.update.course', $courseReview->id) }} " method="POST">
-                                                                 @csrf
-                                                                 <input type="text" hidden name="course_id" id="courseId" value="{{ $course->id }} " data-id=" {{ $course->id }} ">
-                                                                 <textarea name="content" id="content" cols="30" rows="3" class="form-control mb-3" placeholder="Message"> {{ $courseReview->content }} </textarea>
-                                                                 @error('content')
-                                                                     <div class="alert alert-danger">{{ $message }}</div>
-                                                                 @enderror
+                                                        <div class="m-2 hapo-content-review" id="content{{ $courseReview->id }}">
+                                                            <p class="text-justify">
+                                                                {{ $courseReview->content }}
+                                                            </p>
+                                                            <div class="hapo-review-footer">
+                                                                <a href="#" class="course-other-item-button px-3 py-2 btn-learn hapo-review-reply">Reply</a>
+                                                            </div>
+                                                        </div>
+                                                        @if(Auth::user() && Auth::user()->id == $courseReview->user->id)
+                                                            <div class="hapo-form-review-hidden" id="form{{ $courseReview->id }}">
+                                                                <form action=" {{ route('review.update.course', $courseReview->id) }} " method="POST">
+                                                                    @csrf
+                                                                    <input type="text" hidden name="course_id" id="courseId" value="{{ $course->id }} " data-id=" {{ $course->id }} ">
+                                                                    <textarea name="content" id="content" cols="30" rows="3" class="form-control mb-3" placeholder="Message"> {{ $courseReview->content }} </textarea>
+                                                                    @error('content')
+                                                                        <div class="alert alert-danger">{{ $message }}</div>
+                                                                    @enderror
                                                                 <div class="d-flex align-items-center justify-content-end">
-                                                                     <div class="d-flex align-items-center"></div>
-                                                                     <button class="btn btn-learn cancelLesson px-3 mr-2">Cancel</button>
-                                                                     <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} ">Update</button>
+                                                                        <div class="d-flex align-items-center"></div>
+                                                                        <button class="btn btn-primary cancelLesson px-3 mr-2">Cancel</button>
+                                                                        <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} ">Update</button>
                                                                 </div>
-                                                             </form>
-                                                         </div>
-                                                         <div class="dropleft hapo-review-drop" id="drop{{ $courseReview->id }}">
-                                                             <div id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                 <img src=" {{ asset('storage/images/more.png') }} " id="hapo-more">
-                                                             </div>
-                                                             <div class="dropdown-menu" aria-labelledby="dLabel">
-                                                                 <div class="dropdown-item">Unfollow message</div>
-                                                                 <div class="dropdown-divider"></div>
-                                                                 <div class="btn btn-edit-mess dropdown-item">Edit message</div>
-                                                                 <a href=" {{ route('review.destroy.lessson', $courseReview->id) }} " class="dropdown-item">Delete message</a>
-                                                             </div>
-                                                         </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="dropleft hapo-review-drop" id="drop{{ $courseReview->id }}">
+                                                                <div id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <img src=" {{ asset('storage/images/more.png') }} " id="hapo-more">
+                                                                </div>
+                                                                <div class="dropdown-menu" aria-labelledby="dLabel">
+                                                                    <div class="dropdown-item">Unfollow message</div>
+                                                                    <div class="dropdown-divider"></div>
+                                                                    <div class="btn btn-edit-mess dropdown-item">Edit message</div>
+                                                                    <a href=" {{ route('review.destroy.lessson', $courseReview->id) }} " class="dropdown-item">Delete message</a>
+                                                                </div>
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                  </div>
                                             </div>
@@ -240,7 +242,11 @@
                                                         <input type="radio" class="rating" id="starOne" name="rating" value="1" /><label for="starOne" title="Sucks big time">1 star</label>
                                                     </div>
                                                </div>
-                                                <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} ">Send</button>
+                                               @if(Auth::check())
+                                               <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} " >Send</button>
+                                               @else
+                                               <div  class="btn btn-learn px-3" data-toggle=modal data-target=#exampleModal >Send</div>
+                                               @endif
                                            </div>
                                         </form>
                                     </div>
