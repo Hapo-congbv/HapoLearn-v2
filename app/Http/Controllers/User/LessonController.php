@@ -89,7 +89,7 @@ class LessonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ReviewRequest $request, $id)
     {
         $review = Review::findOrFail($id);
         $data = $request->all();
