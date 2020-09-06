@@ -438,11 +438,11 @@
 }
 
 .hapo-form-review-hidden {
-    display: none;
+  display: none;
 }
 
 .cancelLesson {
-    box-shadow: inset 0 1.5px 2px #6a6c8b;
-    border-radius: 22px;
-    @include fontUTM(bold, 15px , $main_color);
+  box-shadow: inset 0 1.5px 2px #6a6c8b;
+  border-radius: 22px;
+  @include fontUTM(bold, 15px, $main_color);
 }
