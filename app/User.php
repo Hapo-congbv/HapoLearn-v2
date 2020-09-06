@@ -63,5 +63,4 @@ class User extends Authenticatable
     {
         return self::ROLE_LABEL[array_flip(self::ROLE)[$this->role_id]];
     }
-
 }
