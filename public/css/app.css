@@ -49935,6 +49935,10 @@ footer .hapo-copyright p {
   padding: 20px;
   border-top: 1px solid #e2e0e0;
   border-bottom: 1px solid #e2e0e0;
+  color: #505353;
+}
+.course-info .course-info-text .hapo-text {
+  -webkit-text-stroke: 0.8px;
 }
 .course-info .course-info-tittle {
   background-color: #b2d235;

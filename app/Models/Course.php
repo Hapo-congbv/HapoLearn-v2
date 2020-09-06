@@ -77,9 +77,9 @@ class Course extends Model
         ];
 
         if ($timeFormat['hours'] == 0) {
-            $time = $timeFormat['minutes'] . " minutes";
+            $time = "0 hours";
         } else {
-            $time = $timeFormat['hours'] . " hours " . $timeFormat['minutes'] . " minutes";
+            $time = $timeFormat['hours'] . " hours ";
         }
         return $time;
     }

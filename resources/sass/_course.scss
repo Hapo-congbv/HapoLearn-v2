@@ -212,6 +212,11 @@
     padding: 20px;
     border-top: 1px solid #e2e0e0;
     border-bottom: 1px solid #e2e0e0;
+    color: $color_title;
+
+    .hapo-text {
+      -webkit-text-stroke: 0.8px;
+    }
   }
 
   .course-info-tittle {

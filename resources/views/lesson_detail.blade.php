@@ -262,20 +262,60 @@
                 </div>
                 <div class="col-4 course-info h-50 ml-5 w-100 px-0">
                     <div class="hapo-data-lesson-detail">
-                        <div class="course-info-text">
-                            <i class="fas fa-book"></i> Course: {{ $lesson->course->course_name }}
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                                <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="fas fa-book"></i> Course
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                                    </div>
+                                </div>
+                            <div class="col-6 m-0 p-0 hapo-text">{{ $lesson->course->course_name }}</div>
                         </div>
-                        <div class="course-info-text">
-                            <i class="fas fa-users"></i> Learners: {{ $lesson->count_user_lesson }}
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                                <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="fas fa-users"></i> Learners
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                                    </div>
+                                </div>
+                            <div class="col-6 m-0 p-0 hapo-text">{{ $lesson->count_user_lesson }}</div>
                         </div>
-                        <div class="course-info-text">
-                            <i class="far fa-clock"></i> Times: {{ $lesson->time_lesson }}
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                                <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="far fa-clock"></i> Times
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                                    </div>
+                                </div>
+                            <div class="col-6 m-0 p-0 hapo-text"> {{ $lesson->time_lesson }}</div>
                         </div>
-                        <div class="course-info-text">
-                            <i class="fas fa-hashtag"></i> Tags: {{ $lesson->course->tag_course }}
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                                <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="fas fa-hashtag"></i> Tags
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                                    </div>
+                                </div>
+                            <div class="col-6 m-0 p-0 hapo-tag">{{ $lesson->course->tag_course }}</div>
                         </div>
-                        <div class="course-info-text">
-                            <i class="far fa-money-bill-alt"></i> Price: {{ number_format($lesson->price) }} $
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                                <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="far fa-money-bill-alt"></i> Price
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                                    </div>
+                                </div>
+                            <div class="col-6 m-0 p-0 hapo-text">{{ number_format($lesson->price) }} $</div>
                         </div>
                         <div class="course-info-text">
                             <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">

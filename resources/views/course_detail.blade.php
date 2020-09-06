@@ -268,20 +268,60 @@
                        </div>
                     </div>
                     <div class="hapo-data-lesson-detail">
-                        <div class="course-info-text">
-                            <i class="fas fa-users"></i> Learners: {{ $course->count_user }}
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                               <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="fas fa-users"></i> Learners
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                               </div>
+                            </div>
+                            <div class="col-6 m-0 p-0 hapo-text">{{ $course->count_user }}</div>
                         </div>
-                        <div class="course-info-text">
-                            <i class="far fa-list-alt"></i> Lessons: {{ $course->count_lesson }} lessons
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                               <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="far fa-list-alt"></i> Lessons
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                               </div>
+                            </div>
+                            <div class="col-6 m-0 p-0 hapo-text">{{ $course->count_lesson }} lessons</div>
                         </div>
-                        <div class="course-info-text">
-                            <i class="far fa-clock"></i> Times: {{ $course->time }}
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                                <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="far fa-clock"></i> Times
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                                </div>
+                            </div>
+                            <div class="col-6 m-0 p-0 hapo-text">{{ $course->time }}</div>
                         </div>
-                        <div class="course-info-text">
-                            <i class="fas fa-hashtag"></i> Tags: {{ $course->tag_course }}
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                                <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="fas fa-hashtag"></i> Tags
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                                </div>
+                            </div>
+                            <div class="col-6 m-0 p-0 hapo-tag">{{ $course->tag_course }}</div>
                         </div>
-                        <div class="course-info-text">
-                            <i class="far fa-money-bill-alt"></i> Price: {{ number_format($course->price) }} $
+                        <div class="course-info-text row m-0">
+                            <div class="col-6 m-0 p-0">
+                                <div class="row m-0">
+                                    <div class="col-10 m-0 p-0">
+                                        <i class="far fa-money-bill-alt"></i> Price
+                                    </div>
+                                    <div class="col-2 m-0 p-0 "> : </div>
+                                </div>
+                            </div>
+                            <div class="col-6 m-0 p-0 hapo-text">{{ number_format($course->price) }} $</div>
                         </div>
                     </div>
                     <div class="mt-3 mb-5">
