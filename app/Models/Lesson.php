@@ -51,10 +51,19 @@ class Lesson extends Model
 
     public function getTimeLessonAttribute()
     {
-        $time = $this->time;
-        $hours = floor($time / 3600);
-        $minutes = ceil(($time / 3600 - $hours) * 60);
-        return $hours . " hours" . $minutes . " minutes";
+        $timeFormatHours = floor($this->time / 60);
+        $timeFormatMinutes = ceil($this->time - floor($this->time / 60) * 60);
+        $timeFormat = [
+            'hours' => $timeFormatHours,
+            'minutes' => $timeFormatMinutes
+        ];
+
+        if ($timeFormat['hours'] == 0) {
+            $time = $timeFormat['minutes'] . " minutes";
+        } else {
+            $time = $timeFormat['hours'] . " hours " . $timeFormat['minutes'] . " minutes";
+        }
+        return $time;
     }
 
     public function getLessonReviewCountAttribute()

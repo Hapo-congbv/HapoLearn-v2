@@ -25,9 +25,8 @@
                                 <h5 class="card-title-course card-title">{{ $item->course_name }} </h5>
                                 <p class="card-text-course card-text mb-0 text-justify">{{ $item->description }}</p>
                                 <a href="{{ route('course.detail', $item->id) }}"
-                                    class="card-link-more col-4 offset-8 d-block text-center py-xl-2 my-xl-3"
-                                    {{ Auth::check() ? '' : 'data-toggle=modal data-target=#exampleModal' }}>More</a>
-                                <input type="text" hidden value="{{ $item->id }}" class="idDirect">
+                                    class="card-link-more col-4 offset-8 d-block text-center py-xl-2 my-xl-3">More</a>
+
                             </div>
                         </div>
                         <hr>

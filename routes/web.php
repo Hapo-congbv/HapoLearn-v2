@@ -27,7 +27,19 @@ Route::get('/course-search', 'User\CourseController@search')->name('course.searc
 
 Route::get('/course-detail/{id}', 'User\CourseController@show')->name('course.detail');
 
+Route::post('course/review', 'User\CourseController@store')->name('review.store.course');
+
+Route::get('/course/review/{id}', 'User\CourseController@destroy')->name('review.destroy.course');
+
+Route::post('/course/review/{id}', 'User\CourseController@update')->name('review.update.course');
+
 Route::get('/lesson-detail/{id}', 'User\LessonController@show')->name('lesson.detail');
+
+Route::post('/lesson/review', 'User\LessonController@store')->name('review.store.lesson');
+
+Route::get('/lesson/review/{id}', 'User\LessonController@destroy')->name('review.destroy.lessson');
+
+Route::post('/lesson/review/{id}', 'User\LessonController@update')->name('review.update.lesson');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', 'Admin\AdminController@index')->name('index');

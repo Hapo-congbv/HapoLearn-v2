@@ -16,6 +16,7 @@
                         <div class="tab-pane fade show active" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
                             <form class="hapo-form-login px-4 py-2" method="POST" action="{{ route('login') }}" >
                                 @csrf
+                                <input type="text" name="id" hidden id="loginDefault" value="{{ old('id') }}">
                                 <div class="form-group hapo-login">
                                     <label for="login_email">Email:</label>
                                     <input id="loginEmail" type="email" class="form-control @error('login_email') is-invalid @enderror" name="login_email" value="{{ old('login_email') }}" required autocomplete="login_email" autofocus>
@@ -70,8 +71,9 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="nav-register" role="tabpanel" aria-labelledby="nav-register-tab">
-                             <form class="hapo-form-login px-4 py-2" method="POST" action="{{ route('register') }}">
+                             <form class="hapo-form-login px-4 py-3" method="POST" action="{{ route('register') }}">
                                 @csrf
+                                <input type="text" name="id" hidden id="registerDefault" value="{{ old('id') }}">
                                 <div class="form-group hapo-register">
                                     <label for="username">User Name:</label>
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>

@@ -26,13 +26,11 @@
                     <a id="navbarDropdown" class="nav-link dropdown-toggle mx-md-2 my-3 my-sm-1 text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
-
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
                             {{ __('Logout') }}
                         </a>
-
                         <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>

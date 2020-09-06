@@ -74,7 +74,6 @@
                        </td>
                    </tr>
                    @endforeach
-
                 </tbody>
                 <tfoot>
                     <tr align="center">

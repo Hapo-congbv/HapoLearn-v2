@@ -650,4 +650,17 @@ footer {
   top: -10px !important;
 }
 
+#hapo-more {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.hapo-review-nd {
+    display: none;
+}
+
+.hapo-review-edit {
+    display: block;
+}
 @import "reponsive";

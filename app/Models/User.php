@@ -1,16 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Lesson;
-use App\Models\CourseUser;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,SoftDeletes;
 
     const ROLE = [
         'user' => 1,
@@ -21,6 +20,13 @@ class User extends Authenticatable
         'user' => 'User',
         'teacher' => 'Teacher',
     ];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -56,7 +62,7 @@ class User extends Authenticatable
 
     public function getIsTeacherAttribute()
     {
-        return $this->role_if == self::ROLE['teacher'];
+        return $this->role_id == self::ROLE['teacher'];
     }
 
     public function getRoleLabelAttribute()

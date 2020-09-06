@@ -1,3 +1,5 @@
+const { defaultsDeep } = require("lodash");
+
 $(document).ready(function () {
     $('.navbar-toggler').click(function () {
         $('.icon').toggleClass('fa-times');
@@ -37,6 +39,33 @@ $(document).ready(function () {
         $("#exampleModal").modal("show");
     }
 
+    $(".card-link-more").click(function() {
+        $("#loginDefault, #registerDefault").val(
+            $(this).next()
+                .val()
+        );
+    });
+
+    $('.btn-edit-mess').click(function(e){
+        e.preventDefault();
+        var a = $(this).closest('div.hapo-form-review').children('.hapo-review-drop').attr('id');
+        var b = $(this).closest('div.hapo-form-review').children('.hapo-content-review').attr('id');
+        var c = $(this).closest('div.hapo-form-review').children('.hapo-form-review-hidden').attr('id');
+
+        document.getElementById(a).style.display = 'none';
+        document.getElementById(b).style.display = 'none';
+        document.getElementById(c).style.display = 'block';
+
+        $('.cancelLesson').click (function (event) {
+            event.preventDefault();
+            document.getElementById(a).style.display = 'block';
+            document.getElementById(b).style.display = 'block';
+            document.getElementById(c).style.display = 'none';
+        })
+    });
+
+
+
     // search filter
     $(document).ready(function() {
         $('#myInput').on('keyup', function(event) {
@@ -58,4 +87,14 @@ $(document).ready(function () {
     $('#threeStar').width(threeStar);
     $('#twoStar').width(twoStar);
     $('#oneStar').width(oneStar);
+
+    $(document).ready(function(){
+        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if(activeTab){
+            $('#nav-tab a[href="' + activeTab + '"]').tab('show');
+        }
+    });
 });
