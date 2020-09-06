@@ -18,14 +18,16 @@
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="navLesson" role="tabpanel" aria-labelledby="navLessonTab">
-                                <div class="hapo-header-filter d-flex align-items-center my-3 mx-3">
-                                    <div class="hapo-filter d-flex justify-content-center align-items-center">
-                                        <img alt="" src="{{ asset('storage/images/filter.png') }} ">
-                                        <p>Filter</p>
+                                <div class="hapo-header-filter d-flex align-items-center justify-content-between my-3 mx-3">
+                                    <div class="hapo-header-form d-flex align-items-center justify-content-between">
+                                        <form action="{{ route('course.detail', $course->id) }}" method="GET" class="d-flex">
+                                            <input type="text" class="hapo-search py-2 mr-3" name="name" value="{{ request('name') }}" placeholder="Search for names.." size="25px">
+                                            <i class="fa fa-search"></i>
+                                            <input type="submit" value="Search" class="btn btn-search py-2">
+                                        </form>
                                     </div>
-                                    <div class="hapo-header-form d-flex flex-row">
-                                        <input type="text" class="hapo-search" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-                                        <a class="fa fa-search" href=""></a>
+                                    <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">
+                                        <a href="#" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
                                     </div>
                                 </div>
                                 <div class="course-lesson-detail" >
@@ -36,7 +38,8 @@
                                                     <tr>
                                                         <td class="text-justify d-flex justify-content-between">
                                                             <p class="course-other-item">{{ ++$key . ".  " . $item->lesson_name }}.</p>
-                                                            <a href="{{ route('lesson.detail',$item->id) }}" class="course-other-item-button px-3 py-2 btn-learn">Learn</a>
+                                                            <a href="{{ route('lesson.detail', $item->id) }}" class="card-link-more course-other-item-button px-3 py-2 btn-learn" {{ Auth::check() ? '' : 'data-toggle=modal data-target=#exampleModal' }}>Learn</a>
+                                                            <input type="text" hidden value="{{ $item->id }}" class="idDirect">
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -49,7 +52,7 @@
                                         </tbody>
                                     </table>
                                     <div class="pagination col-12 mt-5 d-flex justify-content-end mt-4 ">
-                                        {{ $lessonCourse->links() }}
+                                        {{ $lessonCourse->appends($_GET)->links() }}
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +107,7 @@
                                         </div>
                                         <div class="hapo-review-bodyright ml-4">
                                            <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
-                                                <div class="pr-0">5 start</div>
+                                                <div class="pr-0">5 star</div>
                                                 <div class="progress w-75">
                                                     <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['five_star']) }}%" hidden id="fiveStarVal">
                                                     <div class="progress-bar" id="fiveStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -112,7 +115,7 @@
                                                 <div class="">{{ $course->getCourseRatingCount($ratingStar['five_star']) }}</div>
                                            </div>
                                            <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
-                                                <div class="pr-0">4 start</div>
+                                                <div class="pr-0">4 star</div>
                                                 <div class="progress w-75">
                                                     <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['four_star']) }}%" hidden id="fourStarVal">
                                                     <div class="progress-bar" id="fourStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -120,7 +123,7 @@
                                                 <div class="">{{ $course->getCourseRatingCount($ratingStar['four_star']) }}</div>
                                             </div>
                                             <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
-                                                <div class="pr-0">3 start</div>
+                                                <div class="pr-0">3 star</div>
                                                 <div class="progress w-75">
                                                     <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['three_star']) }}%" hidden id="threeStarVal">
                                                     <div class="progress-bar" id="threeStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -128,7 +131,7 @@
                                                 <div class="">{{ $course->getCourseRatingCount($ratingStar['three_star']) }}</div>
                                             </div>
                                             <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
-                                                <div class="pr-0">2 start</div>
+                                                <div class="pr-0">2 star</div>
                                                 <div class="progress w-75">
                                                     <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['two_star']) }}%" hidden id="twoStarVal">
                                                     <div class="progress-bar" id="twoStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -136,7 +139,7 @@
                                                 <div class="">{{ $course->getCourseRatingCount($ratingStar['two_star']) }}</div>
                                             </div>
                                             <div class="mt-3 d-flex align-items-center justify-content-between px-3 ">
-                                                <div class="pr-0">1 start</div>
+                                                <div class="pr-0">1 star</div>
                                                 <div class="progress w-75">
                                                     <input type="text" value="{{ $course->getCoursePrecentRating($ratingStar['one_star']) }}%" hidden id="oneStarVal">
                                                     <div class="progress-bar" id="oneStar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -150,34 +153,68 @@
                                         <div class="hapo-review-showall">Show all review <i class="fas fa-sort-down"></i></div>
                                         @foreach ($courReviews as $courseReview)
                                         <div class="hapo-review-user">
-                                            <div class="hapo-review-content-header d-flex justify-content-start align-items-center mt-5">
-                                                <div class="hapo-review-content-avatar mr-3">
-                                                    <img class="rounded-circle" src="{{ asset('storage/images/user.png') }} " alt="">
-                                                </div>
-                                                <div class="hapo-review-content-username mr-3">
-                                                <p class="m-0 p-0">{{ $courseReview->user->name }} </p>
-                                                </div>
-                                                <?php $star = $courseReview->rating ?>
-                                                <div class="hapo-review-content-rating mr-3">
-                                                    @for ($i = 0; $i < $ratingStar['five_star']; $i++)
-                                                        @if ($i < $star)
-                                                            <i class="fas fa-star"></i>
-                                                        @else
-                                                            <i class="far fa-star"></i>
-                                                        @endif
-                                                    @endfor
-                                                </div>
-                                                <div class="hapo-review-content-time">
-                                                    <p class="m-0 p-0">{{ $courseReview->created_at }} </p>
+                                            <div class="hapo-review-content-header d-flex justify-content-between align-items-center mt-5">
+                                                <div class="d-flex align-items-center justify-content-start">
+                                                    <div class="hapo-review-content-avatar mr-3">
+                                                        <img class="rounded-circle" src="{{ asset('storage/images/user.png') }} " alt="">
+                                                    </div>
+                                                    <div class="hapo-review-content-username mr-3">
+                                                    <p class="m-0 p-0">{{ $courseReview->user->name }} </p>
+                                                    </div>
+                                                    <?php $star = $courseReview->rating ?>
+                                                    <div class="hapo-review-content-rating mr-3">
+                                                        @for ($i = 0; $i < $ratingStar['five_star']; $i++)
+                                                            @if ($i < $star)
+                                                                <i class="fas fa-star"></i>
+                                                            @else
+                                                                <i class="far fa-star"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </div>
+                                                    <div class="hapo-review-content-time">
+                                                        <p class="m-0 p-0">{{ $courseReview->created_at }} </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="hapo-review-content-body">
-                                                <p class="text-justify">
-                                                    {{ $courseReview->content }}
-                                                </p>
-                                            </div>
-                                            <div class="hapo-review-footer">
-                                                <a href="#" class="course-other-item-button px-3 py-2 btn-learn hapo-review-reply">Reply</a>
+                                                <div class="hapo-review">
+                                                    <div class="hapo-form-review" id="{{ $courseReview->id }}">
+                                                         <div class="m-2 hapo-content-review" id="content{{ $courseReview->id }}">
+                                                             <p class="text-justify">
+                                                                 {{ $courseReview->content }}
+                                                             </p>
+                                                             <div class="hapo-review-footer">
+                                                                 <a href="#" class="course-other-item-button px-3 py-2 btn-learn hapo-review-reply">Reply</a>
+                                                             </div>
+                                                         </div>
+                                                         <div class="hapo-form-review-hidden" id="form{{ $courseReview->id }}" style="display: none">
+                                                             <form action=" {{ route('review.update.course', $courseReview->id) }} " method="POST">
+                                                                 @csrf
+                                                                 <input type="text" hidden name="course_id" id="courseId" value="{{ $course->id }} " data-id=" {{ $course->id }} ">
+                                                                 <textarea name="content" id="content" cols="30" rows="3" class="form-control mb-3" placeholder="Message"> {{ $courseReview->content }} </textarea>
+                                                                 @error('content')
+                                                                     <div class="alert alert-danger">{{ $message }}</div>
+                                                                 @enderror
+                                                                <div class="d-flex align-items-center justify-content-end">
+                                                                     <div class="d-flex align-items-center"></div>
+                                                                     <button class="btn btn-learn cancelLesson px-3 mr-2">Cancel</button>
+                                                                     <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} ">Update</button>
+                                                                </div>
+                                                             </form>
+                                                         </div>
+                                                         <div class="dropleft hapo-review-drop" id="drop{{ $courseReview->id }}">
+                                                             <div id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                 <img src=" {{ asset('storage/images/more.png') }} " id="hapo-more">
+                                                             </div>
+                                                             <div class="dropdown-menu" aria-labelledby="dLabel">
+                                                                 <div class="dropdown-item">Unfollow message</div>
+                                                                 <div class="dropdown-divider"></div>
+                                                                 <div class="btn btn-edit-mess dropdown-item">Edit message</div>
+                                                                 <a href=" {{ route('review.destroy.lessson', $courseReview->id) }} " class="dropdown-item">Delete message</a>
+                                                             </div>
+                                                         </div>
+                                                    </div>
+                                                 </div>
                                             </div>
                                         </div>
                                         <hr>
@@ -185,8 +222,27 @@
                                     </div>
                                     <div class="leave-commnent">
                                         <div class="hapo-review-leave-comment mb-3">Leave a Comment</div>
-                                        <textarea name="comment" id="" cols="30" rows="3" class="form-control mb-3" placeholder="Message"></textarea>
-                                        <button class="btn btn-learn px-3">Send</button>
+                                        <form action=" {{ route('review.store.course') }} " method="POST">
+                                            @csrf
+                                            <input type="text" hidden name="course_id" id="courseId" value="{{ $course->id }} " data-id=" {{ $course->id }} ">
+                                            <textarea name="content" id="content" cols="30" rows="3" class="form-control mb-3" placeholder="Message"></textarea>
+                                            @error('content')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                           <div class="d-flex align-items-center justify-content-between">
+                                               <div class="d-flex align-items-center">
+                                                    <div class="mr-3 hapo-review-leave-comment">Vote:</div>
+                                                    <div class="rating">
+                                                        <input type="radio" class="rating" id="starFive" name="rating" value="5" /><label for="starFive" title="Rocks!">5 stars</label>
+                                                        <input type="radio" class="rating" id="starFour" name="rating" value="4" /><label for="starFour" title="Pretty good">4 stars</label>
+                                                        <input type="radio" class="rating" id="starThree" name="rating" value="3" /><label for="starThree" title="Meh">3 stars</label>
+                                                        <input type="radio" class="rating" id="starTwo" name="rating" value="2" /><label for="starTwo" title="Kinda bad">2 stars</label>
+                                                        <input type="radio" class="rating" id="starOne" name="rating" value="1" /><label for="starOne" title="Sucks big time">1 star</label>
+                                                    </div>
+                                               </div>
+                                                <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} ">Send</button>
+                                           </div>
+                                        </form>
                                     </div>
                                </div>
                             </div>

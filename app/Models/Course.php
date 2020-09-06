@@ -41,7 +41,7 @@ class Course extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function user()
+    public function learner()
     {
         return $this->belongsToMany(User::class, 'course_users');
     }
@@ -58,7 +58,7 @@ class Course extends Model
 
     public function getCountUserAttribute()
     {
-        return $this->user()->count();
+        return $this->learner()->count();
     }
 
     public function getCountLessonAttribute()
@@ -68,10 +68,20 @@ class Course extends Model
 
     public function getTimeAttribute()
     {
-        $time = $this->lesson()->sum('time');
-        $hours = floor($time / 3600);
-        $minutes = ceil(($time / 3600 - $hours) * 60);
-        return $hours . " hours" . $minutes . " minutes";
+        $allTime = $this->lesson()->sum('time');
+        $timeFormatHours = floor($allTime / 60);
+        $timeFormatMinutes = ceil($allTime - floor($allTime / 60) * 60);
+        $timeFormat = [
+            'hours' => $timeFormatHours,
+            'minutes' => $timeFormatMinutes
+        ];
+
+        if ($timeFormat['hours'] == 0) {
+            $time = $timeFormat['minutes'] . " minutes";
+        } else {
+            $time = $timeFormat['hours'] . " hours " . $timeFormat['minutes'] . " minutes";
+        }
+        return $time;
     }
 
     public function getTagsAttribute()

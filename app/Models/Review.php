@@ -20,7 +20,7 @@ class Review extends Model
      *
      * @var array
      */
-    protected $fillable = ['content', 'rating', 'user_id', 'type', 'target_id'];
+    protected $fillable = ['content', 'rating', 'user_id', 'course_id', 'lesson_id'];
 
     /**
      * Indicates if the model should be timestamped.

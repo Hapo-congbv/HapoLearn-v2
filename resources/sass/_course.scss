@@ -93,7 +93,7 @@
   }
 
   .nav-tabs {
-    width: 50%;
+    width: 70%;
 
     .nav-item {
       @include fontUTM(bold, 20px, $color_title);
@@ -112,32 +112,10 @@
     width: 80%;
   }
 
-  .hapo-filter {
-    width: 80px;
-    height: 30px;
-    margin-right: 15px;
-    background: #ffffff;
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
-
-    img {
-      margin-right: 5px;
-    }
-
-    p {
-      font: normal bold 16px/22px Open Sans;
-      color: $color_title;
-      display: contents;
-    }
-  }
-
   .hapo-header-form {
-    height: 30px;
     position: relative;
 
     .hapo-search {
-      width: 100%;
-      height: 100%;
       background: #ffffff;
       border: 1px solid #c4c4c4;
       border-radius: 5px;
@@ -146,13 +124,18 @@
       font: normal bold 16px/22px Open Sans;
     }
 
-    a {
+    i {
       position: absolute;
-      right: 5%;
-      margin-top: 5px;
+      right: 30%;
+      margin-top: 10px;
       font-size: 20px;
       line-height: 23px;
       color: $color_title;
+    }
+
+    .btn-search {
+      background-color: $color_link;
+      @include fontUTM(bold, 15px, $main_color);
     }
   }
 
@@ -178,7 +161,7 @@
     .hapo-review-header,
     .hapo-review-leave-comment {
       -webkit-text-stroke: 0.5px;
-      @include fontUTM(bold, 25px, $color_title);
+      @include fontUTM(bold, 23px, $color_title);
     }
 
     .hapo-lesson-contentdes,
@@ -187,6 +170,17 @@
       @include fontUTM(normal, 18px, #949292);
     }
   }
+}
+
+.hapo-courses-btn,
+.hapo-lesson-btn {
+  font: normal bold 20px/43px UTM;
+  background: #b2d235;
+  border-radius: 22px;
+  color: white;
+  margin: 0;
+  box-shadow: inset 0 1.5px 2px #6f8710;
+  -webkit-text-stroke-width: 1px;
 }
 
 .btn-learn {
@@ -383,8 +377,62 @@
 }
 
 .leave-commnent {
-    textarea {
-        -webkit-text-stroke: 0.1px;
-        @include fontUTM(normal, 18px, #747474);
-    }
+  textarea {
+    -webkit-text-stroke: 0.1px;
+    @include fontUTM(normal, 18px, #747474);
+  }
+}
+
+.rating {
+  float: left;
+}
+
+.rating:not(:checked) > input {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
+
+.rating:not(:checked) > label {
+  float: right;
+  width: 1em;
+  padding: 0 0.1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 200%;
+  line-height: 1.2;
+  color: #ddd;
+}
+
+.rating:not(:checked) > label:before {
+  content: "★ ";
+}
+
+.rating > input:checked ~ label {
+  color: #f70;
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: gold;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+  color: #ea0;
+}
+
+.rating > label:active {
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
+
+.hapo-review-drop {
+  position: absolute;
+  margin-top: -110px;
+  right: 0;
 }
