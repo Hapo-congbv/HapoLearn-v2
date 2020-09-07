@@ -27,7 +27,7 @@
                                         </form>
                                     </div>
                                     <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">
-                                        @if ($pivotId != 0)
+                                        @if ($pivotId)
                                             <div class="w-100 text-center">
                                                 <a href="{{ route('course.user.destroy', $pivotId) }} " class="btn btn-light hapo-lesson-btn border-0 py-lg-0 px-4 py-2"  onclick="return confirm('Are you sure you want to leave this course?');" >Leave this Course</a>
                                             </div>
