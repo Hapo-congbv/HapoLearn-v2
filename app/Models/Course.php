@@ -43,7 +43,7 @@ class Course extends Model
 
     public function learner()
     {
-        return $this->belongsToMany(User::class, 'course_users');
+        return $this->belongsToMany(User::class, 'course_users')->withPivot('id');
     }
 
     public function reviews()

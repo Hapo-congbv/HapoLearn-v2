@@ -90,4 +90,9 @@ class Lesson extends Model
         $percent = $query / $allRatingCount * 100;
         return $percent;
     }
+
+    public function lessonLearner()
+    {
+        return $this->belongsToMany(User::class, 'lesson_users')->withPivot('id');
+    }
 }

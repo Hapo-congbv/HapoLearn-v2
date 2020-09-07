@@ -18,7 +18,7 @@ class CourseUser extends Model
      *
      * @var array
      */
-    protected $fillable = ['course_id', 'user_id', 'lesson_id'];
+    protected $fillable = ['course_id', 'user_id'];
 
     /**
      * Indicates if the model should be timestamped.

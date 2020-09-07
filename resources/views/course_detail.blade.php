@@ -27,7 +27,23 @@
                                         </form>
                                     </div>
                                     <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">
-                                        <a href="#" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
+                                        @if ($pivotId != 0)
+                                            <div class="w-100 text-center">
+                                                <a href="{{ route('course.user.destroy', $pivotId) }} " class="btn btn-light hapo-lesson-btn border-0 py-lg-0 px-4 py-2"  onclick="return confirm('Are you sure you want to leave this course?');" >Leave this Course</a>
+                                            </div>
+                                        @else
+                                            <form action="{{ route('course.user.store') }}" method="post" class="text-center">
+                                                @csrf
+                                                <input type="text" name="course_id" value="{{ $course->id }}" hidden>
+                                                <input type="text" name="user_id" value="{{ Auth::id() }}" hidden>
+                                                @if (Auth::user())
+                                                    <input type="submit" value="Take This Course" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2"  onclick="return confirm('Take This Course?');">
+                                                @else
+                                                    <a href="{{ route('course.detail', $course->id) }}" class="card-link-more btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2" {{ Auth::check() ? '' : 'data-toggle=modal data-target=#exampleModal' }}>Take This Course</a>
+                                                    <input type="submit" hidden value="{{ $course->id }}" class="idDirect">
+                                                @endif
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="course-lesson-detail" >
@@ -37,9 +53,19 @@
                                                 @foreach ($lessonCourse as $key => $item)
                                                     <tr>
                                                         <td class="text-justify d-flex justify-content-between">
-                                                            <p class="course-other-item">{{ ++$key . ".  " . $item->lesson_name }}.</p>
-                                                            <a href="{{ route('lesson.detail', $item->id) }}" class="card-link-more course-other-item-button px-3 py-2 btn-learn" {{ Auth::check() ? '' : 'data-toggle=modal data-target=#exampleModal' }}>Learn</a>
-                                                            <input type="text" hidden value="{{ $item->id }}" class="idDirect">
+                                                            <p class="course-other-item">{{ $key+1 . ".  " . $item->lesson_name }}.</p>
+                                                            @if ($pivotId != 0)
+                                                                @if ( $checkLearnLesson[$key] > 0)
+                                                                    <a href="{{ route('lesson.detail', $item->id) }}"><button class="btn btn-light btn-learn">Continue</button></a>
+                                                                @else
+                                                                    <form action="{{ route('lesson.user.store') }}" method="post" class="text-center">
+                                                                        @csrf
+                                                                        <input type="text" name="user_id" value="{{ Auth::id() }}" hidden>
+                                                                        <input type="text" hidden value="{{ $item->id }}" name="lesson_id">
+                                                                        <input type="submit" value="Learn" class="btn btn-learn">
+                                                                    </form>
+                                                                @endif
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach

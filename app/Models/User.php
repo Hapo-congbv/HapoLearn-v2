@@ -69,4 +69,9 @@ class User extends Authenticatable
     {
         return self::ROLE_LABEL[array_flip(self::ROLE)[$this->role_id]];
     }
+
+    public function lessonLearned()
+    {
+        return $this->belongsToMany(Lesson::class, 'lesson_users')->withPivot('id');
+    }
 }

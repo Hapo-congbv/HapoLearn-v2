@@ -16,25 +16,6 @@ class LessonController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -61,6 +42,11 @@ class LessonController extends Controller
         $otherCourses = Course::limit(config('variable.other_course'))->get();
         $lesson = Lesson::findOrfail($id);
         $lessonReviews = $lesson->lessonReviews;
+        $findFirstPivote = $lesson->lessonLearner()->wherePivot('user_id', Auth::user()->id)->first();
+        $pivotId = 0;
+        if ($findFirstPivote) {
+            $pivotId = $findFirstPivote->pivot->id;
+        }
         $ratingStar = [
             'five_star' => config('variable.five_star'),
             'four_star' => config('variable.four_star'),
@@ -68,7 +54,8 @@ class LessonController extends Controller
             'two_star' => config('variable.two_star'),
             'one_star' => config('variable.one_star')
         ];
-        return view('lesson_detail', compact(['lesson', 'otherCourses', 'lessonReviews', 'ratingStar']));
+        return view('lesson_detail', compact(['lesson', 'otherCourses', 'lessonReviews', 'ratingStar',
+        'pivotId']));
     }
 
     /**
