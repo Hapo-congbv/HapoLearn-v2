@@ -21,11 +21,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// course
 Route::get('/course-all', 'User\CourseController@index')->name('course.all');
 
 Route::get('/course-search', 'User\CourseController@search')->name('course.search');
 
 Route::get('/course-detail/{id}', 'User\CourseController@show')->name('course.detail');
+
+Route::post('/take-user-course', 'User\CourseUserController@store')->name('course.user.store');
+
+Route::get('/leave-user-course/{id}', 'User\CourseUserController@destroy')->name('course.user.destroy');
 
 Route::post('course/review', 'User\CourseController@store')->name('review.store.course');
 
@@ -33,7 +38,12 @@ Route::get('/course/review/{id}', 'User\CourseController@destroy')->name('review
 
 Route::post('/course/review/{id}', 'User\CourseController@update')->name('review.update.course');
 
+//lesson
 Route::get('/lesson-detail/{id}', 'User\LessonController@show')->name('lesson.detail');
+
+Route::post('/take-user-lesson', 'User\LessonUserController@store')->name('lesson.user.store');
+
+Route::get('/leave-user-lesson/{id}/{idCourse}', 'User\LessonUserController@destroy')->name('lesson.user.destroy');
 
 Route::post('/lesson/review', 'User\LessonController@store')->name('review.store.lesson');
 
