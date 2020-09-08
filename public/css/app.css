@@ -49854,6 +49854,10 @@ footer .hapo-copyright p {
   font: bold 18px UTM;
   color: #505353;
 }
+.hapo-detail-content-left .course-lesson-detail a {
+  font: bold 18px UTM;
+  color: #b2d235;
+}
 .hapo-detail-content-left .hapo-lesson-description .hapo-description-header,
 .hapo-detail-content-left .hapo-lesson-description .hapo-requirement-header,
 .hapo-detail-content-left .hapo-lesson-description .hapo-teacher-header,

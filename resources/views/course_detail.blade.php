@@ -52,7 +52,7 @@
                                                     <tr>
                                                         <td class="text-justify d-flex justify-content-between">
                                                             @if ($course->check_user_course)
-                                                                @if ($item->is_user_less)
+                                                                @if ($item->check_user_lesson)
                                                                     <a href="{{ route('lesson.detail', $item->id) }}" class="course-other-item">{{ $key+1 . ".  " . $item->lesson_name }}.</a>
                                                                     <a href="{{ route('lesson.detail', $item->id) }}"><button class="btn btn-light btn-learn">Continue</button></a>
                                                                 @else
