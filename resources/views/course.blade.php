@@ -40,8 +40,8 @@
                                 <p class="mb-0">{{ $item->count_lesson }} </p>
                             </div>
                             <div class="wrap-quizes col-xl-4 text-center">
-                                <a href="#" class="card-link mb-2 d-block">Quizzes</a>
-                                <p class="mb-0">1000</p>
+                                <a href="#" class="card-link mb-2 d-block">Times</a>
+                                <p class="mb-0">{{ $item->time }}</p>
                             </div>
                         </div>
                     </div>

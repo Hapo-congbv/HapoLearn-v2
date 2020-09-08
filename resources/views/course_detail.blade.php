@@ -27,7 +27,21 @@
                                         </form>
                                     </div>
                                     <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">
-                                        <a href="#" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
+                                        @if ($course->check_user_course)
+                                            <div class="w-100 text-center">
+                                                <a href="{{ route('course.user.destroy', $course->id) }} " class="btn btn-light hapo-lesson-btn border-0 py-lg-0 px-4 py-2"  onclick="return confirm('Are you sure you want to leave this course?');" >Leave this Course</a>
+                                            </div>
+                                        @else
+                                            <form action="{{ route('course.user.store', $course->id) }}" method="post" class="text-center">
+                                                @csrf
+                                                @if (Auth::user())
+                                                    <input type="submit" value="Take This Course" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2"  onclick="return confirm('Take This Course?');">
+                                                @else
+                                                    <a href="{{ route('course.detail', $course->id) }}" class="card-link-more btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2" {{ Auth::check() ? '' : 'data-toggle=modal data-target=#exampleModal' }}>Take This Course</a>
+                                                    <input type="text" hidden value="{{ $course->id }}" class="idDirect">
+                                                @endif
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="course-lesson-detail" >
@@ -37,9 +51,20 @@
                                                 @foreach ($lessonCourse as $key => $item)
                                                     <tr>
                                                         <td class="text-justify d-flex justify-content-between">
-                                                            <p class="course-other-item">{{ ++$key . ".  " . $item->lesson_name }}.</p>
-                                                            <a href="{{ route('lesson.detail', $item->id) }}" class="card-link-more course-other-item-button px-3 py-2 btn-learn" {{ Auth::check() ? '' : 'data-toggle=modal data-target=#exampleModal' }}>Learn</a>
-                                                            <input type="text" hidden value="{{ $item->id }}" class="idDirect">
+                                                            @if ($course->check_user_course)
+                                                                @if ($item->check_user_lesson)
+                                                                    <a href="{{ route('lesson.detail', $item->id) }}" class="course-other-item">{{ $key+1 . ".  " . $item->lesson_name }}.</a>
+                                                                    <a href="{{ route('lesson.detail', $item->id) }}"><button class="btn btn-light btn-learn">Continue</button></a>
+                                                                @else
+                                                                    <p class="course-other-item">{{ $key+1 . ".  " . $item->lesson_name }}.</p>
+                                                                    <form action="{{ route('lesson.user.store', $item->id ) }}" method="post" class="text-center">
+                                                                        @csrf
+                                                                        <input type="submit" value="Learn" class="btn btn-learn">
+                                                                    </form>
+                                                                @endif
+                                                            @else
+                                                                <p class="course-other-item">{{ $key+1 . ".  " . $item->lesson_name }}.</p>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach

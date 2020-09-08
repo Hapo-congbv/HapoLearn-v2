@@ -59,7 +59,7 @@ class LoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             if ($request->id) {
-                return redirect()->route('lesson.detail', $request->id);
+                return redirect()->route('course.detail', $request->id);
             } else {
                 return redirect()->route('home');
             }

@@ -7,6 +7,8 @@ use App\Models\Lesson;
 use App\User;
 use App\Models\Review;
 use App\Models\Tag;
+use App\Models\CourseUser;
+use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
@@ -128,5 +130,15 @@ class Course extends Model
         $allRatingCount = ($this->course_review_count) ?: 1;
         $percent = $query / $allRatingCount * 100;
         return $percent;
+    }
+
+    public function getCheckUserCourseAttribute()
+    {
+        if (Auth::user() == null) {
+            return false;
+        } else {
+            $check = $this->learner()->wherePivot("user_id", Auth::user()->id)->exists();
+            return $check;
+        }
     }
 }

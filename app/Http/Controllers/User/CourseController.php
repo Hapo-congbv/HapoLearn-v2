@@ -60,7 +60,8 @@ class CourseController extends Controller
             'two_star' => config('variable.two_star'),
             'one_star' => config('variable.one_star')
         ];
-        return view('course_detail', compact(['course', 'lessonCourse', 'otherCourses', 'courReviews', 'ratingStar']));
+        return view('course_detail', compact(['course', 'lessonCourse', 'otherCourses', 'courReviews',
+        'ratingStar']));
     }
 
     public function search(Request $request)
