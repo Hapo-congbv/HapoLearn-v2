@@ -53,21 +53,6 @@ class CourseController extends Controller
             ['lesson_name', 'LIKE', "%" . $request->name . "%"],
         ])->paginate(config('variable.pagination'));
         $courReviews = $course->reviews;
-        $findFirstPivote = $course->learner()->wherePivot('user_id', Auth::user()->id)->first();
-        $pivotId = 0;
-        if ($findFirstPivote) {
-            $pivotId = $findFirstPivote->pivot->id;
-        }
-        $checkLearnLesson = [];
-        $pivotIdLesson = 0;
-        foreach ($lessonCourse as $lesson) {
-            $findPivotLesson = $lesson->lessonLearner()->wherePivot('user_id', Auth::user()->id)->first();
-            $pivotIdLesson = 0;
-            if ($findPivotLesson) {
-                $pivotIdLesson = $findPivotLesson->pivot->id;
-            }
-            $checkLearnLesson[] = $pivotIdLesson;
-        }
         $ratingStar = [
             'five_star' => config('variable.five_star'),
             'four_star' => config('variable.four_star'),
@@ -76,7 +61,7 @@ class CourseController extends Controller
             'one_star' => config('variable.one_star')
         ];
         return view('course_detail', compact(['course', 'lessonCourse', 'otherCourses', 'courReviews',
-        'ratingStar', 'pivotId' ,'checkLearnLesson']));
+        'ratingStar']));
     }
 
     public function search(Request $request)

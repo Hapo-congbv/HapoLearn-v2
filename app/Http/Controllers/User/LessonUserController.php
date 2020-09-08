@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Lesson;
 use App\Models\UserLesson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LessonUserController extends Controller
 {
@@ -14,12 +16,11 @@ class LessonUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id)
     {
-        $lessonUser = $request->all();
-        $lessonId = $lessonUser['lesson_id'] = $request->lesson_id;
-        UserLesson::create($lessonUser);
-        return redirect()->route('lesson.detail', $lessonId);
+        $lesson = Lesson::findOrFail($id);
+        $lesson->lessonLearner()->attach(Auth::user()->id);
+        return redirect()->route('lesson.detail', $id);
     }
 
     /**
@@ -30,8 +31,8 @@ class LessonUserController extends Controller
      */
     public function destroy($id, $idCourse)
     {
-        $userCourse = UserLesson::findOrfail($id);
-        $userCourse->delete();
+        $lesson = Lesson::find($id);
+        $lesson->lessonLearner()->detach(Auth::user()->id);
         return redirect()->route('course.detail', $idCourse);
     }
 }

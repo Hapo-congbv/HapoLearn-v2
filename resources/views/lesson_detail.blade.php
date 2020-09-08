@@ -319,7 +319,7 @@
                         </div>
                         <div class="course-info-text">
                             <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">
-                                <a href="{{ route('lesson.user.destroy', [$pivotId, $lesson->course->id]) }} " class="btn btn-light hapo-lesson-btn border-0 py-lg-0 px-4 py-2"  onclick="return confirm('Are you sure you want to leave this lesson?');" >Leave this Lesson</a>
+                                <a href="{{ route('lesson.user.destroy', [$lesson->id, $lesson->course->id]) }} " class="btn btn-light hapo-lesson-btn border-0 py-lg-0 px-4 py-2"  onclick="return confirm('Are you sure you want to leave this lesson?');" >Leave this Lesson</a>
                             </div>
                         </div>
                     </div>

@@ -148,6 +148,10 @@
     p {
       @include fontUTM(bold, 18px, $color_title);
     }
+
+    a {
+      @include fontUTM(bold, 18px, $color_link);
+    }
   }
 
   .hapo-lesson-description,

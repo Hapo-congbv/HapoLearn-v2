@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Course;
 use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
 
 class Lesson extends Model
 {
@@ -36,7 +37,7 @@ class Lesson extends Model
 
     public function userLesson()
     {
-        return $this->hasMany(UserLesson::class);
+        return $this->hasMany(UserLesson::class, 'lesson_id');
     }
 
     public function lessonReviews()
@@ -93,6 +94,16 @@ class Lesson extends Model
 
     public function lessonLearner()
     {
-        return $this->belongsToMany(User::class, 'lesson_users')->withPivot('id');
+        return $this->belongsToMany(User::class, 'lesson_users');
+    }
+
+    public function getIsUserLessAttribute()
+    {
+        if (Auth::user() == null) {
+            $check = [];
+        } else {
+            $check = $this->lessonLearner()->wherePivot("user_id", Auth::user()->id)->get();
+        }
+        return count($check);
     }
 }

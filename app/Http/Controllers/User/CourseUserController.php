@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\CourseUser;
-use Illuminate\Http\Request;
+use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
 
 class CourseUserController extends Controller
 {
@@ -14,10 +14,10 @@ class CourseUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id)
     {
-        $userCourse = $request->all();
-        CourseUser::create($userCourse);
+        $course = Course::findOrFail($id);
+        $course->learner()->attach(Auth::user()->id);
         return redirect()->back();
     }
 
@@ -29,8 +29,8 @@ class CourseUserController extends Controller
      */
     public function destroy($id)
     {
-        $userCourse = CourseUser::findOrfail($id);
-        $userCourse->delete();
+        $course = Course::find($id);
+        $course->learner()->detach(Auth::user()->id);
         return redirect()->back();
     }
 }

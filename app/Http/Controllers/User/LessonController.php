@@ -43,10 +43,6 @@ class LessonController extends Controller
         $lesson = Lesson::findOrfail($id);
         $lessonReviews = $lesson->lessonReviews;
         $findFirstPivote = $lesson->lessonLearner()->wherePivot('user_id', Auth::user()->id)->first();
-        $pivotId = 0;
-        if ($findFirstPivote) {
-            $pivotId = $findFirstPivote->pivot->id;
-        }
         $ratingStar = [
             'five_star' => config('variable.five_star'),
             'four_star' => config('variable.four_star'),
@@ -54,8 +50,7 @@ class LessonController extends Controller
             'two_star' => config('variable.two_star'),
             'one_star' => config('variable.one_star')
         ];
-        return view('lesson_detail', compact(['lesson', 'otherCourses', 'lessonReviews', 'ratingStar',
-        'pivotId']));
+        return view('lesson_detail', compact(['lesson', 'otherCourses', 'lessonReviews', 'ratingStar']));
     }
 
     /**

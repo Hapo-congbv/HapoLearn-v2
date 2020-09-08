@@ -28,7 +28,7 @@ Route::get('/course-search', 'User\CourseController@search')->name('course.searc
 
 Route::get('/course-detail/{id}', 'User\CourseController@show')->name('course.detail');
 
-Route::post('/take-user-course', 'User\CourseUserController@store')->name('course.user.store');
+Route::post('/take-user-course/{id}', 'User\CourseUserController@store')->name('course.user.store');
 
 Route::get('/leave-user-course/{id}', 'User\CourseUserController@destroy')->name('course.user.destroy');
 
@@ -41,7 +41,7 @@ Route::post('/course/review/{id}', 'User\CourseController@update')->name('review
 //lesson
 Route::get('/lesson-detail/{id}', 'User\LessonController@show')->name('lesson.detail');
 
-Route::post('/take-user-lesson', 'User\LessonUserController@store')->name('lesson.user.store');
+Route::post('/take-user-lesson/{id}', 'User\LessonUserController@store')->name('lesson.user.store');
 
 Route::get('/leave-user-lesson/{id}/{idCourse}', 'User\LessonUserController@destroy')->name('lesson.user.destroy');
 
