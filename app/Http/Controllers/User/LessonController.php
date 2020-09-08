@@ -42,7 +42,6 @@ class LessonController extends Controller
         $otherCourses = Course::limit(config('variable.other_course'))->get();
         $lesson = Lesson::findOrfail($id);
         $lessonReviews = $lesson->lessonReviews;
-        $findFirstPivote = $lesson->lessonLearner()->wherePivot('user_id', Auth::user()->id)->first();
         $ratingStar = [
             'five_star' => config('variable.five_star'),
             'four_star' => config('variable.four_star'),
