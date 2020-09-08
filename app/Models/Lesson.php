@@ -97,13 +97,9 @@ class Lesson extends Model
         return $this->belongsToMany(User::class, 'lesson_users');
     }
 
-    public function getIsUserLessAttribute()
+    public function getCheckUserLessonAttribute()
     {
-        if (Auth::user() == null) {
-            $check = [];
-        } else {
-            $check = $this->lessonLearner()->wherePivot("user_id", Auth::user()->id)->get();
-        }
-        return count($check);
+        $check = $this->lessonLearner()->wherePivot("user_id", Auth::user()->id)->exists();
+        return $check;
     }
 }
