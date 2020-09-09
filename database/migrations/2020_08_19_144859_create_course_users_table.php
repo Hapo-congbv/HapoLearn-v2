@@ -17,7 +17,6 @@ class CreateCourseUsersTable extends Migration
             $table->increments('id');
             $table->integer('course_id')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('lesson_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

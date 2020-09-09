@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Course;
 
 class CourseController extends Controller
 {
@@ -14,7 +14,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('admin.course.index');
     }
 
     /**

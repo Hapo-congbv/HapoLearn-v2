@@ -7,30 +7,27 @@
         <div class="collapse collapse navbar-collapse col-6 col-md-12 col-xl-8 p-0 justify-content-xl-end justify-content-md-center"  id="sibarNavbar">
             <ul class="navbar-nav align-items-center hapo-nav-item">
                 <li class="nav-item  hapo-list-items">
-                    <a class="nav-link" href="#">HOME</a>
+                    <a class="nav-link" href=" {{ route('home') }} ">HOME</a>
                 </li>
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="#">All COURSES</a>
+                    <a class="nav-link" href="{{ route('course.all') }}">All COURSES</a>
                 </li>
                 @if(Auth::check())
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="#">LIST LESSON</a>
-                </li>
-                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="#">LESSON DETAIL</a>
-                </li>
-                <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="#">PROFILE</a>
+                    <a class="nav-link" href=" {{ route('user.profile') }} ">PROFILE</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle mx-md-2 my-3 my-sm-1 text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
-
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('logout') }}"
+<<<<<<< HEAD
                         onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
+=======
+                        onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">
+>>>>>>> 91515b9ecd85f8e505a26ecf9688087fe34205c2
                             {{ __('Logout') }}
                         </a>
 

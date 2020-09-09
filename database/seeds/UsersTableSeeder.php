@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\User;
+use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,13 +12,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'name' => 'Hapo Tester',
-            'email' => 'test@haposoft.com',
-            'password' => bcrypt('12345678'),
-            'birth_day' => '2020/08/19',
-            'address' => 'hnoi',
-            'phone' => '0987654321'
-        ]);
+        factory(User::class, 20)->create();
     }
 }
