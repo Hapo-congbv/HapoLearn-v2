@@ -34,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'email_verified_at', 'password', 'birth_day', 'address', 'phone', 'avatar', 'role_id'
+        'name', 'email', 'email_verified_at', 'password', 'birth_day', 'address', 'about', 'phone', 'avatar', 'role_id'
     ];
 
     /**
@@ -55,9 +55,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function courseUser()
+    public function courses()
     {
-        return $this->hasMany(CourseUser::class);
+        return $this->belongsToMany(Course::class, 'course_users');
     }
 
     public function getIsTeacherAttribute()
