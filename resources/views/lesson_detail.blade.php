@@ -182,7 +182,7 @@
                                                     @endfor
                                                 </div>
                                                 <div class="hapo-review-content-time">
-                                                    <p class="m-0 p-0">{{ $lessonReview->created_at }} </p>
+                                                    <p class="m-0 p-0">{{ date('d-m-Y G:i', strtotime($lessonReview->created_at)) }} </p>
                                                 </div>
                                             </div>
                                         </div>

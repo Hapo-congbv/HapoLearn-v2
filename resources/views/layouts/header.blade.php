@@ -14,13 +14,7 @@
                 </li>
                 @if(Auth::check())
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="#">LIST LESSON</a>
-                </li>
-                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="#">LESSON DETAIL</a>
-                </li>
-                <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="#">PROFILE</a>
+                    <a class="nav-link" href=" {{ route('user.profile') }} ">PROFILE</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle mx-md-2 my-3 my-sm-1 text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

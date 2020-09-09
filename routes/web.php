@@ -51,6 +51,13 @@ Route::get('/lesson/review/{id}', 'User\LessonController@destroy')->name('review
 
 Route::post('/lesson/review/{id}', 'User\LessonController@update')->name('review.update.lesson');
 
+Route::get('/user/profile', 'User\UserController@index')->name('user.profile');
+
+Route::post('users/profile/{id}', 'User\UserController@update')->name('user.profile.update');
+
+Route::post('users/profile/avartar/{id}', 'User\UserController@updateAvatar')->name('user.profile.avatar');
+
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', 'Admin\AdminController@index')->name('index');
     Route::resource('users', 'Admin\UserController');

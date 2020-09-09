@@ -39,6 +39,10 @@ $(document).ready(function () {
         $("#exampleModal").modal("show");
     }
 
+    if ($("#myModal input").hasClass("is-invalid")) {
+        $("#myModal").modal("show");
+    }
+
     $(".card-link-more").click(function() {
         $("#loginDefault, #registerDefault").val(
             $(this).next()
@@ -97,4 +101,24 @@ $(document).ready(function () {
             $('#nav-tab a[href="' + activeTab + '"]').tab('show');
         }
     });
+
+    setTimeout(function() {
+        $('#myAlert').fadeOut('slow');
+    }, 3000);
+
+    function preview_image(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+            $('#output_image').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]); // convert to base64 string
+        }
+    }
+
+    $("#avatar").change(function() {
+        preview_image(this);
+        $('#output_image').removeClass('d-none').addClass('d-block');
+    });
 });
+

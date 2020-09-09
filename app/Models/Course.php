@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Lesson;
-use App\User;
+use App\Models\User;
 use App\Models\Review;
 use App\Models\Tag;
-use App\Models\CourseUser;
 use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
