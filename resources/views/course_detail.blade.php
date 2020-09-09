@@ -221,11 +221,11 @@
                                                                     @error('content')
                                                                         <div class="alert alert-danger">{{ $message }}</div>
                                                                     @enderror
-                                                                <div class="d-flex align-items-center justify-content-end">
+                                                                    <div class="d-flex align-items-center justify-content-end">
                                                                         <div class="d-flex align-items-center"></div>
                                                                         <button class="btn btn-primary cancelLesson px-3 mr-2">Cancel</button>
                                                                         <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} ">Update</button>
-                                                                </div>
+                                                                    </div>
                                                                 </form>
                                                             </div>
                                                             <div class="dropleft hapo-review-drop" id="drop{{ $courseReview->id }}">

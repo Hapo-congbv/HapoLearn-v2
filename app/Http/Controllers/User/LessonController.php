@@ -28,7 +28,9 @@ class LessonController extends Controller
         $review = $request->all();
         $review['user_id'] = Auth::id();
         Review::create($review);
-        return redirect()->back();
+        return json_encode(array(
+            "statusCode" => 200
+        ));
     }
 
     /**

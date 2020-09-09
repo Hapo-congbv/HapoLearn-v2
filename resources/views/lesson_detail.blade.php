@@ -201,15 +201,15 @@
                                                     <div class="hapo-form-review-hidden" id="form{{ $lessonReview->id }}">
                                                         <form action=" {{ route('review.update.lesson', $lessonReview->id) }} " method="POST">
                                                             @csrf
-                                                            <input type="text" hidden name="lesson_id" id="lessonId" value="{{ $lesson->id }} " data-id=" {{ $lesson->id }} ">
-                                                            <textarea name="content" id="content" cols="30" rows="3" class="form-control mb-3" placeholder="Message"> {{ $lessonReview->content }} </textarea>
+                                                            <input type="text" hidden name="lesson_id"  value="{{ $lesson->id }} " data-id=" {{ $lesson->id }} ">
+                                                            <textarea name="content"  cols="30" rows="3" class="form-control mb-3" placeholder="Message"> {{ $lessonReview->content }} </textarea>
                                                             @error('content')
                                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                             @enderror
                                                            <div class="d-flex align-items-center justify-content-end">
                                                                 <div class="d-flex align-items-center"></div>
                                                                 <button class="btn btn-info cancelLesson px-3 mr-2">Cancel</button>
-                                                                <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $lesson->id }} ">Update</button>
+                                                                <button type="submit" class="btn btn-learn px-3" data-id=" {{ $lesson->id }} ">Update</button>
                                                            </div>
                                                         </form>
                                                     </div>
@@ -234,7 +234,7 @@
                                 </div>
                                 <div class="leave-commnent">
                                     <div class="hapo-review-leave-comment mb-3">Leave a Comment</div>
-                                    <form action=" {{ route('review.store.lesson') }} " method="POST">
+                                    <form action="" method="POST">
                                         @csrf
                                         <input type="text" hidden name="lesson_id" id="lessonId" value="{{ $lesson->id }} " data-id=" {{ $lesson->id }} ">
                                         <textarea name="content" id="content" cols="30" rows="3" class="form-control mb-3" placeholder="Message"></textarea>

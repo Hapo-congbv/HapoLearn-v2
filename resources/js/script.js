@@ -68,8 +68,6 @@ $(document).ready(function () {
         })
     });
 
-
-
     // search filter
     $(document).ready(function() {
         $('#myInput').on('keyup', function(event) {
