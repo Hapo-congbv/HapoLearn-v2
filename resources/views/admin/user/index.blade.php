@@ -3,7 +3,7 @@
 @section('contents')
 <div class="container-fluid">
     @if ($message = Session::get('message'))
-        <div class="alert alert-success alert-block my-2">
+        <div class="alert alert-success alert-block my-2" id="myAlert">
             <button type="button" class="close" data-dismiss="alert">X</button>
             <strong>{{ $message }}</strong>
         </div>

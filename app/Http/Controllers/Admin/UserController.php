@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Facade\Ignition\QueryRecorder\Query;
 use Illuminate\Support\Facades\Storage;
 

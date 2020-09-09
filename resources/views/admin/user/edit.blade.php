@@ -15,9 +15,9 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="role_id">Role: </label>
-                                    <input class="form-check-input ml-4" type="radio" name="role_id" id="1" value="{{ App\User::ROLE['user'] }}" {{ old('role', $user->role_id) ==  App\User::ROLE['user'] ? 'checked' : '' }}>
+                                    <input class="form-check-input ml-4" type="radio" name="role_id" id="1" value="{{ App\Models\User::ROLE['user'] }}" {{ old('role', $user->role_id) ==  App\Models\User::ROLE['user'] ? 'checked' : '' }}>
                                     <label for="1" class="ml-5">User</label>
-                                    <input class="form-check-input ml-4" type="radio" name="role_id" id="2" value="{{ App\User::ROLE['teacher'] }}" {{ old('role',  $user->role_id) ==  App\User::ROLE['teacher'] ? 'checked' : '' }}>
+                                    <input class="form-check-input ml-4" type="radio" name="role_id" id="2" value="{{ App\Models\User::ROLE['teacher'] }}" {{ old('role',  $user->role_id) ==  App\Models\User::ROLE['teacher'] ? 'checked' : '' }}>
                                     <label for="2" class="ml-5">Teacher</label>
                                     @error('role_id')
                                         <div class="alert alert-danger">{{ $message }}</div>
