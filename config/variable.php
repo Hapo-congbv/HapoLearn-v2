@@ -7,5 +7,6 @@ return [
     'four_star' => '4',
     'three_star' => '3',
     'two_star' => '2',
-    'one_star' => '1'
+    'one_star' => '1',
+    'storage' => 'public/users/'
 ];

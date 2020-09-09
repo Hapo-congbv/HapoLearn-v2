@@ -107,8 +107,8 @@ class UserController extends Controller
         $avatar = null;
         if ($request->hasFile('avatar')) {
             $avatar = $id . "_" . $request->file('avatar')->getClientOriginalName();
-            $request->file('avatar')->storeAs('public/users', $avatar);
-            Storage::disk('public')->delete('/users/' . $user->avatar);
+            $request->file('avatar')->storeAs(config('variable.storage'), $avatar);
+            Storage::delete(config('variable.storage') . $user->avatar);
         }
         $user->avatar = $avatar;
         $user->update();
