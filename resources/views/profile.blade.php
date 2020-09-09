@@ -13,7 +13,7 @@
             <div class="col-3 ">
                 <div class="hapo-profile-left-header">
                     <div class="hapo-profile-image d-flex flex-column align-items-center justify-content-center">
-                        <img src=" {{ asset('storage/users/'. Auth::user()->avatar)}} " alt="">
+                        <img src=" {{ asset('storage/users/'. Auth::user()->avatar) }} " alt="">
                         <button class="btn btn-img" data-toggle="modal" data-target="#myModal"><i class="fas fa-camera"></i></button>
                     </div>
                     <div class="hapo-profile-contact mt-2 mb-3 d-flex flex-column justify-content-center align-items-center">
@@ -52,7 +52,7 @@
                                 <div class="hapo-right-imgcourse p-3 d-flex flex-column align-items-center justify-content-center flex-wrap">
                                     <img src=" {{ asset('storage/images/'. $course->image) }} " class="rounded-circle" alt="course">
                                     <br>
-                                    <span> {{$course->course_name }} </span>
+                                    <span> {{ $course->course_name }} </span>
                                 </div>
                             @endforeach
                             <div class="hapo-right-imgcourse p-2 d-flex flex-column align-items-center justify-content-cente">
