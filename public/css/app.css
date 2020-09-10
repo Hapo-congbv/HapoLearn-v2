@@ -50091,6 +50091,9 @@ footer .hapo-copyright p {
   font: normal 18px UTM;
   color: #949292;
 }
+.hapo-review-content .hapo-review-content-body .hapo-content-review {
+  word-break: break-word;
+}
 
 .leave-commnent textarea {
   -webkit-text-stroke: 0.1px;

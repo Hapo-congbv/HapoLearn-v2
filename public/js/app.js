@@ -41525,10 +41525,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   !*** ./resources/js/script.js ***!
   \********************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
-    defaultsDeep = _require.defaultsDeep;
+/***/ (function(module, exports) {
 
 $(document).ready(function () {
   $('.navbar-toggler').click(function () {

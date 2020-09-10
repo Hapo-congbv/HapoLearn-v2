@@ -1,6 +1,13 @@
 @extends('layouts.app')
 @section('title','Course Detail')
 @section('content')
+<div class="head-detail container-fluid mt-2 d-flex align-items-center">
+    <ul class="pl-5 d-flex align-content-center justify-content-center">
+        <li class="mx-2"><a href=" {{ route('home') }} ">Home</a></li> >
+        <li class="mx-2"><a href=" {{ route('course.all') }} ">All courses</a></li> >
+        <li class="mx-2"><a href="">Courses detail</a></li>
+    </ul>
+</div>
     <div class="hapo-detail">
         <div class="container">
             <div class="row pt-5">
@@ -204,7 +211,7 @@
                                             <div class="hapo-review-content-body">
                                                 <div class="hapo-review">
                                                     <div class="hapo-form-review" id="{{ $courseReview->id }}">
-                                                        <div class="m-2 hapo-content-review" id="content{{ $courseReview->id }}">
+                                                        <div class="m-2 hapo-content-review w-100" id="content{{ $courseReview->id }}">
                                                             <p class="text-justify">
                                                                 {{ $courseReview->content }}
                                                             </p>
@@ -216,15 +223,26 @@
                                                             <div class="hapo-form-review-hidden" id="form{{ $courseReview->id }}">
                                                                 <form action=" {{ route('review.update.course', $courseReview->id) }} " method="POST">
                                                                     @csrf
-                                                                    <input type="text" hidden name="course_id" id="courseId" value="{{ $course->id }} " data-id=" {{ $course->id }} ">
-                                                                    <textarea name="content" id="content" cols="30" rows="3" class="form-control mb-3" placeholder="Message"> {{ $courseReview->content }} </textarea>
+                                                                    <input type="text" hidden name="course_id" value="{{ $course->id }} " data-id=" {{ $course->id }} ">
+                                                                    <textarea name="content" cols="30" rows="3" class="form-control mb-3" placeholder="Message"> {{ $courseReview->content }} </textarea>
                                                                     @error('content')
                                                                         <div class="alert alert-danger">{{ $message }}</div>
                                                                     @enderror
-                                                                    <div class="d-flex align-items-center justify-content-end">
-                                                                        <div class="d-flex align-items-center"></div>
-                                                                        <button class="btn btn-primary cancelLesson px-3 mr-2">Cancel</button>
-                                                                        <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} ">Update</button>
+                                                                    <div class="d-flex align-items-center justify-content-between">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="mr-3 hapo-review-leave-comment">Vote:</div>
+                                                                            <div class="rating">
+                                                                                <input type="radio" class="rating" id="starFive{{ $courseReview->id }}" name="rating" value="5" /><label for="starFive{{ $courseReview->id }}" title="Rocks!">5 stars</label>
+                                                                                <input type="radio" class="rating" id="starFour{{ $courseReview->id }}" name="rating" value="4" /><label for="starFour{{ $courseReview->id }}" title="Pretty good">4 stars</label>
+                                                                                <input type="radio" class="rating" id="starThree{{ $courseReview->id }}" name="rating" value="3" /><label for="starThree{{ $courseReview->id }}" title="Meh">3 stars</label>
+                                                                                <input type="radio" class="rating" id="starTwo{{ $courseReview->id }}" name="rating" value="2" /><label for="starTwo{{ $courseReview->id }}" title="Kinda bad">2 stars</label>
+                                                                                <input type="radio" class="rating" id="starOne{{ $courseReview->id }}" name="rating" value="1" /><label for="starOne{{ $courseReview->id }}" title="Sucks big time">1 star</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <button class="btn btn-primary cancelLesson px-3 mr-2">Cancel</button>
+                                                                            <button type="submit" class="btn btn-learn px-3" data-id=" {{ $course->id }} ">Update</button>
+                                                                        </div>
                                                                     </div>
                                                                 </form>
                                                             </div>

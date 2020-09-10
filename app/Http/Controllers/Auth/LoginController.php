@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -40,11 +42,21 @@ class LoginController extends Controller
     //override function validateLogin in AuthenticatesUsers
     protected function attemptLogin(Request $request)
     {
+        $user = User::where('email', '=', $request->login_email)->first();
+        $role = $user->role_id;
 
-        return $this->guard()->attempt(
-            ['email' => $request->login_email, 'password' => $request->login_password],
-            $request->filled('remember')
-        );
+        $data = [
+            'email' => $request->login_email,
+            'password' => $request->login_password
+        ];
+
+        if ($role == User::ROLE['user']) {
+            return Auth::guard('web')->attempt($data, $request->filled('remember'));
+        }
+
+        if ($role == User::ROLE['teacher']) {
+            return Auth::guard('admin')->attempt($data, $request->filled('remember'));
+        }
     }
 
     public function login(Request $request)
@@ -58,10 +70,24 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            if ($request->id) {
-                return redirect()->route('course.detail', $request->id);
-            } else {
-                return $this->sendLoginResponse($request);
+            if (empty(Auth::guard('admin')->user()->role_id)) {
+                return redirect()->route('home');
+            }
+
+            if (Auth::guard('admin')->user()->role_id == User::ROLE['teacher']) {
+                return redirect()->route('admin');
+            }
+
+            if (empty(Auth::guard('web')->user()->role_id)) {
+                return redirect()->route('home');
+            }
+
+            if (Auth::user()->role_id == User::ROLE['user']) {
+                if ($request->id) {
+                    return redirect()->route('course.detail', $request->id);
+                } else {
+                    return $this->sendLoginResponse($request);
+                }
             }
         }
 

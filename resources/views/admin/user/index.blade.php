@@ -14,12 +14,12 @@
                 <div class="hapo-admin-header-name px-3 d-flex align-items-center">
                     List Users
                 </div>
-                <form class="form-inline col-xs-7 text-center" method="GET" action="{{ route('admin.users.index') }}" id="formSearchUser">
+                <form class="form-inline col-xs-7 text-center" method="GET" action="{{ route('users.index') }}" id="formSearchUser">
                     <input class="form-control" type="text" placeholder="Search" name="name" value="{{ request('name') }}">
                     <i class="fa fa-search"></i>
                 </form>
                 <div class="col-xs-4 ml-4 text-right">
-                    <a href="{{ Route('admin.users.create') }}" class="btn btn-danger" role="button">Create</a>
+                    <a href="{{ Route('users.create') }}" class="btn btn-danger" role="button">Create</a>
                 </div>
             </div>
             <div class="hapo-admin-header-link px-5">
@@ -62,9 +62,9 @@
                             <!-- show -->
                             <a href data-id="{{ $user->id }}" class="icon-show mx-1" data-toggle="modal" data-target="#showUser" ><span class="btn btn-info"><i class="fas fa-user" aria-hidden="true"></i></span></a>
                             <!-- edit -->
-                            <a href="{{ route('admin.users.edit', $user->id) }}"  class="icon-edit mx-1" ><span class="btn btn-primary"> <i class="fas fa-edit" aria-hidden="true"></i></span> </a>
+                            <a href="{{ route('users.edit', $user->id) }}"  class="icon-edit mx-1" ><span class="btn btn-primary"> <i class="fas fa-edit" aria-hidden="true"></i></span> </a>
                             <!-- delete -->
-                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="post" id="delete">
+                            <form action="{{ route('users.destroy', $user->id) }}" method="post" id="delete">
                                 @method('DELETE')
                                 @csrf
                                 <button type="submit" class="btn btn-danger icon-delete" onclick="return confirm('Are you sure ?')" >

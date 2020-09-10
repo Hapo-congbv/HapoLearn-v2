@@ -14,7 +14,7 @@ class LessonController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:web');
     }
 
     /**
@@ -26,11 +26,9 @@ class LessonController extends Controller
     public function store(ReviewRequest $request)
     {
         $review = $request->all();
-        $review['user_id'] = Auth::id();
+        $review['user_id'] = Auth::user()->id;
         Review::create($review);
-        return json_encode(array(
-            "statusCode" => 200
-        ));
+        return redirect()->back();
     }
 
     /**
