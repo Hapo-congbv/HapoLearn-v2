@@ -50,18 +50,12 @@ class LoginController extends Controller
             'password' => $request->login_password
         ];
 
-        if ($request->remember == trans('remember.Remember Me')) {
-            $remember = true;
-        } else {
-            $remember = false;
-        }
-
         if ($role == User::ROLE['user']) {
-            return Auth::guard('web')->attempt($data);
+            return Auth::guard('web')->attempt($data, $request->filled('remember'));
         }
 
         if ($role == User::ROLE['teacher']) {
-            return Auth::guard('admin')->attempt($data);
+            return Auth::guard('admin')->attempt($data, $request->filled('remember'));
         }
     }
 

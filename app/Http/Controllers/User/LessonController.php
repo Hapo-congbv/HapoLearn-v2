@@ -39,7 +39,6 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        $lesson = Lesson::findOrfail($id);
         $otherCourses = Course::limit(config('variable.other_course'))->get();
         $lesson = Lesson::findOrfail($id);
         $lessonReviews = $lesson->lessonReviews;
