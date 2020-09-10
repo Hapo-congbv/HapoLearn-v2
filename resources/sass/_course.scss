@@ -384,6 +384,10 @@
   .hapo-review-content-body {
     -webkit-text-stroke: 0.05px;
     @include fontUTM(normal, 18px, #949292);
+
+    .hapo-content-review {
+        word-break: break-word;
+    }
   }
 }
 

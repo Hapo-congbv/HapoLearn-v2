@@ -14,7 +14,7 @@ class LessonController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:web')->except('logout');
     }
 
     /**
@@ -26,11 +26,9 @@ class LessonController extends Controller
     public function store(ReviewRequest $request)
     {
         $review = $request->all();
-        $review['user_id'] = Auth::id();
+        $review['user_id'] = Auth::user()->id;
         Review::create($review);
-        return json_encode(array(
-            "statusCode" => 200
-        ));
+        return redirect()->back();
     }
 
     /**
@@ -41,6 +39,8 @@ class LessonController extends Controller
      */
     public function show($id)
     {
+        $lesson = Lesson::findOrfail($id);
+        // dd($lesson->lessonLearner());
         $otherCourses = Course::limit(config('variable.other_course'))->get();
         $lesson = Lesson::findOrfail($id);
         $lessonReviews = $lesson->lessonReviews;
