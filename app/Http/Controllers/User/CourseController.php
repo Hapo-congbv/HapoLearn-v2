@@ -20,6 +20,7 @@ class CourseController extends Controller
      */
     public function index()
     {
+        // dd(Auth::user());
         $courses = Course::paginate(config('variable.pagination'));
         return view('course', compact('courses'));
     }

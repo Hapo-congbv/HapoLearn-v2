@@ -1,5 +1,3 @@
-const { defaultsDeep } = require("lodash");
-
 $(document).ready(function () {
     $('.navbar-toggler').click(function () {
         $('.icon').toggleClass('fa-times');

@@ -35,8 +35,7 @@
                     </div>
                     <div class="hapo-left-body-desc mt-3 text-justify">
                         <span>
-                            Vivamus volutpat eros pulvinar velit laoreet, sit amet egestas erat dignissim. Sed quis rutrum tellus,
-                            sit amet viverra felis. Cras sagittis sem sit amet urna feugiat rutrum. Nam nulla ippsumipsum, them venenatis
+                            {{ Auth::user()->about }}
                         </span>
                     </div>
                 </div>
