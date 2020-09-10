@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:web')->except('logout');
+        $this->middleware('auth:web');
     }
     /**
      * Display a listing of the resource.

@@ -1,6 +1,14 @@
 @extends('layouts.app')
 @section('title','Lesson Detail')
 @section('content')
+<div class="head-detail container-fluid mt-2 d-flex align-items-center">
+    <ul class="pl-5 d-flex align-content-center justify-content-center">
+        <li class="mx-2"><a href=" {{ route('home') }} ">Home</a></li> >
+        <li class="mx-2"><a href=" {{ route('course.all') }} ">All courses</a></li> >
+        <li class="mx-2"><a href=" {{ route('course.detail', $lesson->course->id) }} ">Courses detail</a></li> >
+        <li class="mx-2"><a href="#">Lesson detail</a></li>
+    </ul>
+</div>
     <div class="hapo-detail">
         <div class="container">
             <div class="row pt-5">
@@ -86,7 +94,7 @@
                                                         <p class="hapo-program-lesson my-0 ml-3 d-flex align-items-center justify-content-center">Lesson</p>
                                                     </div>
                                                     <p class="hapo-program-name m-0 text-left d-flex align-items-center justify-content-center">Program learn HTML/CSS Program learn HTML/CSS </p>
-                                                    <a href="" class="course-other-item-button px-3 py-2 btn-learn">Learn</a>
+                                                    <a href="" class="course-other-item-button px-3 py-2 btn-learn">Preview</a>
                                                 </td>
                                             </tr>
                                         @endfor
@@ -189,8 +197,8 @@
                                         <div class="hapo-review-content-body">
                                             <div class="hapo-review">
                                                <div class="hapo-form-review" id="{{ $lessonReview->id }}">
-                                                    <div class="m-2 hapo-content-review" id="content{{ $lessonReview->id }}">
-                                                        <p class="text-justify">
+                                                    <div class="m-2 hapo-content-review w-100" id="content{{ $lessonReview->id }}">
+                                                        <p class="text-justify d-flex align-content-center flex-wrap">
                                                             {{ $lessonReview->content }}
                                                         </p>
                                                         <div class="hapo-review-footer">
@@ -206,10 +214,21 @@
                                                             @error('content')
                                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                             @enderror
-                                                           <div class="d-flex align-items-center justify-content-end">
-                                                                <div class="d-flex align-items-center"></div>
-                                                                <button class="btn btn-info cancelLesson px-3 mr-2">Cancel</button>
-                                                                <button type="submit" class="btn btn-learn px-3" data-id=" {{ $lesson->id }} ">Update</button>
+                                                           <div class="d-flex align-items-center justify-content-between">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="mr-3 hapo-review-leave-comment">Vote:</div>
+                                                                    <div class="rating">
+                                                                        <input type="radio" class="rating" id="starFive{{ $lessonReview->id }}" name="rating" value="5" /><label for="starFive{{ $lessonReview->id }}" title="Rocks!">5 stars</label>
+                                                                        <input type="radio" class="rating" id="starFour{{ $lessonReview->id }}" name="rating" value="4" /><label for="starFour{{ $lessonReview->id }}" title="Pretty good">4 stars</label>
+                                                                        <input type="radio" class="rating" id="starThree{{ $lessonReview->id }}" name="rating" value="3" /><label for="starThree{{ $lessonReview->id }}" title="Meh">3 stars</label>
+                                                                        <input type="radio" class="rating" id="starTwo{{ $lessonReview->id }}" name="rating" value="2" /><label for="starTwo{{ $lessonReview->id }}" title="Kinda bad">2 stars</label>
+                                                                        <input type="radio" class="rating" id="starOne{{ $lessonReview->id }}" name="rating" value="1" /><label for="starOne{{ $lessonReview->id }}" title="Sucks big time">1 star</label>
+                                                                    </div>
+                                                                </div>
+                                                               <div>
+                                                                    <button class="btn btn-info cancelLesson px-3 mr-2">Cancel</button>
+                                                                    <button type="submit" class="btn btn-learn px-3" data-id=" {{ $lesson->id }} ">Update</button>
+                                                               </div>
                                                            </div>
                                                         </form>
                                                     </div>
@@ -234,7 +253,7 @@
                                 </div>
                                 <div class="leave-commnent">
                                     <div class="hapo-review-leave-comment mb-3">Leave a Comment</div>
-                                    <form action="" method="POST">
+                                    <form action=" {{ route('review.store.lesson') }} " method="POST">
                                         @csrf
                                         <input type="text" hidden name="lesson_id" id="lessonId" value="{{ $lesson->id }} " data-id=" {{ $lesson->id }} ">
                                         <textarea name="content" id="content" cols="30" rows="3" class="form-control mb-3" placeholder="Message"></textarea>
