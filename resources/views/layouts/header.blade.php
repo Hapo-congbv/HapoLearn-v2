@@ -6,15 +6,16 @@
         <img src="{{url('storage/images/Hapo_Learn_logo.png')}} " class="col-7 col-md-6 col-xl-3 ml-xl-1 m-auto ml-xl-2">
         <div class="collapse collapse navbar-collapse col-6 col-md-12 col-xl-8 p-0 justify-content-xl-end justify-content-md-center"  id="sibarNavbar">
             <ul class="navbar-nav align-items-center hapo-nav-item">
-                <li class="nav-item  hapo-list-items">
-                    <a class="nav-link" href=" {{ route('home') }} ">HOME</a>
+                <li class="nav-item  hapo-list-item">
+                    <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href=" {{ route('home') }} ">HOME</a>
                 </li>
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href="{{ route('course.all') }}">All COURSES</a>
+                    <a class="nav-link {{ Request::is('course/*') ? 'active' : '' }}" href="{{ route('course.all') }}">All COURSES</a>
+                    {{-- <a class="nav-link {{ $currentUrl == 'home' ? 'active' : '' }}" href="{{ route('course.all') }}">All COURSES</a> --}}
                 </li>
                 @if(Auth::guard('web')->check())
                 <li class="nav-item hapo-list-item">
-                    <a class="nav-link" href=" {{ route('user.profile') }} ">PROFILE</a>
+                    <a class="nav-link {{ Route::is('user.profile') ? 'active' : '' }}" href=" {{ route('user.profile') }} ">PROFILE</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle mx-md-2 my-3 my-sm-1 text-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

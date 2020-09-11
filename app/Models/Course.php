@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
 {
+    const ORDER = [
+        'most' => 1,
+        'least' => 2,
+    ];
+
     /**
      * The table associated with the model.
      *
@@ -32,7 +37,7 @@ class Course extends Model
      */
     public $timestamps = true;
 
-    public function lesson()
+    public function lessons()
     {
         return $this->hasMany(Lesson::class, 'course_id');
     }
@@ -64,12 +69,12 @@ class Course extends Model
 
     public function getCountLessonAttribute()
     {
-        return $this->lesson()->count();
+        return $this->lessons()->count();
     }
 
     public function getTimeAttribute()
     {
-        $allTime = $this->lesson()->sum('time');
+        $allTime = $this->lessons()->sum('time');
         $timeFormatHours = floor($allTime / 60);
         $timeFormatMinutes = ceil($allTime - floor($allTime / 60) * 60);
         $timeFormat = [
@@ -78,11 +83,17 @@ class Course extends Model
         ];
 
         if ($timeFormat['hours'] == 0) {
-            $time = "0 hours";
+            $time = "0 h";
         } else {
-            $time = $timeFormat['hours'] . " hours ";
+            $time = $timeFormat['hours'] . " h ";
         }
         return $time;
+    }
+
+    public function getTimeCourseAttribute()
+    {
+        $allTime = $this->lessons()->sum('time');
+        return $allTime;
     }
 
     public function getTagsAttribute()
@@ -139,5 +150,77 @@ class Course extends Model
             $check = $this->learner()->wherePivot("user_id", Auth::user()->id)->exists();
             return $check;
         }
+    }
+
+    public function scopeSearchFilter($query, $request)
+    {
+        $querry = null;
+
+        if ($request->tag != 0) {
+            $querry = $query->join('course_tags', 'courses.id', '=', 'course_id')
+            ->join('tags', 'tags.id', '=', 'course_tags.tag_id')
+            ->where('tags.id', $request->tag)
+            ->get(['courses.*']);
+        }
+
+        if ($request->has('name')) {
+            $querry = $query->where('course_name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->has('searched') == 0) {
+            $querry = $query->orderByDesc('id');
+        }
+
+        if ($request->teacher) {
+            $query->where('teacher_id', $request->teacher);
+        }
+
+        if ($request->has('student')) {
+            if ($request->student == Course::ORDER['most']) {
+                $querry = $query->withCount('learner')->orderByDesc('learner_count');
+            }
+
+            if ($request->student == Course::ORDER['least']) {
+                $querry = $query->withCount('learner')->orderBy('learner_count');
+            }
+        }
+
+        if ($request->has('lesson')) {
+            if ($request->lesson == Course::ORDER['most']) {
+                $querry = $query->withCount('lessons')->orderBy('lessons_count', 'desc');
+            }
+
+            if ($request->lesson == Course::ORDER['least']) {
+                $querry = $query->withCount('lessons')->orderByASC('lessons_count');
+            }
+        }
+
+        if ($request->has('review')) {
+            if ($request->review == Course::ORDER['most']) {
+                $querry = $query->withCount('reviews')->orderByDesc('reviews_count');
+            }
+
+            if ($request->review == Course::ORDER['least']) {
+                $querry = $query->withCount('reviews')->orderBy('reviews_count');
+            }
+        }
+
+        if ($request->has('time')) {
+            if ($request->time == Course::ORDER['most']) {
+                $querry = $query->addSelect(['time' => Lesson::selectRaw('sum(time) as total')
+                    ->whereColumn('course_id', 'courses.id')
+                    ->groupBy('course_id')
+                ])->orderByDesc('time');
+            }
+
+            if ($request->time == Course::ORDER['least']) {
+                $querry = $query->addSelect(['time' => Lesson::selectRaw('sum(time) as total')
+                    ->whereColumn('course_id', 'courses.id')
+                    ->groupBy('course_id')
+                ])->orderBy('time');
+            }
+        }
+
+        return $querry;
     }
 }
