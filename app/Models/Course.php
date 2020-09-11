@@ -90,12 +90,6 @@ class Course extends Model
         return $time;
     }
 
-    public function getTimeCourseAttribute()
-    {
-        $allTime = $this->lessons()->sum('time');
-        return $allTime;
-    }
-
     public function getTagsAttribute()
     {
         return $this->tag;
