@@ -92,7 +92,6 @@
                                 <h4 class="hapo-teacher-header mt-2 p-3">
                                     Main Teachers
                                 </h4>
-
                                 <div class="hapo-teacher-body d-flex align-items-center ml-2 mt-4 p-3">
                                      <div class="hapo-teacher-image">
                                          <img src="{{ asset('storage/images/teacher.png') }} " alt="">

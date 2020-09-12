@@ -71,23 +71,15 @@ class LoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             if (empty(Auth::guard('admin')->user()->role_id)) {
-                return redirect()->route('home');
-            }
-
-            if (Auth::guard('admin')->user()->role_id == User::ROLE['teacher']) {
-                return redirect()->route('admin');
-            }
-
-            if (empty(Auth::guard('web')->user()->role_id)) {
-                return redirect()->route('home');
-            }
-
-            if (Auth::user()->role_id == User::ROLE['user']) {
                 if ($request->id) {
                     return redirect()->route('course.detail', $request->id);
                 } else {
                     return $this->sendLoginResponse($request);
                 }
+            }
+
+            if (Auth::guard('admin')->user()->role_id == User::ROLE['teacher']) {
+                return redirect()->route('admin');
             }
         }
 
