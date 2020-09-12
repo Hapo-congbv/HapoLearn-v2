@@ -62,6 +62,11 @@ class Course extends Model
         return $this->belongsToMany(Tag::class, 'course_tags');
     }
 
+    public function courseTag()
+    {
+        return $this->hasMany(CourseTag::class);
+    }
+
     public function getCountUserAttribute()
     {
         return $this->learner()->count();
@@ -151,10 +156,11 @@ class Course extends Model
         $querry = null;
 
         if ($request->tag != 0) {
-            $querry = $query->join('course_tags', 'courses.id', '=', 'course_id')
-            ->join('tags', 'tags.id', '=', 'course_tags.tag_id')
-            ->where('tags.id', $request->tag)
-            ->get(['courses.*']);
+            $querry = $query->with('courseTag')->whereHas('courseTag', function ($q) use ($request) {
+                $q->join('tags', 'tags.id', '=', 'course_tags.tag_id')
+                ->where('tags.id', $request->tag);
+            })
+            ->get();
         }
 
         if ($request->has('name')) {
