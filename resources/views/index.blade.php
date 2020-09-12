@@ -13,7 +13,7 @@
             <p class="">Interactive lessons, "on-the-go" <br> practice, peer support.</p>
         </div>
         <a class="hapo-slide-button">
-            <span class="hapo-slide-button-link" href="javascript:void(0)">Start Learning Now!</span>
+            <span class="hapo-slide-button-link" href="#">Start Learning Now!</span>
         </a>
     </div>
     <div class="block-messenger">
@@ -29,8 +29,8 @@
                         Bạn có cần chúng tôi hỗ trợ gì không?</p>
                     </div>
                     <div class="login-mess mt-3 text-center">
-                        <a href="javascript:void(0)" class="hapo-button-messager-link d-flex justify-content-center align-items-center">
-                            <img src="images/Vector.png" alt="" class="mr-2">
+                        <a href="#" class="hapo-button-messager-link d-flex justify-content-center align-items-center">
+                            <img src=" {{ asset('storage/images/Vector.png') }} " alt="" class="mr-2">
                             Đăng nhập vào Messager
                         </a>
                     </div>
@@ -53,7 +53,7 @@
                     <h5 class="card-title text-center pt-lg-2 mb-xl-3">{{ $item->course_name }} </h5>
                     <p class="card-text text-center p-0 m-auto pl-3 pr-3">{{ $item->description }}</p>
                     <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">
-                        <a href="javascript:void(0)" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
+                        <a href="#" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
                     </div>
                 </div>
             </div>
@@ -70,14 +70,14 @@
                     <h5 class="card-title text-center pt-lg-2 mb-xl-3">{{ $item->course_name }} </h5>
                     <p class="card-text text-center p-0 m-auto pl-3 pr-3">{{ $item->description }}</p>
                     <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">
-                        <a href="javascript:void(0)" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
+                        <a href="#" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
         <div class="hapo-course-link all-courses col-12 text-center d-flex align-items-center justify-content-center">
-            <a href="javascript:void(0)" class="hapo-courses-link-all">View All Other Courses <img alt="&gt;&gt;&gt;" src="{{ asset('storage/images/direct_icon.png') }}"></a>
+            <a href="#" class="hapo-courses-link-all">View All Other Courses <img alt="&gt;&gt;&gt;" src="{{ asset('storage/images/direct_icon.png') }}"></a>
         </div>
     </div>
 </section>
@@ -136,7 +136,7 @@
                 </div>
             </div>
             <div class="hapo-element-account d-flex flex-row">
-                <img class="img-fluid img-account ml-lg-3" src="image/Ellipse1.png" alt="">
+                <img class="img-fluid img-account rounded ml-lg-3" src=" {{ asset('storage/images/teacher.png') }} " alt="">
                 <div class="hapo-block-infor ml-2 d-flex flex-column">
                     <span class="hapo-txt-name">Hoang Anh Nguyen</span>
                     <span class="hapo-txt-lang">PHP</span>
@@ -163,7 +163,7 @@
                 </div>
             </div>
             <div class="hapo-element-account d-flex flex-row">
-                <img class="img-fluid img-account ml-lg-3" src="image/Ellipse1.png" alt="">
+                <img class="img-fluid img-account ml-lg-3" src="{{ asset('storage/images/teacher.png') }}" alt="">
                 <div class="hapo-block-infor ml-2 d-flex flex-column">
                     <span class="hapo-txt-name">Hoang Anh Nguyen</span>
                     <span class="hapo-txt-lang">PHP</span>
@@ -190,7 +190,7 @@
                 </div>
             </div>
             <div class="hapo-element-account d-flex flex-row">
-                <img class="img-fluid img-account ml-lg-3" src="image/Ellipse1.png" alt="">
+                <img class="img-fluid img-account ml-lg-3" src="{{ asset('storage/images/teacher.png') }}" alt="">
                 <div class="hapo-block-infor ml-2 d-flex flex-column">
                     <span class="hapo-txt-name">Hoang Anh Nguyen</span>
                     <span class="hapo-txt-lang">PHP</span>

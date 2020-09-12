@@ -41632,6 +41632,10 @@ $(document).ready(function () {
     preview_image(this);
     $('#output_image').removeClass('d-none').addClass('d-block');
   });
+  $(".filter-show").hide();
+  $('.filter-toggle').click(function () {
+    $('.filter-show').toggle();
+  });
 });
 
 /***/ }),

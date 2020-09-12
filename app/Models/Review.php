@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Course;
+use Carbon\Carbon;
 
 class Review extends Model
 {
@@ -32,5 +33,11 @@ class Review extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getFormatCreatedAtAttribute()
+    {
+        $createdAt = Carbon::parse($this->created_at)->format('F j, Y \a\t g:i a');
+        return $createdAt;
     }
 }

@@ -92,7 +92,6 @@
                                 <h4 class="hapo-teacher-header mt-2 p-3">
                                     Main Teachers
                                 </h4>
-                                @for ($i = 0; $i < 3; $i++)
                                 <div class="hapo-teacher-body d-flex align-items-center ml-2 mt-4 p-3">
                                      <div class="hapo-teacher-image">
                                          <img src="{{ asset('storage/images/teacher.png') }} " alt="">
@@ -109,13 +108,10 @@
                                  </div>
                                  <div class="hapo-teacher-description  p-3">
                                      <p class="text-justify">
-                                         Vivamus volutpat eros pulvinar velit laoreet, sit amet egestas erat dignissim.
-                                         Sed quis rutrum tellus, sit amet viverra felis. Cras sagittis sem sit amet urna feugiat rutrum. Nam nulla ipsum,
-                                         venenatis malesuada felis quis, ultricies convallis neque. Pellentesque tristique
+                                        {{ $course->teacher->description }}
                                      </p>
                                  </div>
                                  <hr>
-                                @endfor
                             </div>
                             <div class="tab-pane fade" id="navReview" role="tabpanel" aria-labelledby="navReviewTab">
                                <div class="px-3">
@@ -204,7 +200,7 @@
                                                         @endfor
                                                     </div>
                                                     <div class="hapo-review-content-time">
-                                                        <p class="m-0 p-0">{{ date('d-m-Y G:i', strtotime($courseReview->created_at)) }}</p>
+                                                        <p class="m-0 p-0">{{ $courseReview->format_created_at }}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -288,7 +284,8 @@
                                                @if(Auth::check())
                                                <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} " >Send</button>
                                                @else
-                                               <div  class="btn btn-learn px-3" data-toggle=modal data-target=#exampleModal >Send</div>
+                                               <div  class="card-link-more btn btn-learn px-3" data-toggle=modal data-target=#exampleModal >Send</div>
+                                               <input type="text" hidden value="{{ $course->id }}" class="idDirect">
                                                @endif
                                            </div>
                                         </form>

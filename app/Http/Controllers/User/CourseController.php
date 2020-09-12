@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Review;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
@@ -20,9 +22,10 @@ class CourseController extends Controller
      */
     public function index()
     {
-        // dd(Auth::user());
         $courses = Course::paginate(config('variable.pagination'));
-        return view('course', compact('courses'));
+        $teachers = User::where('role_id', User::ROLE['teacher'])->get();
+        $tags = Tag::all();
+        return view('course', compact('courses', 'teachers', 'tags'));
     }
 
       /**
@@ -67,11 +70,13 @@ class CourseController extends Controller
 
     public function search(Request $request)
     {
-        $courseName = $request->name;
-        $courses = Course::where('course_name', 'like', '%' . $courseName . '%')
-        ->orderByDesc('id')->paginate(config('variable.pagination'));
+        $teachers = User::where('role_id', User::ROLE['teacher'])->get();
+        $tags = Tag::all();
+        $courses = Course::query()->SearchFilter($request)->paginate(config('variable.pagination'));
         $data = [
             'courses' => $courses,
+            'teachers' => $teachers,
+            'tags'  => $tags,
         ];
         return view('course', $data);
     }

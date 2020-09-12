@@ -48695,6 +48695,7 @@ body {
   border-radius: 17px;
   text-transform: uppercase;
 }
+#sibarNavbar li .active,
 #sibarNavbar li a:hover {
   color: #ffffff;
   background: #b2d235;
@@ -49728,23 +49729,58 @@ footer .hapo-copyright p {
     height: 320px;
   }
 }
-.filter .filter-icon, .filter .filter-search {
+.filter .filter-icon, .filter .filter-search .hapo-filter {
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   background-color: #ffffff;
 }
-.filter .filter-icon .filter-text, .filter .filter-search .filter-text {
+.filter .filter-search {
   font: bold 16px/22px Open Sans;
 }
 .filter .filter-search .text-search {
-  width: 300px;
-  border: none;
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  padding: 10px 28px;
+  color: #bababa;
+  font: normal bold 16px/22px Open Sans;
 }
-.filter .filter-search .text-search:focus {
-  outline: none;
+.filter .filter-search i {
+  position: absolute;
+  right: 60%;
+  margin-top: 10px;
+  font-size: 20px;
+  line-height: 23px;
+  color: #505353;
+}
+.filter .filter-search .btn-search {
+  background-color: #b2d235;
+  font: bold 15px UTM;
+  color: #ffffff;
 }
 .filter .filter-search .fa {
   font-size: 20px;
+}
+.filter .filter-search .hapo-filter-seach {
+  padding: 8px 20px;
+  color: #ffffff;
+  background-color: #b2d235;
+}
+.filter .filter-search .radio-toolbar input[type=radio] {
+  display: none;
+}
+.filter .filter-search .radio-toolbar label {
+  margin: 0 10px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 2px;
+  background-color: #e5e6e7;
+  font: bold 18px UTM;
+  color: #505353;
+}
+.filter .filter-search .radio-toolbar input[type=radio]:checked + label {
+  background: #b2d235;
+  color: #ffffff;
 }
 
 .wrap-all-course {
