@@ -130,14 +130,12 @@
                     <img class="hapo-boder-left ml-4" src="{{ asset('storage/images/border-left.png') }}" alt="">
                 </div>
                 <div class="hapo-cmt ml-2">
-                    <p> “ {{ $review->content }} ”
-                    {{-- <br>
-                        Thank you Eddie Bryan.”
-                    </p> --}}
+                    <p> {{ $review->content}}
+                    </p>
                 </div>
             </div>
             <div class="hapo-element-account d-flex flex-row">
-                <img class="img-fluid img-account rounded ml-lg-3" src=" {{ asset('storage/images/teacher.png') }} " alt="">
+                <img class="img-fluid img-account ml-lg-3" src="{{ asset('storage/images/teacher.png') }}" alt="">
                 <div class="hapo-block-infor ml-2 d-flex flex-column">
                     <span class="hapo-txt-name">{{ $review->user->name }}</span>
                     <span class="hapo-txt-lang">PHP</span>
