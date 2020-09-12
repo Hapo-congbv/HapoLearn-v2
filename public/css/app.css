@@ -50334,6 +50334,23 @@ footer .hapo-copyright p {
   color: #505353;
 }
 
+.pagination .page-item {
+  padding: 5px;
+  font: bold 20px UTM;
+  color: #b2d235;
+}
+.pagination .page-item .page-link {
+  color: #b2d235;
+  border: 1px solid #b2d235;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+.pagination .page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background: #b2d235;
+}
+
 .hapo-admin .hapo-admin-header {
   background-color: grey;
 }

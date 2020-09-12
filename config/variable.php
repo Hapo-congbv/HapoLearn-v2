@@ -8,5 +8,7 @@ return [
     'three_star' => '3',
     'two_star' => '2',
     'one_star' => '1',
-    'storage' => 'public/users/'
+    'storage' => 'public/users/',
+    'reviews' => '4',
+    'course' => '3',
 ];

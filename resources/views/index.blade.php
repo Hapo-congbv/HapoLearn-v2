@@ -12,8 +12,8 @@
         <div class="hapo-txt-dect">
             <p class="">Interactive lessons, "on-the-go" <br> practice, peer support.</p>
         </div>
-        <a class="hapo-slide-button">
-            <span class="hapo-slide-button-link" href="#">Start Learning Now!</span>
+        <a href=" {{ route('course.all') }} " class="hapo-slide-button">
+            <span class="hapo-slide-button-link" >Start Learning Now!</span>
         </a>
     </div>
     <div class="block-messenger">
@@ -53,7 +53,7 @@
                     <h5 class="card-title text-center pt-lg-2 mb-xl-3">{{ $item->course_name }} </h5>
                     <p class="card-text text-center p-0 m-auto pl-3 pr-3">{{ $item->description }}</p>
                     <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">
-                        <a href="#" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
+                        <a href=" {{ route('course.detail', $item->id) }} " class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
                     </div>
                 </div>
             </div>
@@ -70,14 +70,14 @@
                     <h5 class="card-title text-center pt-lg-2 mb-xl-3">{{ $item->course_name }} </h5>
                     <p class="card-text text-center p-0 m-auto pl-3 pr-3">{{ $item->description }}</p>
                     <div class="text-center pb-lg-0 pb-md-2 pb-3 m-3">
-                        <a href="#" class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
+                        <a href=" {{ route('course.detail', $item->id) }} " class="btn btn-light hapo-courses-btn border-0 py-lg-0 px-4 py-2 ">Take This Course</a>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
         <div class="hapo-course-link all-courses col-12 text-center d-flex align-items-center justify-content-center">
-            <a href="#" class="hapo-courses-link-all">View All Other Courses <img alt="&gt;&gt;&gt;" src="{{ asset('storage/images/direct_icon.png') }}"></a>
+            <a href=" {{ route('course.all') }} " class="hapo-courses-link-all">View All Other Courses <img alt="&gt;&gt;&gt;" src="{{ asset('storage/images/direct_icon.png') }}"></a>
         </div>
     </div>
 </section>
@@ -123,87 +123,37 @@
         </span>
     </div>
     <div class="hapo-slide-block row mt-5">
+        @foreach ($reviews as $review)
         <div class="hapo-block-cmt d-flex flex-column col-12">
             <div class="hapo-element-cmt d-flex flex-row mx-auto">
                 <div class="pt-4">
                     <img class="hapo-boder-left ml-4" src="{{ asset('storage/images/border-left.png') }}" alt="">
                 </div>
                 <div class="hapo-cmt ml-2">
-                    <p> “A wonderful course on how to start. Eddie beautifully conveys all essentials of a becoming a good Angular developer. Very glad to have taken this course.
-                    <br>
+                    <p> “ {{ $review->content }} ”
+                    {{-- <br>
                         Thank you Eddie Bryan.”
-                    </p>
+                    </p> --}}
                 </div>
             </div>
             <div class="hapo-element-account d-flex flex-row">
                 <img class="img-fluid img-account rounded ml-lg-3" src=" {{ asset('storage/images/teacher.png') }} " alt="">
                 <div class="hapo-block-infor ml-2 d-flex flex-column">
-                    <span class="hapo-txt-name">Hoang Anh Nguyen</span>
+                    <span class="hapo-txt-name">{{ $review->user->name }}</span>
                     <span class="hapo-txt-lang">PHP</span>
                     <span>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="far fa-star"></i>
+                        @for ($i = 0; $i < $fiveStar; $i++)
+                            @if ($i < $review->rating)
+                                <i class="fas fa-star"></i>
+                            @else
+                                <i class="far fa-star"></i>
+                            @endif
+                        @endfor
                     </span>
                 </div>
             </div>
         </div>
-        <div class="hapo-block-cmt d-flex flex-column col-12">
-            <div class="hapo-element-cmt d-flex flex-row mx-auto">
-                <div class="pt-4">
-                    <img class="hapo-boder-left ml-4" src="{{ asset('storage/images/border-left.png') }}" alt="">
-                </div>
-                <div class="hapo-cmt ml-2">
-                    <p> “A wonderful course on how to start. Eddie beautifully conveys all essentials of a becoming a good Angular developer. Very glad to have taken this course.
-                    <br>
-                        Thank you Eddie Bryan.”
-                    </p>
-                </div>
-            </div>
-            <div class="hapo-element-account d-flex flex-row">
-                <img class="img-fluid img-account ml-lg-3" src="{{ asset('storage/images/teacher.png') }}" alt="">
-                <div class="hapo-block-infor ml-2 d-flex flex-column">
-                    <span class="hapo-txt-name">Hoang Anh Nguyen</span>
-                    <span class="hapo-txt-lang">PHP</span>
-                    <span>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="far fa-star"></i>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="hapo-block-cmt d-flex flex-column col-12">
-            <div class="hapo-element-cmt d-flex flex-row mx-auto">
-                <div class="pt-4">
-                    <img class="hapo-boder-left ml-4" src="{{ asset('storage/images/border-left.png') }}" alt="">
-                </div>
-                <div class="hapo-cmt ml-2">
-                    <p> “A wonderful course on how to start. Eddie beautifully conveys all essentials of a becoming a good Angular developer. Very glad to have taken this course.
-                    <br>
-                        Thank you Eddie Bryan.”
-                    </p>
-                </div>
-            </div>
-            <div class="hapo-element-account d-flex flex-row">
-                <img class="img-fluid img-account ml-lg-3" src="{{ asset('storage/images/teacher.png') }}" alt="">
-                <div class="hapo-block-infor ml-2 d-flex flex-column">
-                    <span class="hapo-txt-name">Hoang Anh Nguyen</span>
-                    <span class="hapo-txt-lang">PHP</span>
-                    <span>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="far fa-star"></i>
-                    </span>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
     <div class="controls-top row d-flex justify-content-between position-relative">
       <a class="btn-sm prev"><i class="fas fa-chevron-left"></i></a>
@@ -216,7 +166,7 @@
           <span>Become a member of our <br> growing community!</span>
         </div>
         <div class="hapo-learn-link p-3">
-            <a class="btn btn-learn-link border-0  px-md-5 py-md-3 px-4 py-2 " href="">Start Learning Now!</a>
+            <a class="btn btn-learn-link border-0  px-md-5 py-md-3 px-4 py-2 " href="{{ route('course.all') }}">Start Learning Now!</a>
         </div>
     </div>
 </section>
@@ -231,7 +181,7 @@
                     Courses
                 </div>
                 <div class="hapo-statistic-data">
-                    1,586
+                    {{ $courseCount }}
                 </div>
             </div>
             <div class="hapo-statistic-count col-md-4 pl-0 pr-0">
@@ -239,7 +189,7 @@
                     Lessons
                 </div>
                 <div class="hapo-statistic-data">
-                    2,689
+                    {{ $lessonCount }}
                 </div>
             </div>
             <div class="hapo-statistic-count col-md-4 pl-0 pr-0">
@@ -247,7 +197,7 @@
                     Learners
                 </div>
                 <div class="hapo-statistic-data">
-                    16,882
+                    {{ $userCount }}
                 </div>
             </div>
         </div>

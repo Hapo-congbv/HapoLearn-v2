@@ -56,7 +56,6 @@
                                <h4 class="hapo-teacher-header mt-4">
                                    Main Teachers
                                </h4>
-                               @for ($i = 0; $i < 3; $i++)
                                <div class="hapo-teacher-body d-flex align-items-center ml-2 mt-4">
                                     <div class="hapo-teacher-image">
                                         <img src="{{ asset('storage/images/teacher.png') }} " alt="">
@@ -73,12 +72,9 @@
                                 </div>
                                 <div class="hapo-teacher-description mt-3">
                                     <p class="text-justify">
-                                        Vivamus volutpat eros pulvinar velit laoreet, sit amet egestas erat dignissim.
-                                        Sed quis rutrum tellus, sit amet viverra felis. Cras sagittis sem sit amet urna feugiat rutrum. Nam nulla ipsum,
-                                        venenatis malesuada felis quis, ultricies convallis neque. Pellentesque tristique
+                                        {{ $lesson->course->teacher->about }}
                                     </p>
                                 </div>
-                               @endfor
                             </div>
                             <div class="tab-pane fade" id="navProgram" role="tabpanel" aria-labelledby="navProgramTab">
                                 <h4 class="hapo-program-header mt-4 mb-5">

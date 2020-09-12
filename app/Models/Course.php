@@ -167,8 +167,14 @@ class Course extends Model
             $querry = $query->where('course_name', 'like', '%' . $request->name . '%');
         }
 
-        if ($request->has('searched') == 0) {
-            $querry = $query->orderByDesc('id');
+        if ($request->has('searched')) {
+            if ($request->searched == Course::ORDER['most']) {
+                $querry = $this->orderByDesc('id');
+            }
+
+            if ($request->searched == Course::ORDER['least']) {
+                $querry = $this->orderBy('id');
+            }
         }
 
         if ($request->teacher) {
