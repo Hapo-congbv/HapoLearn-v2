@@ -284,7 +284,8 @@
                                                @if(Auth::check())
                                                <button type="submit" id="submitLesson" class="btn btn-learn px-3" data-id=" {{ $course->id }} " >Send</button>
                                                @else
-                                               <div  class="btn btn-learn px-3" data-toggle=modal data-target=#exampleModal >Send</div>
+                                               <div  class="card-link-more btn btn-learn px-3" data-toggle=modal data-target=#exampleModal >Send</div>
+                                               <input type="text" hidden value="{{ $course->id }}" class="idDirect">
                                                @endif
                                            </div>
                                         </form>
