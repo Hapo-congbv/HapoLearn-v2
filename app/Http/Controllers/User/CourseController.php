@@ -70,7 +70,7 @@ class CourseController extends Controller
 
     public function search(Request $request)
     {
-        $teachers = User::where('role_id', '2')->get();
+        $teachers = User::where('role_id', User::ROLE['teacher'])->get();
         $tags = Tag::all();
         $courses = Course::query()->SearchFilter($request)->paginate(config('variable.pagination'));
         $data = [
