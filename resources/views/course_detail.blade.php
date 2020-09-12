@@ -84,7 +84,7 @@
                                         </tbody>
                                     </table>
                                     <div class="pagination col-12 mt-5 d-flex justify-content-end mt-4 ">
-                                        {{ $lessonCourse->appends($_GET)->links() }}
+                                        {{ $lessonCourse->appends($_GET)->links('pagination') }}
                                     </div>
                                 </div>
                             </div>

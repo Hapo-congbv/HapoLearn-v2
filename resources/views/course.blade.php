@@ -24,11 +24,11 @@
                             <div class="hapo-filte-content col-11 p-0 d-flex flex-wrap">
                                 <div class="radio-toolbar d-flex align-content-center ">
                                    <div>
-                                        <input type="radio" id="newest" name="searched" checked value="0">
+                                        <input type="radio" id="newest" name="searched" checked value="1">
                                         <label for="newest">Newest</label>
                                    </div>
                                    <div>
-                                        <input type="radio" id="oldest" name="searched" value="1">
+                                        <input type="radio" id="oldest" name="searched" value="2">
                                         <label for="oldest">Oldest</label>
                                    </div>
                                 </div>
@@ -116,7 +116,7 @@
                 @endforeach
             </div>
             <div class="pagination col-12 mt-5 d-flex justify-content-end">
-                {{ $courses->appends($_GET)->links() }}
+                {{ $courses->appends($_GET)->links('pagination') }}
             </div>
         </div>
     </div>
