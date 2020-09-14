@@ -74,17 +74,10 @@ class CourseController extends Controller
                 'teacher_id' => Auth::guard('admin')->user()->id,
             ]);
 
-            $courseId = Course::where('course_name', $request->course_name)->first()->id;
+            $course = Course::where('course_name', $request->course_name)->first();
             $tagArray = $request->tagId;
             if (!empty($tagArray)) {
-                for ($i = 0; $i < count($tagArray); $i++) {
-                    $data = [
-                        'course_id' => $courseId,
-                        'tag_id' => $tagArray[$i],
-                    ];
-
-                    CourseTag::create($data);
-                }
+                $course->tag()->attach($tagArray);
             }
 
             DB::commit();
@@ -141,6 +134,7 @@ class CourseController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->all();
+            $courses = Course::findOrFail($id);
             if ($request->hasFile('image')) {
                 $image = uniqid() . "_" . $request->image->getClientOriginalName();
                 $request->file('image')->storeAs(config('variable.storage_image'), $image);
@@ -149,20 +143,12 @@ class CourseController extends Controller
                 $data['image'] = $image;
             }
 
-            Course::find($id)->update($data);
+            $courses->update($data);
 
-            $courses = Course::findOrFail($id);
             $tagArray = $request->tagId;
             if (!empty($tagArray)) {
                 CourseTag::whereIn('course_id', [$courses->id])->delete();
-                for ($i = 0; $i < count($tagArray); $i++) {
-                    $dataTag = [
-                        'course_id' => $id,
-                        'tag_id' => $tagArray[$i],
-                    ];
-
-                    CourseTag::create($dataTag);
-                }
+                $courses->tag()->attach($tagArray);
             }
 
             DB::commit();
