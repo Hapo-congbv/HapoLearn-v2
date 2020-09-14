@@ -1,5 +1,5 @@
 @extends('admin.index')
-@section('title','Admin-user-create')
+@section('title','Admin-course-edit')
 @section('contents')
     <div class="hapo-admin py-3">
         <div class="hapo-admin-header d-flex justify-content-between py-3">
