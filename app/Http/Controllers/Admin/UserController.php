@@ -23,7 +23,7 @@ class UserController extends Controller
             $users->where('name', 'like', '%' . $request->name . '%');
         }
 
-        $users = $users->orderByDesc('id')->paginate(config('variable.pagination'));
+        $users = $users->orderByDesc('id')->paginate(config('variable.pagination_admin'));
         return view('admin.user.index', compact('users'));
     }
 

@@ -28,7 +28,7 @@ class Course extends Model
      *
      * @var array
      */
-    protected $fillable = ['course_name', 'description', 'image', 'price', 'time', 'quizze', 'teacher_id'];
+    protected $fillable = ['course_name', 'description', 'image', 'price', 'requirement', 'teacher_id'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -163,10 +163,6 @@ class Course extends Model
             ->get();
         }
 
-        if ($request->has('name')) {
-            $querry = $query->where('course_name', 'like', '%' . $request->name . '%');
-        }
-
         if ($request->has('searched')) {
             if ($request->searched == Course::ORDER['most']) {
                 $querry = $this->orderByDesc('id');
@@ -177,9 +173,7 @@ class Course extends Model
             }
         }
 
-        if ($request->teacher) {
-            $query->where('teacher_id', $request->teacher);
-        }
+
 
         if ($request->has('student')) {
             if ($request->student == Course::ORDER['most']) {
@@ -225,6 +219,14 @@ class Course extends Model
                     ->groupBy('course_id')
                 ])->orderBy('time');
             }
+        }
+
+        if ($request->has('name')) {
+            $querry = $query->where('course_name', 'like', '%' . $request->name . '%');
+        }
+
+        if ($request->teacher) {
+            $query->where('teacher_id', $request->teacher);
         }
 
         return $querry;

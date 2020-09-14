@@ -79,7 +79,7 @@ class LoginController extends Controller
             }
 
             if (Auth::guard('admin')->user()->role_id == User::ROLE['teacher']) {
-                return redirect()->route('admin');
+                return redirect()->route('admin.admin_dasboard');
             }
         }
 

@@ -22,7 +22,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::paginate(config('variable.pagination'));
+        $courses = Course::orderByDesc('id')->paginate(config('variable.pagination'));
         $teachers = User::where('role_id', User::ROLE['teacher'])->get();
         $tags = Tag::all();
         return view('course', compact('courses', 'teachers', 'tags'));

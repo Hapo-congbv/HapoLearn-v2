@@ -23,12 +23,33 @@ class CourseRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'course_name'   => 'required|min:4|max:32',
-            'description'   => 'required|max:255',
-            'image'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
-            'price'         => 'required|numeric|digits_between:1,10',
-            'tag'           => 'required'
-        ];
+        switch ($this->method()) {
+            case 'GET':
+            case 'DELETE':
+                return [];
+
+            case 'POST':
+                return [
+                    'course_name'   => 'required|min:4|max:32',
+                    'description'   => 'required|max:255',
+                    'requirement'   => 'required|max:255',
+                    'image'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+                    'price'         => 'required|numeric|digits_between:1,10',
+                ];
+
+            case 'PUT':
+                return [
+                    'course_name'   => 'required|min:4|max:32',
+                    'description'   => 'required|max:255',
+                    'requirement'   => 'required|max:255',
+                    'price'         => 'required|numeric|digits_between:1,10',
+                ];
+
+            case 'PATCH':
+                return [];
+
+            default:
+                break;
+        }
     }
 }
