@@ -50,10 +50,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                   <?php $stt=0 ?>
-                   @foreach($courses as $course)
+                   @foreach($courses as $key => $course)
                    <tr>
-                        <td class="text-center"> {{ ++$stt }} </td>
+                        <td class="text-center"> {{ $courses->firstItem() + $key }} </td>
                         <td class="text-center"><img src="{{ ($course->image == null) ? '' : asset('storage/images/' . $course->image) }}" alt="" class="rounded-circle" width="65px" height="65px"></td>
                         <td>{{ $course->course_name }}</td>
                         <td>{{ $course->description }}</td>
