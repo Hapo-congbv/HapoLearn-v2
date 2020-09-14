@@ -135,7 +135,7 @@
                 </div>
             </div>
             <div class="hapo-element-account d-flex flex-row">
-                <img class="img-fluid img-account ml-lg-3" src="{{ asset('storage/images/teacher.png') }}" alt="">
+                <img class="img-fluid img-account ml-lg-3 rounded-circle" src="{{ asset('storage/users/'. $review->user->avatar) }}" alt="">
                 <div class="hapo-block-infor ml-2 d-flex flex-column">
                     <span class="hapo-txt-name">{{ $review->user->name }}</span>
                     <span class="hapo-txt-lang">PHP</span>

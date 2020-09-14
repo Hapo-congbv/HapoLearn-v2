@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row pt-5">
                 <div class="col-7 p-0">
-                    <div class="hapo-detail-course-header d-flex justify-content-center">
+                    <div class="hapo-detail-course-header d-flex justify-content-center align-content-center">
                         <img src="{{ asset('storage/images/'.$course->image) }} " alt="">
                     </div>
                     <div class="hapo-detail-content-left mt-3 mb-5">

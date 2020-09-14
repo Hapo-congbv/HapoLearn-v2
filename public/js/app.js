@@ -41543,7 +41543,7 @@ $(document).ready(function () {
     slidesToShow: 2,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 100000000,
+    autoplaySpeed: 4000,
     prevArrow: $('.prev'),
     nextArrow: $('.next'),
     responsive: [{

@@ -48,10 +48,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                   <?php $stt=0 ?>
-                   @foreach($users as $user)
+                   @foreach($users as $key => $user)
                    <tr>
-                        <td class="text-center"> {{ ++$stt }} </td>
+                        <td class="text-center"> {{ $users->firstItem() + $key }} </td>
                         <td class="text-center">{{ $user->role_label }} </td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>

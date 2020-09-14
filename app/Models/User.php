@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -73,5 +74,11 @@ class User extends Authenticatable
     public function lessonLearned()
     {
         return $this->belongsToMany(Lesson::class, 'lesson_users')->withPivot('id');
+    }
+
+    public function getFormatBirthDayAttribute()
+    {
+        $createdAt = Carbon::parse($this->birth_day)->format('M d Y');
+        return $createdAt;
     }
 }
