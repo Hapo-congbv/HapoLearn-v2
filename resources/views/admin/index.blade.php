@@ -103,8 +103,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link ">
+                    <li class="nav-item has-treeview {{ Request::is('admin/tags') || Request::is('admin/tags/*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ Request::is('admin/tags') || Request::is('admin/tags/*') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-tag"></i>
                             <p>
                                 Manager Tag
@@ -113,13 +113,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href=" {{ route('admin.tags.index') }} " class="nav-link {{ Route::is('admin.tags.index') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-list"></i>
                                     <p>Tag list</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href=" {{ route('admin.tags.create') }} " class="nav-link {{ Route::is('admin.tags.create') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-plus"></i>
                                     <p>Thêm Tag</p>
                                 </a>

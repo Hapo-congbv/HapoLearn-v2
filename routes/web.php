@@ -57,4 +57,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
     Route::get('/', 'Admin\AdminController@index')->name('admin_dasboard');
     Route::resource('users', 'Admin\UserController');
     Route::resource('courses', 'Admin\CourseController');
+    Route::resource('tags', 'Admin\TagController');
 });
