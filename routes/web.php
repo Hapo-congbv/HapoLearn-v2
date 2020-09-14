@@ -53,8 +53,8 @@ Route::post('/users/profile/{id}', 'User\UserController@update')->name('user.pro
 
 Route::post('/users/profile/avartar/{id}', 'User\UserController@updateAvatar')->name('user.profile.avatar');
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth:admin'], function () {
-    Route::get('/', 'Admin\AdminController@index')->name('admin');
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin'], function () {
+    Route::get('/', 'Admin\AdminController@index')->name('admin_dasboard');
     Route::resource('users', 'Admin\UserController');
     Route::resource('courses', 'Admin\CourseController');
 });
