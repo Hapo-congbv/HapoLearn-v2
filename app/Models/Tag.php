@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
@@ -26,4 +27,10 @@ class Tag extends Model
      * @var bool
      */
     public $timestamps = true;
+
+    public function getFormatCreatedAtAttribute()
+    {
+        $createdAt = Carbon::parse($this->created_at)->format('F j, Y \a\t g:i a');
+        return $createdAt;
+    }
 }
