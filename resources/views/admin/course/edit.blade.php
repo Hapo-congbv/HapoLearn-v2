@@ -56,8 +56,6 @@
                                         <label for="requirement">Quizze: </label>
                                         <textarea class="form-control" rows="4" @error('requirement') is-invalid @enderror" name="requirement">{{ $courses->requirement }}</textarea>
 
-                                        {{-- <input type="text" class="form-control @error('requirement') is-invalid @enderror" id="requirement" name="requirement" placeholder="requirement" value="{{ $courses->requirement }}"> --}}
-
                                         @error('requirement')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror

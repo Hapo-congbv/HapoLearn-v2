@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="requirement">Quizze: </label>
-                                        <input type="text" class="form-control @error('requirement') is-invalid @enderror" id="requirement" name="requirement" placeholder="requirement" value="{{ old('requirement') }}">
+                                        <textarea class="form-control" rows="4" @error('requirement') is-invalid @enderror" name="requirement" placeholder="requirement">{{ old('requirement') }}</textarea>
 
                                         @error('requirement')
                                             <div class="alert alert-danger">{{ $message }}</div>
