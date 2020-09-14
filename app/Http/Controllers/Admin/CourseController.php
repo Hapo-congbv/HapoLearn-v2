@@ -144,7 +144,7 @@ class CourseController extends Controller
             if ($request->hasFile('image')) {
                 $image = uniqid() . "_" . $request->image->getClientOriginalName();
                 $request->file('image')->storeAs(config('variable.storage_image'), $image);
-                $imageDelete = Course::find($id)->$image;
+                $imageDelete = Course::find($id)->image;
                 Storage::delete(config('variable.storage_image') . $imageDelete);
                 $data['image'] = $image;
             }
