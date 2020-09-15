@@ -60,17 +60,17 @@
                                                         <td class="text-justify d-flex justify-content-between">
                                                             @if ($course->check_user_course)
                                                                 @if ($item->check_user_lesson)
-                                                                    <a href="{{ route('lesson.detail', $item->id) }}" class="course-other-item">{{ $key+1 . ".  " . $item->lesson_name }}.</a>
+                                                                    <a href="{{ route('lesson.detail', $item->id) }}" class="course-other-item">{{ $key+1 . ".  " . $item->lesson_name }}</a>
                                                                     <a href="{{ route('lesson.detail', $item->id) }}"><button class="btn btn-light btn-learn">Continue</button></a>
                                                                 @else
-                                                                    <p class="course-other-item">{{ $key+1 . ".  " . $item->lesson_name }}.</p>
+                                                                    <p class="course-other-item">{{ $lessonCourse->firstItem() + $key . ".  " . $item->lesson_name }}</p>
                                                                     <form action="{{ route('lesson.user.store', $item->id ) }}" method="post" class="text-center">
                                                                         @csrf
                                                                         <input type="submit" value="Learn" class="btn btn-learn">
                                                                     </form>
                                                                 @endif
                                                             @else
-                                                                <p class="course-other-item">{{ $key+1 . ".  " . $item->lesson_name }}.</p>
+                                                                <p class="course-other-item">{{ $lessonCourse->firstItem() + $key . ".  " . $item->lesson_name }}</p>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -339,18 +339,22 @@
                                     <div class="col-2 m-0 p-0 "> : </div>
                                 </div>
                             </div>
-                            <div class="col-6 m-0 p-0 hapo-text">{{ $course->time }}</div>
-                        </div>
-                        <div class="course-info-text row m-0">
-                            <div class="col-6 m-0 p-0">
-                                <div class="row m-0">
-                                    <div class="col-10 m-0 p-0">
-                                        <i class="fas fa-hashtag"></i> Tags
-                                    </div>
-                                    <div class="col-2 m-0 p-0 "> : </div>
-                                </div>
+                            <div class="col-6 m-0 p-0 hapo-text">
+                                @if ($course->time['minutes'] == 0)
+                                {{ $course->time['hours'] }} h
+                                @else
+                                {{ $course->time['hours'] }} h {{ $course->time['minutes'] }} m
+                                @endif
                             </div>
-                            <div class="col-6 m-0 p-0 hapo-tag">{{ $course->tag_course }}</div>
+                        </div>
+                        <div class="course-info-text d-flex align-content-center flex-wrap">
+                            <i class="fas fa-hashtag mr-2"></i> Tags :
+                            @foreach ($tags as $tag)
+                                <form action="{{ route('tag.search', $tag->id) }}" class="mx-1">
+                                    <label for="{{ $tag->id }}"><span class="badge badge-light badge-custom ">{{ $tag->tag_name }}</span></label>
+                                    <input type="submit" hidden id="{{ $tag->id }}">
+                                </form>
+                            @endforeach
                         </div>
                         <div class="course-info-text row m-0">
                             <div class="col-6 m-0 p-0">

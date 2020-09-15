@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="wrap-quizes col-xl-4 text-center">
                                     <a href="#" class="card-link mb-2 d-block">Times</a>
-                                    <p class="mb-0">{{ $item->time }}</p>
+                                    <p class="mb-0">{{ $item->time['hours'] }} (h)</p>
                                 </div>
                             </div>
                         </div>

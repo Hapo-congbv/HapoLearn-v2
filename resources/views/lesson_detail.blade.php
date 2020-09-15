@@ -46,8 +46,11 @@
                                 <div class="hapo-tag px-3 mt-5 mb-3 d-flex">
                                        <div class="d-flex justify-content-center">
                                             <h4>Tag: </h4>
-                                            @foreach ($lesson->course->tags as $tag)
-                                                <span class="tag-item ml-3 d-block btn btn-light">{{ $tag->tag_name }}</span>
+                                            @foreach ($courseTags as $tag)
+                                                <form action="{{ route('tag.search', $tag->id) }}" class="mx-1">
+                                                    <label for="{{ $tag->id }}"><span class="tag-item ml-2 d-block btn btn-light badge-custom ">{{ $tag->tag_name }}</span></label>
+                                                    <input type="submit" hidden id="{{ $tag->id }}">
+                                                </form>
                                             @endforeach
                                        </div>
                                     </div>
@@ -310,16 +313,14 @@
                                 </div>
                             <div class="col-6 m-0 p-0 hapo-text"> {{ $lesson->time_lesson }}</div>
                         </div>
-                        <div class="course-info-text row m-0">
-                            <div class="col-6 m-0 p-0">
-                                <div class="row m-0">
-                                    <div class="col-10 m-0 p-0">
-                                        <i class="fas fa-hashtag"></i> Tags
-                                    </div>
-                                    <div class="col-2 m-0 p-0 "> : </div>
-                                    </div>
-                                </div>
-                            <div class="col-6 m-0 p-0 hapo-tag">{{ $lesson->course->tag_course }}</div>
+                        <div class="course-info-text d-flex align-content-center  flex-wrap">
+                            <i class="fas fa-hashtag mr-2"></i> Tags :
+                            @foreach ($courseTags as $tag)
+                                <form action="{{ route('tag.search', $tag->id) }}" class="mx-1">
+                                    <label for="{{ $tag->id }}"><span class="badge badge-light badge-custom ">{{ $tag->tag_name }}</span></label>
+                                    <input type="submit" hidden id="{{ $tag->id }}">
+                                </form>
+                            @endforeach
                         </div>
                         <div class="course-info-text row m-0">
                             <div class="col-6 m-0 p-0">

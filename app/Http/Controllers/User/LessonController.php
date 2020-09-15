@@ -39,9 +39,12 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        $otherCourses = Course::limit(config('variable.other_course'))->get();
+        $otherCourses = Course::query()->OrderByStudents(Course::ORDER['most'])
+        ->limit(config('variable.other_course'))
+        ->get();
         $lesson = Lesson::findOrfail($id);
         $lessonReviews = $lesson->lessonReviews;
+        $courseTags = $lesson->course->tag;
         $ratingStar = [
             'five_star' => config('variable.five_star'),
             'four_star' => config('variable.four_star'),
@@ -49,7 +52,7 @@ class LessonController extends Controller
             'two_star' => config('variable.two_star'),
             'one_star' => config('variable.one_star')
         ];
-        return view('lesson_detail', compact(['lesson', 'otherCourses', 'lessonReviews', 'ratingStar']));
+        return view('lesson_detail', compact(['lesson', 'otherCourses', 'lessonReviews', 'ratingStar', 'courseTags']));
     }
 
     /**

@@ -50,13 +50,16 @@ class CourseController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $otherCourses = Course::limit(config('variable.other_course'))->get();
+        $otherCourses = Course::query()->OrderByStudents(Course::ORDER['most'])
+        ->limit(config('variable.other_course'))
+        ->get();
         $course = Course::findOrfail($id);
         $lessonCourse = Lesson::where([
             ['course_id', '=', $id],
             ['lesson_name', 'LIKE', "%" . $request->name . "%"],
         ])->paginate(config('variable.pagination'));
         $courReviews = $course->reviews;
+        $tags = $course->tags;
         $ratingStar = [
             'five_star' => config('variable.five_star'),
             'four_star' => config('variable.four_star'),
@@ -65,7 +68,7 @@ class CourseController extends Controller
             'one_star' => config('variable.one_star')
         ];
         return view('course_detail', compact(['course', 'lessonCourse', 'otherCourses', 'courReviews',
-        'ratingStar']));
+        'ratingStar', 'tags']));
     }
 
     public function search(Request $request)
@@ -108,5 +111,14 @@ class CourseController extends Controller
     {
         Review::findOrFail($id)->delete();
         return redirect()->back();
+    }
+
+    public function searchByTag($id)
+    {
+        $teachers = User::where('role_id', User::ROLE['teacher'])->get();
+        $tags = Tag::all();
+        $courses = Course::query()->orderByDesc('id')
+        ->FindByTag($id)->paginate(config('variable.pagination'));
+        return view('course', compact('courses', 'teachers', 'tags'));
     }
 }
