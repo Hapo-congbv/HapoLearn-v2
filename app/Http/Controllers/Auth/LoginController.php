@@ -39,23 +39,38 @@ class LoginController extends Controller
         ]);
     }
 
+    // protected function attemptLoginAdmin(Request $request)
+    // {
+    //     $user = User::where('email', '=', $request->email_log)->first();
+    //     if ($user) {
+    //         $role = $user->role;
+    //         $check = $this->attemptLogin($request) && ($role == 1 || $role == 2);
+    //         return $check;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
     //override function validateLogin in AuthenticatesUsers
     protected function attemptLogin(Request $request)
     {
-        $user = User::where('email', '=', $request->login_email)->first();
-        $role = $user->role_id;
-
         $data = [
             'email' => $request->login_email,
             'password' => $request->login_password
         ];
 
-        if ($role == User::ROLE['user']) {
-            return Auth::guard('web')->attempt($data, $request->filled('remember'));
-        }
+        $user = User::where('email', '=', $request->login_email)->first();
 
-        if ($role == User::ROLE['teacher']) {
-            return Auth::guard('admin')->attempt($data, $request->filled('remember'));
+        if ($user) {
+            $role = $user->role_id;
+
+            if ($role == User::ROLE['user']) {
+                return Auth::guard('web')->attempt($data, $request->filled('remember'));
+            }
+
+            if ($role == User::ROLE['teacher']) {
+                return Auth::guard('admin')->attempt($data, $request->filled('remember'));
+            }
         }
     }
 
