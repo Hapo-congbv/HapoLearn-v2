@@ -33,4 +33,9 @@ class Tag extends Model
         $createdAt = Carbon::parse($this->created_at)->format('F j, Y \a\t g:i a');
         return $createdAt;
     }
+
+    public function courseTag()
+    {
+        return $this->belongsToMany(Course::class, 'course_tag');
+    }
 }

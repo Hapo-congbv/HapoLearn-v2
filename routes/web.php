@@ -34,6 +34,8 @@ Route::get('/review/{id}', 'User\CourseController@destroy')->name('review.destro
 
 Route::post('/review/{id}', 'User\CourseController@update')->name('review.update.course');
 
+Route::get('/course/search-tag/{id}', 'User\CourseController@searchByTag')->name('tag.search');
+
 //lesson
 Route::get('/course/lesson-detail/{id}', 'User\LessonController@show')->name('lesson.detail');
 
@@ -53,9 +55,19 @@ Route::post('/users/profile/{id}', 'User\UserController@update')->name('user.pro
 
 Route::post('/users/profile/avartar/{id}', 'User\UserController@updateAvatar')->name('user.profile.avatar');
 
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin'], function () {
     Route::get('/', 'Admin\AdminController@index')->name('admin_dasboard');
     Route::resource('users', 'Admin\UserController');
     Route::resource('courses', 'Admin\CourseController');
     Route::resource('tags', 'Admin\TagController');
+
+    Route::group(['prefix' => 'lesson', 'as' => 'lesson.'], function () {
+        Route::get('/{course}/index', 'Admin\LessonController@index')->name('index');
+        Route::get('/{course}/create', 'Admin\LessonController@create')->name('create');
+        Route::post('/{course}', 'Admin\LessonController@store')->name('store');
+        Route::get('/{course}/{lesson}/edit', 'Admin\LessonController@edit')->name('edit');
+        Route::put('/{course}/{lesson}', 'Admin\LessonController@update')->name('update');
+        Route::delete('/{course}/{lesson}', 'Admin\LessonController@destroy')->name('destroy');
+    });
 });

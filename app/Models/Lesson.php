@@ -21,7 +21,7 @@ class Lesson extends Model
      *
      * @var array
      */
-    protected $fillable = ['lesson_name', 'description', 'requirement', 'content', 'course_id'];
+    protected $fillable = ['lesson_name', 'description', 'requirement', 'time', 'course_id'];
 
     /**
      * Indicates if the model should be timestamped.
@@ -60,9 +60,9 @@ class Lesson extends Model
         ];
 
         if ($timeFormat['hours'] == 0) {
-            $time = $timeFormat['minutes'] . " minutes";
+            $time = $timeFormat['minutes'] . " m";
         } else {
-            $time = $timeFormat['hours'] . " hours " . $timeFormat['minutes'] . " minutes";
+            $time = $timeFormat['hours'] . " h " . $timeFormat['minutes'] . " m";
         }
         return $time;
     }
