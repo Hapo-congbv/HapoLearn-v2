@@ -48,7 +48,7 @@
         <div class="hapo-course w-100 d-md-flex flex-column flex-md-row justify-content-center">
             @foreach ($course as $item)
             <div class="card hapo-course-item col-md-4 col-12 p-0" >
-                <img class="card-img-top hapo-course-header hapo-item-html " src="{{ asset('storage/images/'.$item->image) }} " alt="Card image cap">
+                <img class="card-img-top  hapo-course-header hapo-item-css " src="{{ asset('storage/images/'.$item->image) }} " alt="Card image cap">
                 <div class="card-body pt-4 pb-lg-4 pb-0 px-0 ">
                     <h5 class="card-title text-center pt-lg-2 mb-xl-3">{{ $item->course_name }} </h5>
                     <p class="card-text text-center p-0 m-auto pl-3 pr-3">{{ $item->description }}</p>
@@ -65,7 +65,7 @@
         <div class="hapo-course w-100 mt-md-5 d-md-flex flex-column flex-md-row justify-content-center">
             @foreach ($courseOld as $item)
             <div class="card hapo-course-item col-md-4 col-12 p-0" >
-                <img class="card-img-top hapo-course-header hapo-item-html " src="{{ asset('storage/images/'.$item->image) }} " alt="Card image cap">
+                <img class="card-img-top hapo-course-header " src="{{ asset('storage/images/'.$item->image) }} " alt="Card image cap">
                 <div class="card-body pt-4 pb-lg-4 pb-0 px-0 ">
                     <h5 class="card-title text-center pt-lg-2 mb-xl-3">{{ $item->course_name }} </h5>
                     <p class="card-text text-center p-0 m-auto pl-3 pr-3">{{ $item->description }}</p>
