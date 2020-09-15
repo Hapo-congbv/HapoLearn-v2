@@ -36,9 +36,9 @@
     }
 
     .hapo-filter-seach {
-        padding: 8px 20px;
-        color: $main_color;
-        background-color: $color_link;
+      padding: 8px 20px;
+      color: $main_color;
+      background-color: $color_link;
     }
 
     .hapo-filter {
@@ -504,4 +504,13 @@
   box-shadow: inset 0 1.5px 2px #6a6c8b;
   border-radius: 22px;
   @include fontUTM(bold, 15px, $main_color);
+}
+
+.badge-custom {
+  color: #1976d2;
+  cursor: pointer;
+  &:hover {
+    background-color: #005db9;
+    color: white;
+  }
 }

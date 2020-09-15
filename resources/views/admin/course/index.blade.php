@@ -61,7 +61,7 @@
                         <td>{{ $course->teacher->name }}</td>
                         <td class="d-flex justify-content-center align-items-center">
                             <!-- show -->
-                            <a href="#"  class="icon-show mx-1" ><span class="btn btn-info"><i class="fas fa-folder-open" aria-hidden="true"></i></span></a>
+                            <a href=" {{ route('admin.lesson.index', $course->id) }} "  class="icon-show mx-1" ><span class="btn btn-info"><i class="fas fa-folder-open" aria-hidden="true"></i></span></a>
                             <!-- edit -->
                             <a href="{{ route('admin.courses.edit', $course->id) }}"  class="icon-edit mx-1" ><span class="btn btn-primary"> <i class="fas fa-edit" aria-hidden="true"></i></span> </a>
                             <!-- delete -->

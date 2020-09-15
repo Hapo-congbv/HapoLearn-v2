@@ -7,6 +7,7 @@ use App\Models\Lesson;
 use App\Models\User;
 use App\Models\Review;
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class Course extends Model
@@ -87,12 +88,7 @@ class Course extends Model
             'minutes' => $timeFormatMinutes
         ];
 
-        if ($timeFormat['hours'] == 0) {
-            $time = "0 h";
-        } else {
-            $time = $timeFormat['hours'] . " h ";
-        }
-        return $time;
+        return $timeFormat;
     }
 
     public function getTagsAttribute()
@@ -156,11 +152,9 @@ class Course extends Model
         $querry = null;
 
         if ($request->tag != 0) {
-            $querry = $query->with('courseTag')->whereHas('courseTag', function ($q) use ($request) {
-                $q->join('tags', 'tags.id', '=', 'course_tags.tag_id')
-                ->where('tags.id', $request->tag);
-            })
-            ->get();
+            $querry = $query->whereHas('tag', function (Builder $q) use ($request) {
+                $q->where('tag_id', $request->tag);
+            })->get();
         }
 
         if ($request->has('searched')) {
@@ -172,8 +166,6 @@ class Course extends Model
                 $querry = $this->orderBy('id');
             }
         }
-
-
 
         if ($request->has('student')) {
             if ($request->student == Course::ORDER['most']) {
@@ -231,4 +223,23 @@ class Course extends Model
 
         return $querry;
     }
+
+    public function scopeFindByTag($query, $tag)
+    {
+        if ($tag) {
+            $query->whereHas('tag', function (Builder $q) use ($tag) {
+                $q->where('tag_id', $tag);
+            })->get();
+        }
+        return $query;
+    }
+
+    public function scopeOrderByStudents($query, $students)
+    {
+        if ($students == Course::ORDER['most']) {
+            $query->withCount('learner')->orderByDesc('learner_count');
+        }
+        return $query;
+    }
+
 }

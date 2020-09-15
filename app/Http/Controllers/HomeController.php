@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $course = Course::orderBy('id', 'ASC')->limit(config('variable.course'))->get();
+        $course = Course::OrderByStudents(Course::ORDER['most'])->limit(config('variable.course'))->get();
         $courseOld = Course::orderBy('id', 'DESC')->limit(config('variable.course'))->get();
         $reviews = Review::orderBy('rating', 'DESC')->limit(config('variable.reviews'))->get();
         $fiveStar = config('variable.five_star');

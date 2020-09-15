@@ -80,8 +80,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item has-treeview {{ Request::is('admin/courses') || Request::is('admin/courses/*') ? 'menu-open' : '' }}">
-                        <a href="#" class="nav-link {{ Request::is('admin/courses') || Request::is('admin/courses/*') ? 'active' : '' }}">
+                    <li class="nav-item has-treeview {{ Request::is('admin/courses') || Request::is('admin/courses/*') || Request::is('admin/lesson/*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{ Request::is('admin/courses') || Request::is('admin/courses/*') || Request::is('admin/lesson/*')? 'active' : '' }}">
                             <i class="nav-icon fas fa-book"></i>
                             <p>
                                Manager Course
