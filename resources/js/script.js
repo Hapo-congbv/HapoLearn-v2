@@ -100,7 +100,7 @@ $(document).ready(function () {
 
     setTimeout(function() {
         $('#myAlert').fadeOut('slow');
-    }, 3000);
+    }, 5000);
 
     function preview_image(input) {
         if (input.files && input.files[0]) {

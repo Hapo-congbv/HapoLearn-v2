@@ -8,4 +8,5 @@ return [
     'create_message_error' => 'Create failed!!!',
     'update_message_error' => 'Update failed!!!',
     'delete_message_error' => 'Delete failed!!! The course still contains a lesson that cannot be deleted',
+    'delete_message_error_user' => "Delete failed!!! User whose course can't be delete !!"
 ];

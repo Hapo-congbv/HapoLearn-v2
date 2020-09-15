@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Facade\Ignition\QueryRecorder\Query;
@@ -111,7 +112,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
-        return redirect()->route('admin.users.index')->with('message', __('messages.delete_message'));
+        $user = User::findOrFail($id);
+        $user = Course::wherein('teacher_id', [$user->id])->get();
+        if (count($user) == 0) {
+            $user->delete();
+            return redirect()->route('admin.users.index')->with('message', __('messages.delete_message'));
+        } else {
+            return redirect()->route('admin.users.index')->with('message', __('messages.delete_message_error_user'));
+        }
     }
 }
