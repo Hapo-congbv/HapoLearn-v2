@@ -11,6 +11,6 @@ $factory->define(Lesson::class, function (Faker $faker) {
         'description' => $faker->text(100),
         'requirement' => $faker->text(100),
         'time' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 100),
-        'course_id' => $faker->numberBetween($min = 1, $max = 85)
+        'course_id' => $faker->numberBetween($min = 1, $max = 100)
     ];
 });

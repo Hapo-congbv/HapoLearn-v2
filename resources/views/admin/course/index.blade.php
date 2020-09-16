@@ -41,10 +41,10 @@
                     <tr align="center">
                         <th>STT</th>
                         <th class="fix-witdh-name">Image</th>
-                        <th class="fix-witdh-name">Name</th>
+                        <th class="fix-witdh-name ">Name</th>
                         <th class="fix-witdh-description">Description</th>
                         <th class="fix-witdh-Price">Price</th>
-                        <th class="fix-witdh-Price">Tag</th>
+                        <th class="fix-witdh-Price col">Tag</th>
                         <th class="fix-witdh-teacher">Teacher</th>
                         <th class="fix-witdh-choice">Option</th>
                     </tr>
@@ -57,9 +57,20 @@
                         <td>{{ $course->course_name }}</td>
                         <td>{{ $course->description }}</td>
                         <td>{{ $course->price }} $</td>
-                        <td>{{ $course->tag_course }} </td>
+                        <td class="d-flex justify-content-center align-content-center flex-wrap border-0">
+                            @foreach ($course->tags as $tag)
+                            <div class="row">
+                                <div class="col-8">
+                                    <form action="{{ route('admin.course.search.tag', $tag->id) }}" class="mx-1">
+                                        <label for="{{ $tag->id }}"><span class="badge badge-light badge-custom ">{{ $tag->tag_name }}</span></label>
+                                        <input type="submit" hidden id="{{ $tag->id }}">
+                                     </form>
+                                </div>
+                            </div>
+                            @endforeach
+                        </td>
                         <td>{{ $course->teacher->name }}</td>
-                        <td class="d-flex justify-content-center align-items-center">
+                        <td class="d-flex justify-content-center align-items-center border-0">
                             <!-- show -->
                             <a href=" {{ route('admin.lesson.index', $course->id) }} "  class="icon-show mx-1" ><span class="btn btn-info"><i class="fas fa-folder-open" aria-hidden="true"></i></span></a>
                             <!-- edit -->

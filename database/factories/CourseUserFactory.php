@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(CourseUser::class, function (Faker $faker) {
     $courseId = mt_rand(1, 20);
-    $userId = mt_rand(1, 10);
+    $userId = mt_rand(1, 80);
     while ($courseId == $userId) {
         $courseId = mt_rand(1, 20);
     }

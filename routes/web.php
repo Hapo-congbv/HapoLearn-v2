@@ -62,6 +62,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
     Route::resource('courses', 'Admin\CourseController');
     Route::resource('tags', 'Admin\TagController');
 
+    Route::get('courses/search-tag/{id}', 'Admin\CourseController@searchByTag')->name('course.search.tag');
+
     Route::group(['prefix' => 'lesson', 'as' => 'lesson.'], function () {
         Route::get('/{course}/index', 'Admin\LessonController@index')->name('index');
         Route::get('/{course}/create', 'Admin\LessonController@create')->name('create');
@@ -70,4 +72,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin
         Route::put('/{course}/{lesson}', 'Admin\LessonController@update')->name('update');
         Route::delete('/{course}/{lesson}', 'Admin\LessonController@destroy')->name('destroy');
     });
+
+
+
 });

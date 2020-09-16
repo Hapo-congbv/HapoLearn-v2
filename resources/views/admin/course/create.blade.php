@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Price: </label>
-                                        <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="100$" value=" {{ old('price') }} ">
+                                        <input type="text" class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="100$" value="{{ old('price') }}">
                                         @error('price')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
@@ -59,20 +59,19 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group d-flex align-item-center flex-wrap">
+                                    <div class=" form-group">
                                         <label for="birth_day" class="mr-4">Tags: </label>
-
-                                        @foreach($tags as $tag)
-                                        <div class="mx-3">
-                                            <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" id="{{ $tag->id }}" name="tagId[]">
-                                            <label class="form-check-label" for="{{ $tag->id }}">
-                                                {{ $tag->tag_name }}
-                                            </label>
+                                        <div class="row ml-2">
+                                            @foreach($tags as $tag)
+                                            <div class="col-4">
+                                                <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" id="{{ $tag->id }}" name="tagId[]" @if(is_array(old('tagId')) && in_array($tag->id, old('tagId'))) checked @endif>
+                                                <label class="form-check-label" for="{{ $tag->id }}">
+                                                    {{ $tag->tag_name }}
+                                                </label>
+                                            </div>
+                                            @endforeach
                                         </div>
-                                        @endforeach
-
                                     </div>
-
                                     <div class="form-group col-xs-6">
                                         <label for="avatar">Choose image: </label>
                                         <input type="file" id="image" name="image"

@@ -93,7 +93,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="videoUrl">Phone: </label>
-                                <input type="number" id="phone" name="phone" class="form-control" value="{{ Auth::user()->phone }}" placeholder="Your phone" >
+                                <input type="text" id="phone" name="phone" class="form-control" value="{{ Auth::user()->phone }}" placeholder="Your phone" >
                                 @error('phone')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror

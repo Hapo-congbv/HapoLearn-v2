@@ -130,7 +130,6 @@ class CourseController extends Controller
      */
     public function update(CourseRequest $request, $id)
     {
-
         DB::beginTransaction();
         try {
             $data = $request->all();
@@ -181,5 +180,19 @@ class CourseController extends Controller
         } else {
             return redirect()->back()->with('message', __('messages.delete_message_error'));
         }
+    }
+
+    public function searchByTag(Request $request, $id)
+    {
+        $courses = Course::query();
+        if ($request->name) {
+            $courses->where('course_name', 'like', '%' . $request->name . '%');
+        }
+
+        $courses = $courses->orderByDesc('id')->FindByTag($id)->paginate(config('variable.pagination_admin'));
+        $data = [
+            'courses' => $courses,
+        ];
+        return view('admin.course.index', $data);
     }
 }

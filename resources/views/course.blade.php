@@ -58,7 +58,7 @@
                                     <select class="custom-select" name="lesson" id="lesson">
                                         <option valute="">Lesson</option>
                                         <option value="1">Most Lesson</option>
-                                        <option value="2">Least Review</option>
+                                        <option value="2">Least Lesson</option>
                                     </select>
                                 </div>
                                 <div class="input-group col-2 p-0 mb-3 mx-2">

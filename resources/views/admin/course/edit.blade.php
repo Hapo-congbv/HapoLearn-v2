@@ -60,23 +60,22 @@
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-group d-flex align-item-center flex-wrap">
-                                        <label for="birth_day" class="mr-4">Tags: </label>
-
-                                        @foreach($tags as $tag)
-                                        <div class="mx-3">
-                                            <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" id="{{ $tag->id }}" name="tagId[]"
-                                            @if (count($courseTag->where('id', $tag->id)))
-                                                checked
-                                            @endif>
-                                            <label class="form-check-label" for="{{ $tag->id }}">
-                                                {{ $tag->tag_name }}
-                                            </label>
+                                    <div class="form-group">
+                                        <label for="tag" class="mr-4">Tags: </label>
+                                        <div class="row ml-2">
+                                            @foreach($tags as $tag)
+                                            <div class="col-4">
+                                                <input class="form-check-input" type="checkbox" value="{{ $tag->id }}" id="{{ $tag->id }}" name="tagId[]"
+                                                @if (count($courseTag->where('id', $tag->id)))
+                                                    checked
+                                                @endif>
+                                                <label class="form-check-label" for="{{ $tag->id }}">
+                                                    {{ $tag->tag_name }}
+                                                </label>
+                                            </div>
+                                            @endforeach
                                         </div>
-                                        @endforeach
-
                                     </div>
-
                                     <div class="form-group col-xs-6">
                                         <label for="avatar">Choose image: </label>
                                         <input type="file" id="image" name="image"

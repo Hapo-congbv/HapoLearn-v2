@@ -24,7 +24,7 @@ class CourseController extends Controller
     {
         $courses = Course::orderByDesc('id')->paginate(config('variable.pagination'));
         $teachers = User::where('role_id', User::ROLE['teacher'])->get();
-        $tags = Tag::all();
+        $tags = Tag::orderByDesc('id')->limit(config('variable.pagination'))->get();
         return view('course', compact('courses', 'teachers', 'tags'));
     }
 
@@ -116,7 +116,7 @@ class CourseController extends Controller
     public function searchByTag($id)
     {
         $teachers = User::where('role_id', User::ROLE['teacher'])->get();
-        $tags = Tag::all();
+        $tags = Tag::limit(config('variable.pagination'));
         $courses = Course::query()->orderByDesc('id')
         ->FindByTag($id)->paginate(config('variable.pagination'));
         return view('course', compact('courses', 'teachers', 'tags'));

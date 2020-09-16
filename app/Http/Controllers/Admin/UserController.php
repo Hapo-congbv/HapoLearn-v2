@@ -113,12 +113,22 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user = Course::wherein('teacher_id', [$user->id])->get();
-        if (count($user) == 0) {
+        $role = $user->role_id;
+
+        if ($role == User::ROLE['teacher']) {
+            $users = Course::where('teacher_id', $id)->first()->get();
+            if (count($users) == 0) {
+                $user->delete();
+                return redirect()->route('admin.users.index')->with('message', __('messages.delete_message'));
+            } else {
+                return redirect()->route('admin.users.index')
+                ->with('message', __('messages.delete_message_error_user'));
+            }
+        }
+
+        if ($role == User::ROLE['user']) {
             $user->delete();
             return redirect()->route('admin.users.index')->with('message', __('messages.delete_message'));
-        } else {
-            return redirect()->route('admin.users.index')->with('message', __('messages.delete_message_error_user'));
         }
     }
 }

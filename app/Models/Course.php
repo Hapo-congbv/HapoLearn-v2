@@ -88,6 +88,12 @@ class Course extends Model
             'minutes' => $timeFormatMinutes
         ];
 
+        // if ($timeFormat['hours'] == 0) {
+        //     $time = $timeFormat['minutes'] . "(m)";
+        // } else {
+        //     $time = $timeFormat['hours'] . " (h) " . $timeFormat['minutes'] . "(m)";
+        // }
+        // return $time;
         return $timeFormat;
     }
 
@@ -154,7 +160,7 @@ class Course extends Model
         if ($request->tag != 0) {
             $querry = $query->whereHas('tag', function (Builder $q) use ($request) {
                 $q->where('tag_id', $request->tag);
-            })->get();
+            });
         }
 
         if ($request->has('searched')) {
@@ -183,7 +189,7 @@ class Course extends Model
             }
 
             if ($request->lesson == Course::ORDER['least']) {
-                $querry = $query->withCount('lessons')->orderByASC('lessons_count');
+                $querry = $query->withCount('lessons')->orderBy('lessons_count');
             }
         }
 
